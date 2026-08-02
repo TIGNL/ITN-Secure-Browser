@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#1A1A2E">
+
+    <!-- Domain field -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="النطاق"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/inputDomain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="مثال: youtube.com"
+        android:inputType="textUri"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#555577"
+        android:backgroundTint="#E94560"
+        android:layout_marginBottom="24dp"
+        android:imeOptions="actionNext" />
+
+    <!-- Daily limit field -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="الحد اليومي (بالدقائق)"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/inputLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="اتركه فارغاً لبلا حد"
+        android:inputType="number"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#555577"
+        android:backgroundTint="#E94560"
+        android:imeOptions="actionDone" />
+
+</LinearLayout>

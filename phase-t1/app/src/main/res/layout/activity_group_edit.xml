@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F1A">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:background="@color/bg_tab_bar"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:paddingEnd="12dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_back"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="12dp"
+                android:contentDescription="رجوع" />
+
+            <TextView
+                android:id="@+id/headerTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="مجموعة جديدة"
+                android:textColor="@color/text_primary"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="حفظ"
+                android:textColor="@color/accent"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Group name -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="اسم المجموعة"
+                    android:textColor="#888888"
+                    android:textSize="12sp"
+                    android:textAllCaps="true"
+                    android:layout_marginBottom="6dp" />
+
+                <EditText
+                    android:id="@+id/inputGroupName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="مثال: تواصل اجتماعي"
+                    android:inputType="text"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#555577"
+                    android:backgroundTint="@color/accent"
+                    android:layout_marginBottom="24dp"
+                    android:imeOptions="actionNext" />
+
+                <!-- Daily limit -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="الحد اليومي (دقائق)"
+                    android:textColor="#888888"
+                    android:textSize="12sp"
+                    android:textAllCaps="true"
+                    android:layout_marginBottom="6dp" />
+
+                <EditText
+                    android:id="@+id/inputLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="اتركه فارغاً لبلا حد"
+                    android:inputType="number"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#555577"
+                    android:backgroundTint="@color/accent"
+                    android:layout_marginBottom="28dp"
+                    android:imeOptions="actionDone" />
+
+                <!-- Domains section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="النطاقات"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/btnAddDomain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+ إضافة"
+                        android:textColor="@color/accent"
+                        android:textSize="13sp"
+                        android:padding="4dp"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- Domains list container -->
+                <LinearLayout
+                    android:id="@+id/domainsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/domainsEmptyHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="لم تُضف أي نطاقات بعد"
+                    android:textColor="#555577"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="28dp"
+                    android:visibility="visible" />
+
+                <!-- Schedules section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="جداول الحظر"
+                        android:textColor="#888888"
+                        android:textSize="12sp"
+                        android:textAllCaps="true" />
+
+                    <TextView
+                        android:id="@+id/btnAddSchedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+ إضافة"
+                        android:textColor="@color/accent"
+                        android:textSize="13sp"
+                        android:padding="4dp"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- Schedules list container -->
+                <LinearLayout
+                    android:id="@+id/schedulesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/schedulesEmptyHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="لا توجد جداول حظر"
+                    android:textColor="#555577"
+                    android:textSize="13sp"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

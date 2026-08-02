@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ITN Secure Browser</string>
+    <string name="hint_search">Search or enter URL</string>
+    <string name="new_tab">New Tab</string>
+</resources>

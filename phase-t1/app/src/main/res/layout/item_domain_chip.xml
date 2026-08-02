@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:background="#1E1E30"
+    android:paddingStart="14dp"
+    android:paddingEnd="4dp"
+    android:layout_marginBottom="4dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/domainText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:fontFamily="monospace" />
+
+    <ImageButton
+        android:id="@+id/btnRemoveDomain"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_close"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:tint="#666688"
+        android:padding="8dp"
+        android:contentDescription="حذف النطاق" />
+
+</LinearLayout>
