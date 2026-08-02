@@ -57,19 +57,17 @@
         android:layout_height="1dp"
         android:background="#2A2A4A" />
 
-    <!-- Add tab button -->
-    <TextView
+    <!-- زر تبويبة جديدة — أيقونة فقط، 64dp متناسق مع الشريط السفلي -->
+    <ImageButton
         android:id="@+id/btnSheetNewTab"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="＋  تبويبة جديدة"
-        android:textColor="@color/accent"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:gravity="center"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_add"
+        android:tint="@color/accent"
         android:background="?attr/selectableItemBackground"
+        android:padding="18dp"
         android:clickable="true"
         android:focusable="true"
-        android:longClickable="true" />
+        android:contentDescription="تبويبة جديدة" />
 
 </LinearLayout>
