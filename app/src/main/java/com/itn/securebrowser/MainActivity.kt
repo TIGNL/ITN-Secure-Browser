@@ -37,7 +37,6 @@ class MainActivity : BaseActivity() {
     private lateinit var btnForward: FrameLayout
     private lateinit var btnHome: FrameLayout
     private lateinit var btnTabs: FrameLayout
-    private lateinit var tabsSquare: TabsSquareView
     private lateinit var btnMore: ImageButton
     private lateinit var tabsCount: TextView
 
@@ -124,7 +123,7 @@ class MainActivity : BaseActivity() {
         btnForward = findViewById(R.id.btnForward)
         btnHome    = findViewById(R.id.btnHome)
         btnTabs    = findViewById(R.id.btnTabs)
-        tabsSquare = findViewById(R.id.tabsSquare)
+        tabsCount  = findViewById(R.id.tabsCount)
         btnMore    = findViewById(R.id.btnMore)
     }
 
@@ -252,7 +251,6 @@ class MainActivity : BaseActivity() {
             tabsContainer.addView(tabView)
         }
 
-        tabsSquare.tabCount = tabs.size
     }
 
     private fun scrollTabsToActive() {
@@ -451,3 +449,4 @@ class MainActivity : BaseActivity() {
         ).show(supportFragmentManager, MoreBottomSheet.TAG)
     }
 }
+
