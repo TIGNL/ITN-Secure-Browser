@@ -89,14 +89,7 @@ class ManageSpaceActivity : BaseActivity() {
     private fun confirmClearAll() {
         AlertDialog.Builder(this, R.style.DialogTheme)
             .setTitle(getString(R.string.clear_all_title))
-            .setMessage(
-                "سيتم حذف:\n" +
-                "• الكوكيز والكاش\n" +
-                "• سجل الوقت والتتبع\n" +
-                "• بيانات الحجب والجداول\n" +
-                "• الرمز السري\n\n" +
-                "لا يمكن التراجع عن هذا الإجراء."
-            )
+            .setMessage(getString(R.string.clear_all_message))
             .setPositiveButton(getString(R.string.btn_clear_all_confirm)) { _, _ ->
                 CookieManager.getInstance().removeAllCookies(null)
                 CookieManager.getInstance().flush()
@@ -115,3 +108,4 @@ class ManageSpaceActivity : BaseActivity() {
     private fun toast(msg: String) =
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
+
