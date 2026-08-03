@@ -19,8 +19,10 @@ jobs:
           distribution: 'temurin'
 
       - uses: gradle/actions/setup-gradle@v3
+        continue-on-error: true
         with:
           gradle-version: '8.4'
+          cache-read-only: false
 
       - name: Decode Keystore
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/itn-release.jks
@@ -37,4 +39,4 @@ jobs:
         with:
           name: release-apk
           path: app/build/outputs/apk/release/app-release.apk
-# rebuild apk
+
