@@ -78,11 +78,11 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
 
-            <com.itn.securebrowser.TriangleNavView
-                android:id="@+id/triangleBack"
+            <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_triangle"
                 android:contentDescription="@string/cd_back" />
 
         </FrameLayout>
@@ -97,11 +97,11 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
 
-            <com.itn.securebrowser.TriangleNavView
-                android:id="@+id/triangleForward"
+            <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_triangle"
                 android:scaleX="-1"
                 android:contentDescription="@string/cd_forward" />
 
@@ -117,10 +117,11 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
 
-            <com.itn.securebrowser.CircleView
+            <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_circle"
                 android:contentDescription="@string/cd_home" />
 
         </FrameLayout>
@@ -135,12 +136,27 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
 
-            <com.itn.securebrowser.TabsSquareView
-                android:id="@+id/tabsSquare"
+            <FrameLayout
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/cd_tabs" />
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_square"
+                    android:contentDescription="@string/cd_tabs" />
+
+                <TextView
+                    android:id="@+id/tabsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="8sp" />
+
+            </FrameLayout>
 
         </FrameLayout>
 
