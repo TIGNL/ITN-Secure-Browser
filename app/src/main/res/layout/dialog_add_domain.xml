@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/inputDomain"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/add_domain_hint"
+    android:inputType="textUri"
+    android:textSize="@dimen/text_sm"
+    android:textColor="@color/text_primary"
+    android:textColorHint="#555577"
+    android:backgroundTint="#E94560"
+    android:paddingStart="48dp"
+    android:paddingEnd="48dp"
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp" />
