@@ -140,7 +140,7 @@ class GroupEditActivity : BaseActivity() {
         val input = EditText(this).apply {
             hint = getString(R.string.add_domain_hint)
             inputType     = android.text.InputType.TYPE_TEXT_VARIATION_URI
-            textSize      = 15f
+            textSize      = 16f  // text_sm
             setPadding(48, 32, 48, 32)
             setTextColor(0xFFFFFFFF.toInt())
             setHintTextColor(0xFF555577.toInt())
