@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     private var currentTabId = -1
     private var nextTabId = 0
     private var isLoading = false
-    private var isDesktopMode = false
+    var isDesktopMode = false
 
     private val desktopUserAgent =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
             createNewTab()
         }
         btnTabs.setOnClickListener { showTabsSheet() }
-        btnMore.setOnClickListener { /* وحدة ٢ */ }
+        btnMore.setOnClickListener { showMoreSheet() }
 
         urlBar.setOnEditorActionListener { _, actionId, event ->
             val isGo    = actionId == EditorInfo.IME_ACTION_GO
@@ -392,7 +392,7 @@ class MainActivity : AppCompatActivity() {
         getCurrentWebView()?.loadUrl(url)
     }
 
-    private fun applyUserAgent(webView: WebView) {
+    fun applyUserAgent(webView: WebView = getCurrentWebView() ?: return) {
         webView.settings.userAgentString =
             if (isDesktopMode) desktopUserAgent else null
     }
@@ -423,7 +423,8 @@ class MainActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(urlBar.windowToken, 0)
         urlBar.clearFocus()
     }
-    // ── Tabs Bottom Sheet (ت-١) ────────────────────────────────────────────
+
+    // ── Tabs Bottom Sheet ──────────────────────────────────────────────────
     private fun showTabsSheet() {
         TabsBottomSheet(
             tabs        = tabs.toList(),
@@ -433,6 +434,21 @@ class MainActivity : AppCompatActivity() {
             onNewTab    = { createNewTab() },
             onNewTabFromHistory = { /* ت-٣: سيُفتح HistoryActivity */ }
         ).show(supportFragmentManager, TabsBottomSheet.TAG)
+    }
+
+    // ── More Bottom Sheet ──────────────────────────────────────────────────
+    private fun showMoreSheet() {
+        MoreBottomSheet(
+            isDesktopMode          = isDesktopMode,
+            onDesktopModeToggled   = { enabled ->
+                isDesktopMode = enabled
+                tabs.forEach { applyUserAgent(it.webView) }
+            },
+            onOpenParentalSettings = {
+                val intent = Intent(this, PinEntryActivity::class.java)
+                pinForSettingsLauncher.launch(intent)
+            }
+        ).show(supportFragmentManager, MoreBottomSheet.TAG)
     }
 
 }
