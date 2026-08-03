@@ -1,3 +1,4 @@
+SHA: 354b7e348b8844c3be0e73d6ae0d449b58634758
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
@@ -144,4 +145,12 @@
     <!-- Extra keys for full hardcoded-string removal -->
     <string name="cd_add_schedule">Add schedule</string>
     <string name="cd_delete_domain">Remove domain</string>
+
+    <!-- Plurals -->
+    <plurals name="tab_count">
+        <item quantity="one">%d tab</item>
+        <item quantity="other">%d tabs</item>
+    </plurals>
+
 </resources>
+
