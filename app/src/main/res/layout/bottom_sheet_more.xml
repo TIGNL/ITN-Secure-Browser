@@ -74,7 +74,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:marginStart="20dp"
+        android:layout_marginStart="20dp"
         android:background="#2A2A4A" />
 
     <!-- 2. إعدادات الرقابة -->
@@ -111,7 +111,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:marginStart="20dp"
+        android:layout_marginStart="20dp"
         android:background="#2A2A4A" />
 
     <!-- 3. الإعدادات العامة (placeholder) -->
