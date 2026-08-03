@@ -42,6 +42,6 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:tint="#666688"
         android:padding="8dp"
-        android:contentDescription="حذف الجدول" />
+        android:contentDescription="@string/cd_delete_schedule" />
 
 </LinearLayout>

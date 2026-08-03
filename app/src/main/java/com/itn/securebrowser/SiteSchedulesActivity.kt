@@ -72,8 +72,8 @@ class SiteSchedulesActivity : BaseActivity() {
         val site = getSite() ?: run { finish(); return }
 
         val limitMins = site.dailyLimits.values.firstOrNull()
-        headerLimit.text = if (limitMins != null) "الحد اليومي: $limitMins دقيقة"
-                           else "بدون حد يومي"
+        headerLimit.text = if (limitMins != null) getString(R.string.daily_limit_value, limitMins)
+                           else getString(R.string.no_daily_limit)
 
         adapter.updateSchedules(site.schedules)
 
@@ -123,7 +123,7 @@ class SiteSchedulesActivity : BaseActivity() {
         }
 
         AlertDialog.Builder(this, R.style.DialogTheme)
-            .setTitle("إضافة جدول حظر")
+            .setTitle(getString(R.string.add_schedule_title))
             .setView(dialogView)
             .setPositiveButton("إضافة") { _, _ ->
                 val days = buildList {
@@ -136,7 +136,7 @@ class SiteSchedulesActivity : BaseActivity() {
                     if (cbFri.isChecked) add("FRIDAY")
                 }
                 if (days.isEmpty()) {
-                    toast("اختر يوماً واحداً على الأقل")
+                    toast(getString(R.string.err_select_day))
                     return@setPositiveButton
                 }
                 saveSchedule(
@@ -147,7 +147,7 @@ class SiteSchedulesActivity : BaseActivity() {
                     )
                 )
             }
-            .setNegativeButton("إلغاء", null)
+            .setNegativeButton(getString(R.string.btn_cancel), null)
             .show()
     }
 
@@ -159,20 +159,20 @@ class SiteSchedulesActivity : BaseActivity() {
             blockDataStore.saveSite(site.copy(schedules = site.schedules + schedule))
             refresh()
         } catch (e: Exception) {
-            toast(e.message ?: "خطأ في الحفظ")
+            toast(e.message ?: getString(R.string.err_save))
         }
     }
 
     private fun confirmDeleteSchedule(schedule: BlockSchedule) {
         AlertDialog.Builder(this, R.style.DialogTheme)
-            .setTitle("حذف جدول")
-            .setMessage("هل تريد حذف هذا الجدول؟")
+            .setTitle(getString(R.string.delete_schedule_title))
+            .setMessage(getString(R.string.delete_schedule_message))
             .setPositiveButton("حذف") { _, _ ->
                 val site = getSite() ?: return@setPositiveButton
                 blockDataStore.saveSite(site.copy(schedules = site.schedules - schedule))
                 refresh()
             }
-            .setNegativeButton("إلغاء", null)
+            .setNegativeButton(getString(R.string.btn_cancel), null)
             .show()
     }
 

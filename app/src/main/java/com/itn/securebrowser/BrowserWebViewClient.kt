@@ -56,13 +56,13 @@ class BrowserWebViewClient(
         fun buildBlockPage(domain: String, reason: BlockReason): String {
             val (title, message, icon) = when (reason) {
                 is BlockReason.ScheduleBlock -> Triple(
-                    "وقت حظر مجدول",
-                    "هذا الموقع محجوب خلال هذا الوقت.",
+                    "Scheduled block",
+                    "This site is blocked during this time.",
                     "🕐"
                 )
                 is BlockReason.LimitReached -> Triple(
-                    "انتهى وقتك اليوم",
-                    "استهلكت ${reason.usedMinutes} من أصل ${reason.limitMinutes} دقيقة مسموحة.",
+                    "Daily limit reached",
+                    "You used ${reason.usedMinutes} of ${reason.limitMinutes} allowed minutes today.",
                     "⏱️"
                 )
             }
@@ -75,7 +75,7 @@ class BrowserWebViewClient(
             <head>
               <meta charset="UTF-8"/>
               <meta name="viewport" content="width=device-width, initial-scale=1"/>
-              <title>محجوب</title>
+              <title>Blocked</title>
               <style>
                 * { margin:0; padding:0; box-sizing:border-box; }
                 body {

@@ -32,19 +32,19 @@ class GroupAdapter(
         holder.name.text = g.name
 
         holder.domains.text = when (g.domains.size) {
-            0    -> "لا توجد نطاقات"
+            0    -> "No domains"
             1    -> g.domains[0]
-            2    -> "${g.domains[0]}، ${g.domains[1]}"
-            else -> "${g.domains[0]}، ${g.domains[1]} و${g.domains.size - 2} آخرين"
+            2    -> "${g.domains[0]}, ${g.domains[1]}"
+            else -> "${g.domains[0]}, ${g.domains[1]} +${g.domains.size - 2} more"
         }
 
-        holder.limitInfo.text = if (g.dailyLimits.isEmpty()) "بلا حد يومي"
-                                else "${g.dailyLimits.values.first()} دقيقة / يوم"
+        holder.limitInfo.text = if (g.dailyLimits.isEmpty()) "No daily limit"
+                                else "${g.dailyLimits.values.first()} min/day"
 
         holder.scheduleInfo.text = when (g.schedules.size) {
-            0    -> "بلا جداول حظر  ←"
-            1    -> "جدول حظر واحد  ←"
-            else -> "${g.schedules.size} جداول حظر  ←"
+            0    -> "No block schedules  ←"
+            1    -> "1 block schedule  ←"
+            else -> "${g.schedules.size} block schedules  ←"
         }
 
         holder.itemView.setOnClickListener { onItemClick(g) }

@@ -80,10 +80,10 @@ class GroupEditActivity : BaseActivity() {
 
     private fun loadGroupIfEditing() {
         val name = editingGroupName ?: run {
-            headerTitle.text = "مجموعة جديدة"
+            headerTitle.text = getString(R.string.new_group_title)
             return
         }
-        headerTitle.text = "تعديل المجموعة"
+        headerTitle.text = getString(R.string.edit_group_title)
 
         val group = blockDataStore.getGroups().find { it.name == name } ?: run {
             finish(); return
@@ -106,12 +106,12 @@ class GroupEditActivity : BaseActivity() {
 
     private fun trySave() {
         val name = inputGroupName.text.toString().trim()
-        if (name.isBlank()) { toast("أدخل اسم المجموعة"); return }
+        if (name.isBlank()) { toast(getString(R.string.err_enter_group_name)); return }
 
         val rawLimit = inputLimit.text.toString().trim()
         val limitMins: Int? = if (rawLimit.isBlank()) null else {
             val n = rawLimit.toIntOrNull()
-            if (n == null || n <= 0) { toast("الحد اليومي يجب أن يكون رقماً موجباً"); return }
+            if (n == null || n <= 0) { toast(getString(R.string.err_daily_limit_positive)); return }
             n
         }
 
@@ -130,7 +130,7 @@ class GroupEditActivity : BaseActivity() {
             )
             finish()
         } catch (e: IllegalStateException) {
-            toast(e.message ?: "خطأ في الحفظ")
+            toast(e.message ?: getString(R.string.err_save))
         }
     }
 
@@ -138,7 +138,7 @@ class GroupEditActivity : BaseActivity() {
 
     private fun showAddDomainDialog() {
         val input = EditText(this).apply {
-            hint          = "مثال: instagram.com"
+            hint = getString(R.string.add_domain_hint)
             inputType     = android.text.InputType.TYPE_TEXT_VARIATION_URI
             textSize      = 15f
             setPadding(48, 32, 48, 32)
@@ -148,16 +148,16 @@ class GroupEditActivity : BaseActivity() {
         }
 
         AlertDialog.Builder(this, R.style.DialogTheme)
-            .setTitle("إضافة نطاق")
+            .setTitle(getString(R.string.add_domain_title))
             .setView(input)
-            .setPositiveButton("إضافة") { _, _ ->
+            .setPositiveButton(getString(R.string.btn_add)) { _, _ ->
                 val raw = input.text.toString().trim()
                     .removePrefix("https://").removePrefix("http://")
                     .removePrefix("www.").trimEnd('/').lowercase()
                 when {
-                    raw.isBlank()          -> toast("أدخل النطاق")
-                    !raw.contains('.')     -> toast("النطاق غير صحيح")
-                    raw in domains         -> toast("النطاق مضاف مسبقاً")
+                    raw.isBlank()      -> toast(getString(R.string.err_domain_blank))
+                    !raw.contains('.') -> toast(getString(R.string.err_domain_invalid))
+                    raw in domains     -> toast(getString(R.string.err_domain_duplicate))
                     else -> {
                         domains.add(raw)
                         refreshDomainsView()
@@ -219,7 +219,7 @@ class GroupEditActivity : BaseActivity() {
         }
 
         AlertDialog.Builder(this, R.style.DialogTheme)
-            .setTitle("إضافة جدول حظر")
+            .setTitle(getString(R.string.add_schedule_title))
             .setView(dialogView)
             .setPositiveButton("إضافة") { _, _ ->
                 val days = buildList {
@@ -231,7 +231,7 @@ class GroupEditActivity : BaseActivity() {
                     if (cbThu.isChecked) add("THURSDAY")
                     if (cbFri.isChecked) add("FRIDAY")
                 }
-                if (days.isEmpty()) { toast("اختر يوماً واحداً على الأقل"); return@setPositiveButton }
+                if (days.isEmpty()) { toast(getString(R.string.err_select_day)); return@setPositiveButton }
                 schedules.add(BlockSchedule(days = days, from = fmt(fromHour, fromMin), to = fmt(toHour, toMin)))
                 refreshSchedulesView()
             }
@@ -248,7 +248,7 @@ class GroupEditActivity : BaseActivity() {
                 .inflate(R.layout.item_schedule_inline, schedulesContainer, false)
 
             row.findViewById<TextView>(R.id.scheduleDays).text =
-                schedule.days.joinToString("، ") { dayAr(it) }
+                schedule.days.joinToString(", ") { dayAr(it) }
             row.findViewById<TextView>(R.id.scheduleTime).text =
                 "${schedule.from} — ${schedule.to}"
             row.findViewById<ImageButton>(R.id.btnRemoveSchedule).setOnClickListener {
@@ -262,13 +262,13 @@ class GroupEditActivity : BaseActivity() {
     // ── Helper ─────────────────────────────────────────────────────────────
 
     private fun dayAr(d: String) = when (d) {
-        "SATURDAY"  -> "السبت"
-        "SUNDAY"    -> "الأحد"
-        "MONDAY"    -> "الاثنين"
-        "TUESDAY"   -> "الثلاثاء"
-        "WEDNESDAY" -> "الأربعاء"
-        "THURSDAY"  -> "الخميس"
-        "FRIDAY"    -> "الجمعة"
+        "SATURDAY"  -> getString(R.string.day_saturday)
+        "SUNDAY"    -> getString(R.string.day_sunday)
+        "MONDAY"    -> getString(R.string.day_monday)
+        "TUESDAY"   -> getString(R.string.day_tuesday)
+        "WEDNESDAY" -> getString(R.string.day_wednesday)
+        "THURSDAY"  -> getString(R.string.day_thursday)
+        "FRIDAY"    -> getString(R.string.day_friday)
         else        -> d
     }
 

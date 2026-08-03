@@ -52,6 +52,6 @@
         android:src="@drawable/ic_close"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:tint="#E94560"
-        android:contentDescription="حذف" />
+        android:contentDescription="@string/cd_delete_site" />
 
 </LinearLayout>

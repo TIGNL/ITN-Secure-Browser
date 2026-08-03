@@ -66,13 +66,13 @@ class GroupsFragment : Fragment() {
 
     private fun confirmDelete(group: BlockGroup) {
         AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-            .setTitle("حذف مجموعة")
-            .setMessage("هل تريد حذف مجموعة «${group.name}»؟\nسيتم حذف جميع إعداداتها.")
-            .setPositiveButton("حذف") { _, _ ->
+            .setTitle(getString(R.string.delete_group_title))
+            .setMessage(getString(R.string.delete_group_message, group.name))
+            .setPositiveButton(getString(R.string.btn_delete)) { _, _ ->
                 blockDataStore.deleteGroup(group.name)
                 refresh()
             }
-            .setNegativeButton("إلغاء", null)
+            .setNegativeButton(getString(R.string.btn_cancel), null)
             .show()
     }
 }

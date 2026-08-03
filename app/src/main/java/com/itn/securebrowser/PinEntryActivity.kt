@@ -27,7 +27,7 @@ class PinEntryActivity : BaseActivity() {
         /** نتيجة ناجحة يرجعها الـ Activity */
         const val RESULT_PIN_OK = RESULT_FIRST_USER + 1
 
-        fun intentVerify(ctx: Context, subtitle: String = "لفتح الإعدادات"): Intent =
+        fun intentVerify(ctx: Context, subtitle: String = ctx.getString(R.string.pin_subtitle_open_settings)): Intent =
             Intent(ctx, PinEntryActivity::class.java)
                 .putExtra(EXTRA_MODE, MODE_VERIFY)
                 .putExtra(EXTRA_SUBTITLE, subtitle)
@@ -35,7 +35,7 @@ class PinEntryActivity : BaseActivity() {
         fun intentSet(ctx: Context): Intent =
             Intent(ctx, PinEntryActivity::class.java)
                 .putExtra(EXTRA_MODE, MODE_SET)
-                .putExtra(EXTRA_SUBTITLE, "اختر رمزاً سرياً جديداً")
+                .putExtra(EXTRA_SUBTITLE, ctx.getString(R.string.pin_subtitle_new))
     }
 
     // ── Views ──────────────────────────────────────────────────────────────
@@ -65,7 +65,7 @@ class PinEntryActivity : BaseActivity() {
         dots[2] = findViewById(R.id.dot3); dots[3] = findViewById(R.id.dot4)
         dots[4] = findViewById(R.id.dot5); dots[5] = findViewById(R.id.dot6)
 
-        pinTitle.text    = if (mode == MODE_SET) "أدخل رمزاً جديداً" else "أدخل الرمز السري"
+        pinTitle.text    = getString(if (mode == MODE_SET) R.string.pin_title_new else R.string.pin_title_enter)
         pinSubtitle.text = intent.getStringExtra(EXTRA_SUBTITLE) ?: ""
 
         wireKeys()
@@ -120,7 +120,7 @@ class PinEntryActivity : BaseActivity() {
             setResult(RESULT_PIN_OK)
             finish()
         } else {
-            showError("رمز خاطئ، حاول مجدداً")
+            showError(getString(R.string.pin_error_wrong))
             shakeAndClear()
         }
     }
@@ -133,7 +133,7 @@ class PinEntryActivity : BaseActivity() {
             firstPin = pin
             entered.clear()
             refreshDots()
-            pinTitle.text    = "أعد إدخال الرمز للتأكيد"
+            pinTitle.text    = getString(R.string.pin_title_confirm)
             pinSubtitle.text = ""
         } else {
             // إدخال ثانٍ — تحقق من التطابق
@@ -143,8 +143,8 @@ class PinEntryActivity : BaseActivity() {
                 finish()
             } else {
                 firstPin = ""
-                showError("الرمزان غير متطابقين، ابدأ من جديد")
-                pinTitle.text    = "أدخل رمزاً جديداً"
+                showError(getString(R.string.pin_error_mismatch))
+                pinTitle.text    = getString(R.string.pin_title_new)
                 pinSubtitle.text = ""
                 shakeAndClear()
             }

@@ -31,7 +31,7 @@ class ManageSpaceActivity : BaseActivity() {
 
         if (PinManager.hasPin(this)) {
             pinLauncher.launch(
-                PinEntryActivity.intentVerify(this, "لإدارة بيانات التطبيق")
+                PinEntryActivity.intentVerify(this, getString(R.string.pin_subtitle_manage_data))
             )
         } else {
             showOptions()
@@ -42,13 +42,13 @@ class ManageSpaceActivity : BaseActivity() {
 
     private fun showOptions() {
         AlertDialog.Builder(this, R.style.DialogTheme)
-            .setTitle("إدارة بيانات التطبيق")
+            .setTitle(getString(R.string.manage_space_title))
             .setItems(
                 arrayOf(
-                    "مسح الكوكيز والكاش",
-                    "مسح سجل الوقت (التتبع)",
-                    "مسح بيانات المواقع المحجوبة والجداول",
-                    "⚠️  مسح كل شيء"
+                    getString(R.string.clear_browsing),
+                    getString(R.string.clear_tracking),
+                    getString(R.string.clear_blocking),
+                    getString(R.string.clear_all)
                 )
             ) { _, which ->
                 when (which) {
@@ -58,7 +58,7 @@ class ManageSpaceActivity : BaseActivity() {
                     3 -> confirmClearAll()
                 }
             }
-            .setNegativeButton("إلغاء") { _, _ -> finish() }
+            .setNegativeButton(getString(R.string.btn_cancel)) { _, _ -> finish() }
             .setOnCancelListener { finish() }
             .show()
     }
@@ -70,25 +70,25 @@ class ManageSpaceActivity : BaseActivity() {
         CookieManager.getInstance().flush()
         WebStorage.getInstance().deleteAllData()
         cacheDir.deleteRecursively()
-        toast("✓ تم مسح الكوكيز والكاش")
+        toast(getString(R.string.toast_cleared_browsing))
         finish()
     }
 
     private fun clearTracking() {
         getSharedPreferences("itn_time_tracker", MODE_PRIVATE).edit().clear().apply()
-        toast("✓ تم مسح سجل الوقت")
+        toast(getString(R.string.toast_cleared_tracking))
         finish()
     }
 
     private fun clearBlocking() {
         getSharedPreferences("itn_block_data", MODE_PRIVATE).edit().clear().apply()
-        toast("✓ تم مسح بيانات الحجب")
+        toast(getString(R.string.toast_cleared_blocking))
         finish()
     }
 
     private fun confirmClearAll() {
         AlertDialog.Builder(this, R.style.DialogTheme)
-            .setTitle("⚠️  مسح كل البيانات؟")
+            .setTitle(getString(R.string.clear_all_title))
             .setMessage(
                 "سيتم حذف:\n" +
                 "• الكوكيز والكاش\n" +
@@ -97,7 +97,7 @@ class ManageSpaceActivity : BaseActivity() {
                 "• الرمز السري\n\n" +
                 "لا يمكن التراجع عن هذا الإجراء."
             )
-            .setPositiveButton("نعم، امسح كل شيء") { _, _ ->
+            .setPositiveButton(getString(R.string.btn_clear_all_confirm)) { _, _ ->
                 CookieManager.getInstance().removeAllCookies(null)
                 CookieManager.getInstance().flush()
                 WebStorage.getInstance().deleteAllData()
@@ -105,10 +105,10 @@ class ManageSpaceActivity : BaseActivity() {
                 getSharedPreferences("itn_time_tracker", MODE_PRIVATE).edit().clear().apply()
                 getSharedPreferences("itn_block_data",   MODE_PRIVATE).edit().clear().apply()
                 PinManager.clear(this)
-                toast("✓ تم مسح كل البيانات")
+                toast(getString(R.string.toast_cleared_all))
                 finish()
             }
-            .setNegativeButton("إلغاء") { _, _ -> finish() }
+            .setNegativeButton(getString(R.string.btn_cancel)) { _, _ -> finish() }
             .show()
     }
 

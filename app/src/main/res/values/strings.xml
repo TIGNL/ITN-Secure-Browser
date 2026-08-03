@@ -140,4 +140,8 @@
     <string name="toast_cleared_blocking">✓ Block data cleared</string>
     <string name="toast_cleared_all">✓ All data cleared</string>
 
+
+    <!-- Extra keys for full hardcoded-string removal -->
+    <string name="cd_add_schedule">Add schedule</string>
+    <string name="cd_delete_domain">Remove domain</string>
 </resources>

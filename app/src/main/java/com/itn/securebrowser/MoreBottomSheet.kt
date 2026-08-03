@@ -21,7 +21,7 @@ class MoreBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.sheetHeaderTitle).text = "الخيارات"
+        view.findViewById<TextView>(R.id.sheetHeaderTitle).text = getString(R.string.sheet_options)
 
         // ── 1. وضع سطح المكتب ──────────────────────────────────────────────
         val switchDesktop = view.findViewById<SwitchCompat>(R.id.switchDesktopMode)

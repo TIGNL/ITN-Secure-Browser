@@ -29,14 +29,14 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_desktop"
             android:tint="@color/accent"
-            android:contentDescription="وضع سطح المكتب" />
+            android:contentDescription="@string/cd_desktop_mode" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="16dp"
-            android:text="وضع سطح المكتب"
+            android:text="@string/desktop_mode"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
@@ -74,13 +74,13 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_settings"
             android:tint="@color/accent"
-            android:contentDescription="إعدادات الرقابة" />
+            android:contentDescription="@string/cd_parental_settings" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="إعدادات الرقابة"
+            android:text="@string/parental_settings"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
@@ -111,13 +111,13 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_settings"
             android:tint="#666688"
-            android:contentDescription="الإعدادات العامة" />
+            android:contentDescription="@string/cd_general_settings" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="الإعدادات العامة"
+            android:text="@string/general_settings"
             android:textColor="#666688"
             android:textSize="15sp" />
 

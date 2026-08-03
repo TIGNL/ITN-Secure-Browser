@@ -53,15 +53,15 @@ class PinFragment : Fragment() {
 
         btnClear.setOnClickListener {
             AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-                .setTitle("حذف الرمز السري")
-                .setMessage("سيتم حذف الرمز السري وإزالة الحماية. هل تريد المتابعة؟")
+                .setTitle(getString(R.string.delete_pin_title))
+                .setMessage(getString(R.string.delete_pin_message))
                 .setPositiveButton("حذف") { _, _ ->
                     // اطلب التحقق أولاً قبل الحذف
                     verifyForClear.launch(
-                        PinEntryActivity.intentVerify(requireContext(), "تحقق من هويتك أولاً")
+                        PinEntryActivity.intentVerify(requireContext(), getString(R.string.pin_verify_first))
                     )
                 }
-                .setNegativeButton("إلغاء", null)
+                .setNegativeButton(getString(R.string.btn_cancel), null)
                 .show()
         }
 
@@ -75,8 +75,8 @@ class PinFragment : Fragment() {
 
     private fun refresh() {
         val hasPin = PinManager.hasPin(requireContext())
-        statusText.text = if (hasPin) "الرمز السري مفعّل ✓" else "لا يوجد رمز سري مفعّل"
-        btnSet.text     = if (hasPin) "تغيير الرمز السري" else "تعيين رمز سري"
+        statusText.text = getString(if (hasPin) R.string.pin_status_active else R.string.pin_status_none)
+        btnSet.text     = getString(if (hasPin) R.string.btn_change_pin else R.string.btn_set_pin)
         btnClear.visibility = if (hasPin) View.VISIBLE else View.GONE
     }
 }

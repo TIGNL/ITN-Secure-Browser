@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="أيام الحظر"
+            android:text="@string/schedule_days_label"
             android:textColor="#AAAAAA"
             android:textSize="12sp"
             android:textAllCaps="true"
@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="السبت"
+                android:text="@string/day_saturday"
                 android:textColor="#FFFFFF" />
 
             <CheckBox
@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="الأحد"
+                android:text="@string/day_sunday"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
@@ -56,7 +56,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="الاثنين"
+                android:text="@string/day_monday"
                 android:textColor="#FFFFFF" />
 
             <CheckBox
@@ -64,7 +64,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="الثلاثاء"
+                android:text="@string/day_tuesday"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="الأربعاء"
+                android:text="@string/day_wednesday"
                 android:textColor="#FFFFFF" />
 
             <CheckBox
@@ -87,7 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="الخميس"
+                android:text="@string/day_thursday"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
@@ -96,7 +96,7 @@
             android:id="@+id/cbFriday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="الجمعة"
+            android:text="@string/day_friday"
             android:textColor="#FFFFFF"
             android:layout_marginBottom="16dp" />
 
@@ -111,7 +111,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="نطاق الوقت"
+            android:text="@string/schedule_time_label"
             android:textColor="#AAAAAA"
             android:textSize="12sp"
             android:textAllCaps="true"
@@ -127,7 +127,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="من"
+                android:text="@string/schedule_from"
                 android:textColor="#888888"
                 android:textSize="13sp"
                 android:paddingRight="8dp" />
@@ -147,7 +147,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="إلى"
+                android:text="@string/schedule_to"
                 android:textColor="#888888"
                 android:textSize="13sp"
                 android:paddingLeft="16dp"
@@ -169,7 +169,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="اضغط على الوقت لتغييره · يدعم العبور بعد منتصف الليل"
+            android:text="@string/schedule_time_hint"
             android:textColor="#555577"
             android:textSize="11sp"
             android:paddingTop="8dp" />

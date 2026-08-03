@@ -79,7 +79,7 @@ class SitesFragment : Fragment() {
         val inputLimit  = dialogView.findViewById<EditText>(R.id.inputLimit)
 
         AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-            .setTitle("إضافة موقع")
+            .setTitle(getString(R.string.add_site_title))
             .setView(dialogView)
             .setPositiveButton("إضافة") { _, _ ->
                 handleAddSite(
@@ -94,7 +94,7 @@ class SitesFragment : Fragment() {
     private fun handleAddSite(rawDomain: String, rawLimit: String) {
         // ── تحقق من النطاق ─────────────────────────────────────────────────
         if (rawDomain.isBlank()) {
-            toast("أدخل النطاق")
+            toast(getString(R.string.err_enter_domain))
             return
         }
 
@@ -107,7 +107,7 @@ class SitesFragment : Fragment() {
             .lowercase()
 
         if (domain.isBlank() || !domain.contains('.')) {
-            toast("النطاق غير صحيح")
+            toast(getString(R.string.err_invalid_domain))
             return
         }
 
@@ -117,7 +117,7 @@ class SitesFragment : Fragment() {
         } else {
             val n = rawLimit.toIntOrNull()
             if (n == null || n <= 0) {
-                toast("الحد اليومي يجب أن يكون رقماً موجباً")
+                toast(getString(R.string.err_daily_limit_positive))
                 return
             }
             n
@@ -140,7 +140,7 @@ class SitesFragment : Fragment() {
             )
             refresh()
         } catch (e: IllegalStateException) {
-            toast(e.message ?: "خطأ في الحفظ")
+            toast(e.message ?: getString(R.string.err_save))
         }
     }
 
@@ -148,8 +148,8 @@ class SitesFragment : Fragment() {
 
     private fun confirmDelete(site: BlockSite) {
         AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-            .setTitle("حذف موقع")
-            .setMessage("هل تريد حذف «${site.domain}»؟")
+            .setTitle(getString(R.string.delete_site_title))
+            .setMessage(getString(R.string.delete_site_message, site.domain))
             .setPositiveButton("حذف") { _, _ ->
                 blockDataStore.deleteSite(site.domain)
                 refresh()

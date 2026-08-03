@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="النطاق"
+        android:text="@string/add_site_label"
         android:textColor="#888888"
         android:textSize="12sp"
         android:layout_marginBottom="4dp" />
@@ -19,7 +19,7 @@
         android:id="@+id/inputDomain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="مثال: youtube.com"
+        android:hint="@string/add_site_hint"
         android:inputType="textUri"
         android:textColor="#FFFFFF"
         android:textColorHint="#555577"
@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="الحد اليومي (بالدقائق)"
+        android:text="@string/daily_limit_label"
         android:textColor="#888888"
         android:textSize="12sp"
         android:layout_marginBottom="4dp" />
@@ -40,7 +40,7 @@
         android:id="@+id/inputLimit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="اتركه فارغاً لبلا حد"
+        android:hint="@string/daily_limit_hint"
         android:inputType="number"
         android:textColor="#FFFFFF"
         android:textColorHint="#555577"

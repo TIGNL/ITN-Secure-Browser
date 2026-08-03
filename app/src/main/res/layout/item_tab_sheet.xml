@@ -28,6 +28,6 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="10dp"
         android:tint="#666688"
-        android:contentDescription="إغلاق التبويبة" />
+        android:contentDescription="@string/cd_close_tab_sheet" />
 
 </LinearLayout>

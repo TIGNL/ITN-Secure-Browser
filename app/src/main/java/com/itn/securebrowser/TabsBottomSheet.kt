@@ -28,7 +28,7 @@ class TabsBottomSheet(
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<TextView>(R.id.sheetHeaderTitle).text =
-            "${tabs.size} ${if (tabs.size == 1) "تبويبة" else "تبويبات"}"
+            resources.getQuantityString(R.plurals.tab_count, tabs.size, tabs.size)
 
         adapter = TabSheetAdapter(
             tabs     = tabs,

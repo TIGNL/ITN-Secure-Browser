@@ -26,6 +26,6 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:tint="#666688"
         android:padding="8dp"
-        android:contentDescription="حذف النطاق" />
+        android:contentDescription="@string/cd_delete_domain" />
 
 </LinearLayout>

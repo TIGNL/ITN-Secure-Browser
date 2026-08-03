@@ -26,7 +26,7 @@ class ScheduleAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val s = schedules[position]
-        holder.days.text   = s.days.joinToString("، ") { dayToArabic(it) }
+        holder.days.text   = s.days.joinToString(", ") { dayToEnglish(it) }
         holder.time.text   = "${s.from} — ${s.to}"
         holder.delete.setOnClickListener { onDelete(s) }
     }
@@ -37,13 +37,13 @@ class ScheduleAdapter(
     }
 
     private fun dayToArabic(day: String) = when (day) {
-        "SATURDAY"  -> "السبت"
-        "SUNDAY"    -> "الأحد"
-        "MONDAY"    -> "الاثنين"
-        "TUESDAY"   -> "الثلاثاء"
-        "WEDNESDAY" -> "الأربعاء"
-        "THURSDAY"  -> "الخميس"
-        "FRIDAY"    -> "الجمعة"
+        "SATURDAY"  -> "Sat"
+        "SUNDAY"    -> "Sun"
+        "MONDAY"    -> "Mon"
+        "TUESDAY"   -> "Tue"
+        "WEDNESDAY" -> "Wed"
+        "THURSDAY"  -> "Thu"
+        "FRIDAY"    -> "Fri"
         else        -> day
     }
 }

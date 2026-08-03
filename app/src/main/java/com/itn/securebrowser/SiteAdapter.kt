@@ -32,16 +32,16 @@ class SiteAdapter(
         holder.domain.text = site.domain
 
         holder.limitInfo.text = if (site.dailyLimits.isEmpty()) {
-            "بلا حد يومي"
+            "No daily limit"
         } else {
             val mins = site.dailyLimits.values.first()
-            "$mins دقيقة / يوم"
+            "$mins min/day"
         }
 
         holder.scheduleInfo.text = when (site.schedules.size) {
-            0    -> "بلا جداول حظر  ←"
-            1    -> "جدول حظر واحد  ←"
-            else -> "${site.schedules.size} جداول حظر  ←"
+            0    -> "No block schedules  ←"
+            1    -> "1 block schedule  ←"
+            else -> "${site.schedules.size} block schedules  ←"
         }
 
         holder.itemView.setOnClickListener { onItemClick(site) }

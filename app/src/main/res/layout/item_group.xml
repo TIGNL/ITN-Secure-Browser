@@ -60,6 +60,6 @@
         android:src="@drawable/ic_close"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:tint="#E94560"
-        android:contentDescription="حذف المجموعة" />
+        android:contentDescription="@string/cd_delete_group" />
 
 </LinearLayout>

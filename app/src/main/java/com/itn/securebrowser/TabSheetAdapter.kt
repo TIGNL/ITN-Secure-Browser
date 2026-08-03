@@ -28,7 +28,7 @@ class TabSheetAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val tab = tabs[position]
 
-        holder.title.text = tab.title.ifBlank { "تبويبة جديدة" }
+        holder.title.text = tab.title.ifBlank { holder.itemView.context.getString(R.string.new_tab) }
 
         // Active tab → brighter text
         holder.title.alpha = if (tab.id == activeId) 1f else 0.55f
