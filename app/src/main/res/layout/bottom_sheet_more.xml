@@ -37,7 +37,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/desktop_mode"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_sm" />
 
         <CheckBox
             android:id="@+id/switchDesktopMode"
@@ -81,7 +81,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/parental_settings"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_sm" />
 
     </LinearLayout>
 
@@ -118,7 +118,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/general_settings"
             android:textColor="#666688"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_sm" />
 
     </LinearLayout>
 
