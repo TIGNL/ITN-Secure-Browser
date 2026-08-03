@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 
 class MoreBottomSheet(
@@ -19,6 +20,8 @@ class MoreBottomSheet(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.findViewById<TextView>(R.id.sheetHeaderTitle).text = "الخيارات"
 
         // ── 1. وضع سطح المكتب ──────────────────────────────────────────────
         val switchDesktop = view.findViewById<SwitchCompat>(R.id.switchDesktopMode)
@@ -47,3 +50,4 @@ class MoreBottomSheet(
         const val TAG = "MoreBottomSheet"
     }
 }
+
