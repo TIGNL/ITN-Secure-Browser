@@ -31,18 +31,20 @@ class MainActivity : BaseActivity() {
     // ── Views ──────────────────────────────────────────────────────────────
     private lateinit var webViewContainer: FrameLayout
     private lateinit var urlBar: EditText
-    private lateinit var btnBack: ImageButton
-    private lateinit var btnForward: ImageButton
     private lateinit var btnRefreshStop: ImageButton
 
-    private lateinit var btnHome: ImageButton
-    private lateinit var btnTabs: ImageButton
+    // Custom nav views
+    private lateinit var btnNavGroup: FrameLayout
+    private lateinit var triangleNav: TriangleNavView
+    private lateinit var btnHome: FrameLayout
+    private lateinit var btnTabs: FrameLayout
+    private lateinit var tabsSquare: TabsSquareView
     private lateinit var btnMore: ImageButton
+
     private lateinit var tabsContainer: LinearLayout
     private lateinit var tabsScrollView: HorizontalScrollView
     private lateinit var btnNewTab: ImageButton
     private lateinit var progressBar: ProgressBar
-
 
     // ── Block checker (فحص دوري كل 5 ثوانٍ) ────────────────────────────────────
     private val blockHandler  = Handler(Looper.getMainLooper())
@@ -62,6 +64,9 @@ class MainActivity : BaseActivity() {
     private var nextTabId = 0
     private var isLoading = false
     var isDesktopMode = false
+
+    // isForwardMode: true → المثلث يشير للأمام (يمين)، false → للخلف (يسار)
+    private var isForwardMode = false
 
     private val desktopUserAgent =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
@@ -112,25 +117,38 @@ class MainActivity : BaseActivity() {
     private fun initViews() {
         webViewContainer  = findViewById(R.id.webViewContainer)
         urlBar            = findViewById(R.id.urlBar)
-        btnBack           = findViewById(R.id.btnBack)
-        btnForward        = findViewById(R.id.btnForward)
         btnRefreshStop    = findViewById(R.id.btnRefreshStop)
         tabsContainer     = findViewById(R.id.tabsContainer)
         tabsScrollView    = findViewById(R.id.tabsScrollView)
         btnNewTab         = findViewById(R.id.btnNewTab)
         progressBar       = findViewById(R.id.progressBar)
-        btnHome           = findViewById(R.id.btnHome)
-        btnTabs           = findViewById(R.id.btnTabs)
-        btnMore           = findViewById(R.id.btnMore)
+
+        // Custom nav views
+        btnNavGroup  = findViewById(R.id.btnNavGroup)
+        triangleNav  = findViewById(R.id.btnBack)
+        btnHome      = findViewById(R.id.btnHome)
+        btnTabs      = findViewById(R.id.btnTabs)
+        tabsSquare   = findViewById(R.id.tabsSquare)
+        btnMore      = findViewById(R.id.btnMore)
     }
 
     private fun setupListeners() {
-        btnBack.setOnClickListener {
-            getCurrentWebView()?.let { if (it.canGoBack()) it.goBack() }
+        // زر الخلف/الأمام — ضغطة قصيرة، ضغطة طويلة
+        btnNavGroup.setOnClickListener {
+            val wv = getCurrentWebView() ?: return@setOnClickListener
+            if (isForwardMode) {
+                if (wv.canGoForward()) wv.goForward()
+            } else {
+                if (wv.canGoBack()) wv.goBack()
+            }
         }
-        btnForward.setOnClickListener {
-            getCurrentWebView()?.let { if (it.canGoForward()) it.goForward() }
+        btnNavGroup.setOnLongClickListener {
+            // تبديل الوجهة عند الضغط المطوّل
+            isForwardMode = !isForwardMode
+            updateNavButtons()
+            true
         }
+
         btnRefreshStop.setOnClickListener {
             getCurrentWebView()?.let { wv ->
                 if (isLoading) wv.stopLoading() else wv.reload()
@@ -245,6 +263,9 @@ class MainActivity : BaseActivity() {
             closeBtn.setOnClickListener { closeTab(tab.id) }
             tabsContainer.addView(tabView)
         }
+
+        // تحديث عداد التبويبات في الشريط السفلي
+        tabsSquare.tabCount = tabs.size
     }
 
     private fun scrollTabsToActive() {
@@ -393,8 +414,14 @@ class MainActivity : BaseActivity() {
 
     private fun updateNavButtons() {
         val wv = getCurrentWebView()
-        btnBack.alpha    = if (wv?.canGoBack()    == true) 1.0f else 0.35f
-        btnForward.alpha = if (wv?.canGoForward() == true) 1.0f else 0.35f
+
+        // تحديث شفافية زر التنقل
+        val canNav = if (isForwardMode) wv?.canGoForward() == true
+                     else               wv?.canGoBack()    == true
+        btnNavGroup.alpha = if (canNav) 1.0f else 0.35f
+
+        // عكس المثلث عند الوضع الأمامي
+        triangleNav.scaleX = if (isForwardMode) -1f else 1f
     }
 
     private fun getCurrentTab()     = tabs.find { it.id == currentTabId }
