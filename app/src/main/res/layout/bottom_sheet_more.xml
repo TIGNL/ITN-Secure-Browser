@@ -14,23 +14,31 @@
         android:layout_marginBottom="10dp"
         android:background="#444466" />
 
-    <!-- Header -->
-    <TextView
+    <!-- Header 64dp -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="12dp"
-        android:text="الخيارات"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="الخيارات"
+            android:textColor="#888888"
+            android:textSize="13sp" />
+
+    </LinearLayout>
 
     <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#2A2A4A" />
+        android:background="#2A2A4A"
+        android:layout_marginBottom="4dp" />
 
     <!-- 1. وضع سطح المكتب -->
     <LinearLayout
