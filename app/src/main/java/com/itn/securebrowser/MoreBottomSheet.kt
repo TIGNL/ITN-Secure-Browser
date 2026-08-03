@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.appcompat.widget.SwitchCompat
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class MoreBottomSheet(
-    private val isDesktopMode: Boolean,
-    private val onDesktopModeToggled: (Boolean) -> Unit,
+    private val isDesktopMode:          Boolean,
+    private val onDesktopModeToggled:   (Boolean) -> Unit,
     private val onOpenParentalSettings: () -> Unit
-) : BottomSheetDialogFragment() {
+) : BaseBottomSheet() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -30,7 +27,6 @@ class MoreBottomSheet(
             onDesktopModeToggled(checked)
             dismiss()
         }
-        // الضغط على الصف بأكمله يُبدّل الـ Switch
         view.findViewById<View>(R.id.rowDesktopMode).setOnClickListener {
             switchDesktop.toggle()
         }
@@ -43,25 +39,8 @@ class MoreBottomSheet(
 
         // ── 3. الإعدادات العامة (placeholder) ──────────────────────────────
         view.findViewById<View>(R.id.rowGeneralSettings).setOnClickListener {
-            // سيُنفَّذ لاحقاً
             dismiss()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val dialog = dialog as? BottomSheetDialog ?: return
-        val sheet  = dialog.findViewById<View>(
-            com.google.android.material.R.id.design_bottom_sheet
-        ) ?: return
-
-        val screenHeight = resources.displayMetrics.heightPixels
-        sheet.layoutParams.height = (screenHeight * 0.75).toInt()
-
-        val behavior = BottomSheetBehavior.from(sheet)
-        behavior.peekHeight    = (screenHeight * 0.75).toInt()
-        behavior.state         = BottomSheetBehavior.STATE_EXPANDED
-        behavior.skipCollapsed = true
     }
 
     companion object {
