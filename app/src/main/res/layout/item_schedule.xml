@@ -36,8 +36,8 @@
 
     <ImageButton
         android:id="@+id/scheduleDelete"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_close"
         android:background="?attr/selectableItemBackgroundBorderless"
