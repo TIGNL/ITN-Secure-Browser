@@ -79,8 +79,8 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_triangle"
                 android:contentDescription="@string/cd_back" />
@@ -96,8 +96,8 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_triangle"
                 android:scaleX="-1"
@@ -114,8 +114,8 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_circle"
                 android:contentDescription="@string/cd_home" />
@@ -131,12 +131,12 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
             <FrameLayout
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center">
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:src="@drawable/ic_square"
                     android:contentDescription="@string/cd_tabs" />
                 <TextView
