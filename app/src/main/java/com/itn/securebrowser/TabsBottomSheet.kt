@@ -27,7 +27,7 @@ class TabsBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.sheetTabCount).text =
+        view.findViewById<TextView>(R.id.sheetHeaderTitle).text =
             "${tabs.size} ${if (tabs.size == 1) "تبويبة" else "تبويبات"}"
 
         adapter = TabSheetAdapter(
@@ -52,3 +52,4 @@ class TabsBottomSheet(
         const val TAG = "TabsBottomSheet"
     }
 }
+
