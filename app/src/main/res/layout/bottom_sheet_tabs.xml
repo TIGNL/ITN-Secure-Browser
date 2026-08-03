@@ -29,14 +29,14 @@
     <!-- زر تبويبة جديدة — 64dp موحّد مع بقية الصفوف -->
     <ImageButton
         android:id="@+id/btnSheetNewTab"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
         android:src="@drawable/ic_add"
         android:tint="@color/accent"
         android:background="?attr/selectableItemBackground"
-        android:padding="18dp"
+        android:padding="0dp"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="تبويبة جديدة" />
+        android:contentDescription="@string/cd_new_tab" />
 
 </LinearLayout>
