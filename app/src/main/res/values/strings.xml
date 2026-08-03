@@ -17,8 +17,8 @@
     <string name="cd_close_tab">Close tab</string>
 
     <!-- More sheet -->
+    <string name="more_title">Options</string>
     <string name="sheet_options">Options</string>
-    <string name="more_title">More</string>
     <string name="desktop_mode">Desktop Mode</string>
     <string name="cd_desktop_mode">Desktop mode</string>
     <string name="parental_settings">Parental Controls</string>
@@ -27,8 +27,6 @@
     <string name="cd_general_settings">General settings</string>
 
     <!-- Tabs sheet -->
-    <string name="tab_count_one">%d tab</string>
-    <string name="tab_count_other">%d tabs</string>
     <string name="cd_close_tab_sheet">Close tab</string>
 
     <!-- Settings -->
@@ -141,16 +139,4 @@
     <string name="toast_cleared_blocking">✓ Block data cleared</string>
     <string name="toast_cleared_all">✓ All data cleared</string>
 
-
-    <!-- Extra keys for full hardcoded-string removal -->
-    <string name="cd_add_schedule">Add schedule</string>
-    <string name="cd_delete_domain">Remove domain</string>
-
-    <!-- Plurals -->
-    <plurals name="tab_count">
-        <item quantity="one">%d tab</item>
-        <item quantity="other">%d tabs</item>
-    </plurals>
-
 </resources>
-
