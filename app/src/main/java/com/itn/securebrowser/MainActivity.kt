@@ -85,19 +85,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        // WebView reflows automatically; nothing extra needed
     }
 
     override fun onPause() {
         super.onPause()
-        blockHandler.removeCallbacks(blockRunnable)   // أوقف الفاحص الدوري
+        blockHandler.removeCallbacks(blockRunnable)
         timeTracker.onAppPaused()
     }
 
     override fun onResume() {
         super.onResume()
         timeTracker.onAppResumed(TimeTracker.extractDomain(getCurrentWebView()?.url))
-        blockHandler.post(blockRunnable)              // ابدأ الفاحص الدوري
+        blockHandler.post(blockRunnable)
     }
 
     override fun onDestroy() {
@@ -280,9 +279,6 @@ class MainActivity : AppCompatActivity() {
         applyUserAgent(wv)
         wv.isScrollbarFadingEnabled = true
 
-        // لمس الصفحة يتحكم في تركيز شريط العنوان:
-        // ① إن كان الشريط مُركَّزاً → أغلق اللوحة وألغِ التركيز
-        // ② إن كانت الصفحة فارغة   → ركِّز الشريط وافتح اللوحة
         wv.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 if (urlBar.isFocused) {
@@ -296,7 +292,6 @@ class MainActivity : AppCompatActivity() {
                     return@setOnTouchListener true
                 }
             }
-            // على الصفحة الفارغة نستهلك كل الأحداث لمنع WebView من تجاهل ACTION_UP
             val url = wv.url
             if (url.isNullOrBlank() || url == "about:blank" || urlBar.isFocused) true
             else false
@@ -312,7 +307,6 @@ class MainActivity : AppCompatActivity() {
             onProgressChanged = { progress -> handleProgressChanged(wv, progress) }
         )
 
-        // Hidden by default; only the active tab is VISIBLE
         wv.visibility = View.GONE
         return wv
     }
@@ -326,7 +320,7 @@ class MainActivity : AppCompatActivity() {
         updateNavButtons()
         btnRefreshStop.setImageResource(R.drawable.ic_stop)
         progressBar.visibility = View.VISIBLE
-        timeTracker.onDomainChanged(null)         // توقف عن التتبع أثناء التحميل
+        timeTracker.onDomainChanged(null)
     }
 
     private fun handlePageFinished(webView: WebView, url: String) {
@@ -336,7 +330,7 @@ class MainActivity : AppCompatActivity() {
         updateNavButtons()
         btnRefreshStop.setImageResource(R.drawable.ic_refresh)
         progressBar.visibility = View.GONE
-        timeTracker.onDomainChanged(TimeTracker.extractDomain(url))   // ابدأ التتبع
+        timeTracker.onDomainChanged(TimeTracker.extractDomain(url))
     }
 
     private fun handleTitleReceived(webView: WebView, title: String) {
@@ -350,25 +344,20 @@ class MainActivity : AppCompatActivity() {
         if (webView == getCurrentWebView()) progressBar.progress = progress
     }
 
-    // ── Navigation ─────────────────────────────────────────────────────────
-
     // ── فحص دوري للحجب ──────────────────────────────────────────────────────────
 
-    /**
-     * يُنفَّذ كل 5 ثوانٍ — يفحص النطاق الحالي ويعرض صفحة الحجب إن انتهى الوقت.
-     * هذا يحل المشكلة الأساسية: الحجب يعمل حتى لو لم يضغط المستخدم على أي رابط.
-     */
     private fun periodicBlockCheck() {
         val wv  = getCurrentWebView() ?: return
         val url = wv.url?.takeIf { it.isNotBlank() && it != "about:blank" } ?: return
         val domain = TimeTracker.extractDomain(url) ?: return
         val reason = blockEngine.check(domain) ?: return
-        // الحد مُستنفَد — اعرض صفحة الحجب
         wv.loadDataWithBaseURL(
             null, BrowserWebViewClient.buildBlockPage(domain, reason),
             "text/html", "UTF-8", null
         )
     }
+
+    // ── Navigation ─────────────────────────────────────────────────────────
 
     private fun navigateTo(input: String) {
         if (input.isBlank()) return
@@ -377,7 +366,6 @@ class MainActivity : AppCompatActivity() {
             input.contains(".") && !input.contains(" ")                  -> "https://$input"
             else -> "https://www.google.com/search?q=${input.replace(" ", "+")}"
         }
-        // فحص الحجب قبل تحميل الرابط (shouldOverrideUrlLoading لا يُستدعى عند loadUrl)
         val domain = TimeTracker.extractDomain(url)
         if (domain != null) {
             val reason = blockEngine.check(domain)
@@ -392,7 +380,7 @@ class MainActivity : AppCompatActivity() {
         getCurrentWebView()?.loadUrl(url)
     }
 
-    fun applyUserAgent(webView: WebView = getCurrentWebView() ?: return) {
+    fun applyUserAgent(webView: WebView) {
         webView.settings.userAgentString =
             if (isDesktopMode) desktopUserAgent else null
     }
