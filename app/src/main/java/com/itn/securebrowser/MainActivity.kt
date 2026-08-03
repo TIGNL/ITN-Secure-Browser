@@ -31,19 +31,18 @@ class MainActivity : BaseActivity() {
     // ── Views ──────────────────────────────────────────────────────────────
     private lateinit var webViewContainer: FrameLayout
     private lateinit var urlBar: EditText
+    private lateinit var btnBack: ImageButton
+    private lateinit var btnForward: ImageButton
     private lateinit var btnRefreshStop: ImageButton
 
-    private lateinit var btnBack: FrameLayout
-    private lateinit var btnForward: FrameLayout
-    private lateinit var btnHome: FrameLayout
-    private lateinit var btnTabs: FrameLayout
-    private lateinit var tabsSquare: TabsSquareView
+    private lateinit var btnHome: ImageButton
+    private lateinit var btnTabs: ImageButton
     private lateinit var btnMore: ImageButton
-
     private lateinit var tabsContainer: LinearLayout
     private lateinit var tabsScrollView: HorizontalScrollView
     private lateinit var btnNewTab: ImageButton
     private lateinit var progressBar: ProgressBar
+
 
     // ── Block checker (فحص دوري كل 5 ثوانٍ) ────────────────────────────────────
     private val blockHandler  = Handler(Looper.getMainLooper())
@@ -74,7 +73,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        timeTracker    = TimeTracker(this)
+        timeTracker   = TimeTracker(this)
         blockDataStore = BlockDataStore(this)
         blockEngine    = BlockEngine(blockDataStore, timeTracker)
         initViews()
@@ -111,20 +110,18 @@ class MainActivity : BaseActivity() {
     // ── Initialisation ─────────────────────────────────────────────────────
 
     private fun initViews() {
-        webViewContainer = findViewById(R.id.webViewContainer)
-        urlBar           = findViewById(R.id.urlBar)
-        btnRefreshStop   = findViewById(R.id.btnRefreshStop)
-        tabsContainer    = findViewById(R.id.tabsContainer)
-        tabsScrollView   = findViewById(R.id.tabsScrollView)
-        btnNewTab        = findViewById(R.id.btnNewTab)
-        progressBar      = findViewById(R.id.progressBar)
-
-        btnBack    = findViewById(R.id.btnBack)
-        btnForward = findViewById(R.id.btnForward)
-        btnHome    = findViewById(R.id.btnHome)
-        btnTabs    = findViewById(R.id.btnTabs)
-        tabsSquare = findViewById(R.id.tabsSquare)
-        btnMore    = findViewById(R.id.btnMore)
+        webViewContainer  = findViewById(R.id.webViewContainer)
+        urlBar            = findViewById(R.id.urlBar)
+        btnBack           = findViewById(R.id.btnBack)
+        btnForward        = findViewById(R.id.btnForward)
+        btnRefreshStop    = findViewById(R.id.btnRefreshStop)
+        tabsContainer     = findViewById(R.id.tabsContainer)
+        tabsScrollView    = findViewById(R.id.tabsScrollView)
+        btnNewTab         = findViewById(R.id.btnNewTab)
+        progressBar       = findViewById(R.id.progressBar)
+        btnHome           = findViewById(R.id.btnHome)
+        btnTabs           = findViewById(R.id.btnTabs)
+        btnMore           = findViewById(R.id.btnMore)
     }
 
     private fun setupListeners() {
@@ -248,8 +245,6 @@ class MainActivity : BaseActivity() {
             closeBtn.setOnClickListener { closeTab(tab.id) }
             tabsContainer.addView(tabView)
         }
-
-        tabsSquare.tabCount = tabs.size
     }
 
     private fun scrollTabsToActive() {
@@ -307,7 +302,7 @@ class MainActivity : BaseActivity() {
             onPageFinished = { url -> handlePageFinished(wv, url) }
         )
         wv.webChromeClient = BrowserChromeClient(
-            onTitleReceived   = { title    -> handleTitleReceived(wv, title) },
+            onTitleReceived  = { title    -> handleTitleReceived(wv, title) },
             onProgressChanged = { progress -> handleProgressChanged(wv, progress) }
         )
 
@@ -419,11 +414,11 @@ class MainActivity : BaseActivity() {
     // ── Tabs Bottom Sheet ──────────────────────────────────────────────────
     private fun showTabsSheet() {
         TabsBottomSheet(
-            tabs                = tabs.toList(),
-            activeId            = currentTabId,
-            onSelect            = { tab -> switchToTab(tab.id) },
-            onClose             = { tab -> closeTab(tab.id) },
-            onNewTab            = { createNewTab() },
+            tabs        = tabs.toList(),
+            activeId    = currentTabId,
+            onSelect    = { tab -> switchToTab(tab.id) },
+            onClose     = { tab -> closeTab(tab.id) },
+            onNewTab    = { createNewTab() },
             onNewTabFromHistory = { /* ت-٣: سيُفتح HistoryActivity */ }
         ).show(supportFragmentManager, TabsBottomSheet.TAG)
     }
@@ -447,4 +442,5 @@ class MainActivity : BaseActivity() {
             }
         ).show(supportFragmentManager, MoreBottomSheet.TAG)
     }
+
 }

@@ -38,8 +38,8 @@
             android:layout_height="64dp"
             android:src="@drawable/ic_refresh"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="16dp"
-            android:contentDescription="@string/cd_refresh_stop" />
+            android:padding="18dp"
+            android:contentDescription="Refresh or stop" />
 
     </LinearLayout>
 
@@ -60,7 +60,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- ── شريط التنقل السفلي (5 أزرار) ── -->
+    <!-- ── شريط التنقل السفلي ── -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -68,83 +68,50 @@
         android:background="@color/bg_tab_bar"
         android:gravity="center_vertical">
 
-        <!-- زر الخلف — مثلث يشير يساراً -->
-        <FrameLayout
+        <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
+            android:src="@drawable/ic_back"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="18dp"
+            android:alpha="0.35"
+            android:contentDescription="Back" />
 
-            <com.itn.securebrowser.TriangleNavView
-                android:id="@+id/triangleBack"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/cd_back" />
-
-        </FrameLayout>
-
-        <!-- زر الأمام — مثلث معكوس يشير يميناً -->
-        <FrameLayout
+        <ImageButton
             android:id="@+id/btnForward"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
+            android:src="@drawable/ic_forward"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="18dp"
+            android:alpha="0.35"
+            android:contentDescription="Forward" />
 
-            <com.itn.securebrowser.TriangleNavView
-                android:id="@+id/triangleForward"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:scaleX="-1"
-                android:contentDescription="@string/cd_forward" />
-
-        </FrameLayout>
-
-        <!-- زر الرئيسية — دائرة -->
-        <FrameLayout
+        <ImageButton
             android:id="@+id/btnHome"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
+            android:src="@drawable/ic_home"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="18dp"
+            android:contentDescription="Home" />
 
-            <com.itn.securebrowser.CircleView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/cd_home" />
-
-        </FrameLayout>
-
-        <!-- زر التبويبات — مربع مع عداد -->
-        <FrameLayout
+        <!-- زر التبويبات — يفتح bottom sheet في وحدة ٢ -->
+        <ImageButton
             android:id="@+id/btnTabs"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
+            android:src="@drawable/ic_tabs"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="18dp"
+            android:contentDescription="Tabs" />
 
-            <com.itn.securebrowser.TabsSquareView
-                android:id="@+id/tabsSquare"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/cd_tabs" />
-
-        </FrameLayout>
-
-        <!-- زر المزيد -->
+        <!-- ثلاث نقاط -->
         <ImageButton
             android:id="@+id/btnMore"
             android:layout_width="0dp"
@@ -152,12 +119,12 @@
             android:layout_weight="1"
             android:src="@drawable/ic_more"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="16dp"
-            android:contentDescription="@string/cd_more" />
+            android:padding="18dp"
+            android:contentDescription="More" />
 
     </LinearLayout>
 
-    <!-- شريط التبويبات القديم — مخفي -->
+    <!-- شريط التبويبات القديم — مخفي، يُبقي الكود يعمل حتى وحدة ٢ -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -184,7 +151,7 @@
             android:layout_weight="0"
             android:src="@drawable/ic_add"
             android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/cd_new_tab" />
+            android:contentDescription="New tab" />
 
     </LinearLayout>
 
