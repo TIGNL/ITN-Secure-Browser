@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
 
     private lateinit var tabSites: TextView
     private lateinit var tabGroups: TextView

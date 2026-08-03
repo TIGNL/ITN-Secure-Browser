@@ -10,12 +10,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class SiteSchedulesActivity : AppCompatActivity() {
+class SiteSchedulesActivity : BaseActivity() {
 
     private lateinit var blockDataStore: BlockDataStore
     private lateinit var adapter: ScheduleAdapter

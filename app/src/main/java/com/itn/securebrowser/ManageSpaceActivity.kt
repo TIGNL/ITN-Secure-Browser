@@ -7,14 +7,13 @@ import android.webkit.WebStorage
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 
 /**
  * يُستدعى من إعدادات النظام (تطبيقات → ITN → إدارة المساحة)
  * بدلاً من زر "مسح البيانات" الافتراضي.
  * محمي برمز PIN إذا كان مُفعَّلاً.
  */
-class ManageSpaceActivity : AppCompatActivity() {
+class ManageSpaceActivity : BaseActivity() {
 
     private val pinLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()

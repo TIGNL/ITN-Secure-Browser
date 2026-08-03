@@ -16,9 +16,8 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     // ── Settings PIN launcher ────────────────────────────────────────────────
     private val pinForSettingsLauncher = registerForActivityResult(
