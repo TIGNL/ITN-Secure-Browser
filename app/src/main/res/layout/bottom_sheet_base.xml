@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  bottom_sheet_base.xml
+  الهيكل المشترك لجميع الصفحات المنبثقة:
+    • Handle
+    • Header 64dp مع TextView قابل للتخصيص (android:text)
+    • Divider
+  كل صفحة تضيف محتواها الخاص عبر <include> ثم تكمل بعده.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#444466" />
+
+    <!-- Header 64dp -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:id="@+id/sheetHeaderTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="#888888"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#2A2A4A"
+        android:layout_marginBottom="4dp" />
+
+</merge>
