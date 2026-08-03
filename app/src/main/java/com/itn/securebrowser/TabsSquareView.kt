@@ -35,6 +35,7 @@ class TabsSquareView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         strokePaint.strokeWidth = density * 1.5f
+        textPaint.textSize      = 8f * density   // ثابت دائماً
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -42,20 +43,9 @@ class TabsSquareView @JvmOverloads constructor(
         rect.set(pad, pad, width - pad, height - pad)
         canvas.drawRect(rect, strokePaint)
 
-        val label: String
-        val spSize: Float
+        val label = if (tabCount > 9) "+9" else tabCount.toString()
 
-        if (tabCount > 99) {
-            label  = "+99"
-            spSize = 4f
-        } else {
-            label  = tabCount.toString()
-            spSize = 8f
-        }
-
-        textPaint.textSize = spSize * density
         textPaint.getTextBounds(label, 0, label.length, bounds)
-
         val cx = width / 2f
         val cy = height / 2f + bounds.height() / 2f - bounds.bottom
 

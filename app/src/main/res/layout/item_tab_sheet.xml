@@ -11,10 +11,19 @@
     android:focusable="true">
 
     <TextView
+        android:id="@+id/tabSheetIndex"
+        android:layout_width="24dp"
+        android:layout_height="wrap_content"
+        android:textColor="#666688"
+        android:textSize="12sp"
+        android:gravity="center" />
+
+    <TextView
         android:id="@+id/tabSheetTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginStart="12dp"
         android:textColor="@color/text_primary"
         android:textSize="16sp"
         android:maxLines="1"

@@ -15,6 +15,7 @@ class TabSheetAdapter(
 ) : RecyclerView.Adapter<TabSheetAdapter.VH>() {
 
     inner class VH(v: View) : RecyclerView.ViewHolder(v) {
+        val index: TextView    = v.findViewById(R.id.tabSheetIndex)
         val title: TextView    = v.findViewById(R.id.tabSheetTitle)
         val close: ImageButton = v.findViewById(R.id.tabSheetClose)
     }
@@ -28,12 +29,12 @@ class TabSheetAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         val tab = tabs[position]
 
+        holder.index.text = (position + 1).toString()
         holder.title.text = tab.title.ifBlank { holder.itemView.context.getString(R.string.new_tab) }
 
-        // Active tab → brighter text
         holder.title.alpha = if (tab.id == activeId) 1f else 0.55f
+        holder.index.alpha = if (tab.id == activeId) 1f else 0.55f
 
-        // Active indicator — left padding accent
         holder.itemView.setBackgroundResource(
             if (tab.id == activeId) R.drawable.tab_sheet_active_bg
             else android.R.color.transparent
