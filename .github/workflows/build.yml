@@ -28,7 +28,6 @@ jobs:
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/itn-release.jks
 
       - name: Build Release APK
-        id: build
         run: |
           gradle assembleRelease \
             -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/app/itn-release.jks \
@@ -38,12 +37,21 @@ jobs:
             2>&1 | tee build.log
           exit ${PIPESTATUS[0]}
 
-      - name: Upload build log on failure
+      - name: Upload build log to Gist on failure
         if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: build.log
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LOG=$(cat build.log)
+          PAYLOAD=$(jq -n \
+            --arg desc "Build failure: $(git rev-parse --short HEAD)" \
+            --arg content "$LOG" \
+            '{"description":$desc,"public":false,"files":{"build.log":{"content":$content}}}')
+          curl -s -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/gists \
+            -d "$PAYLOAD" | jq -r '.id'
 
       - uses: actions/upload-artifact@v4
         with:
