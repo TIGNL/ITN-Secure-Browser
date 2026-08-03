@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:background="#1A1A2E">
 
-    <!-- الهيكل المشترك: Handle + Header + Divider -->
     <include
         layout="@layout/bottom_sheet_base"
         android:layout_width="match_parent"
@@ -40,7 +39,7 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <CheckBox
             android:id="@+id/switchDesktopMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +92,7 @@
         android:layout_marginStart="20dp"
         android:background="#2A2A4A" />
 
-    <!-- 3. الإعدادات العامة (placeholder) -->
+    <!-- 3. الإعدادات العامة -->
     <LinearLayout
         android:id="@+id/rowGeneralSettings"
         android:layout_width="match_parent"
