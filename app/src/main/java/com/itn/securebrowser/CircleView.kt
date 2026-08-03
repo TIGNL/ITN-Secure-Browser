@@ -13,7 +13,10 @@ class CircleView @JvmOverloads constructor(
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFFFFFFFF.toInt()
         style = Paint.Style.STROKE
-        strokeWidth = 6f
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        paint.strokeWidth = context.resources.displayMetrics.density * 1.5f
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -21,4 +24,3 @@ class CircleView @JvmOverloads constructor(
         canvas.drawCircle(width / 2f, height / 2f, r, paint)
     }
 }
-

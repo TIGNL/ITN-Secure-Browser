@@ -9,11 +9,6 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 
-/**
- * مربع فارغ (stroke فقط) يعرض عدد التبويبات بداخله.
- * - عدد ≤ 99 → يعرض الرقم بحجم 8sp
- * - عدد > 99  → يعرض "+99" بحجم 4sp
- */
 class TabsSquareView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : View(context, attrs) {
@@ -22,15 +17,14 @@ class TabsSquareView @JvmOverloads constructor(
         set(value) { field = value; invalidate() }
 
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color       = 0xFFFFFFFF.toInt()
-        style       = Paint.Style.STROKE
-        strokeWidth = 6f
-        strokeJoin  = Paint.Join.ROUND
+        color      = 0xFFFFFFFF.toInt()
+        style      = Paint.Style.STROKE
+        strokeJoin = Paint.Join.ROUND
     }
 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color    = 0xFFFFFFFF.toInt()
-        typeface = Typeface.DEFAULT_BOLD
+        color     = 0xFFFFFFFF.toInt()
+        typeface  = Typeface.DEFAULT
         textAlign = Paint.Align.CENTER
     }
 
@@ -38,6 +32,10 @@ class TabsSquareView @JvmOverloads constructor(
     private val bounds = Rect()
 
     private val density get() = context.resources.displayMetrics.density
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        strokePaint.strokeWidth = density * 1.5f
+    }
 
     override fun onDraw(canvas: Canvas) {
         val pad = strokePaint.strokeWidth + 2f

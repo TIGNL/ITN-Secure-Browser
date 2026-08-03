@@ -39,7 +39,7 @@
             android:src="@drawable/ic_refresh"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="16dp"
-            android:contentDescription="Refresh or stop" />
+            android:contentDescription="@string/cd_refresh_stop" />
 
     </LinearLayout>
 
@@ -60,7 +60,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- ── شريط التنقل السفلي ── -->
+    <!-- ── شريط التنقل السفلي (5 أزرار) ── -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -68,23 +68,42 @@
         android:background="@color/bg_tab_bar"
         android:gravity="center_vertical">
 
-        <!-- زر الخلف/أمام — مثلث -->
+        <!-- زر الخلف — مثلث يشير يساراً -->
         <FrameLayout
-            android:id="@+id/btnNavGroup"
+            android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center">
+            android:background="?attr/selectableItemBackgroundBorderless">
 
             <com.itn.securebrowser.TriangleNavView
-                android:id="@+id/btnBack"
+                android:id="@+id/triangleBack"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:contentDescription="Back" />
+                android:contentDescription="@string/cd_back" />
+
+        </FrameLayout>
+
+        <!-- زر الأمام — مثلث معكوس يشير يميناً -->
+        <FrameLayout
+            android:id="@+id/btnForward"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <com.itn.securebrowser.TriangleNavView
+                android:id="@+id/triangleForward"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:scaleX="-1"
+                android:contentDescription="@string/cd_forward" />
 
         </FrameLayout>
 
@@ -96,14 +115,13 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center">
+            android:background="?attr/selectableItemBackgroundBorderless">
 
             <com.itn.securebrowser.CircleView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:contentDescription="Home" />
+                android:contentDescription="@string/cd_home" />
 
         </FrameLayout>
 
@@ -115,15 +133,14 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center">
+            android:background="?attr/selectableItemBackgroundBorderless">
 
             <com.itn.securebrowser.TabsSquareView
                 android:id="@+id/tabsSquare"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:contentDescription="Tabs" />
+                android:contentDescription="@string/cd_tabs" />
 
         </FrameLayout>
 
@@ -136,7 +153,7 @@
             android:src="@drawable/ic_more"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="16dp"
-            android:contentDescription="More" />
+            android:contentDescription="@string/cd_more" />
 
     </LinearLayout>
 
@@ -167,7 +184,7 @@
             android:layout_weight="0"
             android:src="@drawable/ic_add"
             android:background="?attr/selectableItemBackground"
-            android:contentDescription="New tab" />
+            android:contentDescription="@string/cd_new_tab" />
 
     </LinearLayout>
 

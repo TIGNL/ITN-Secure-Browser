@@ -33,9 +33,8 @@ class MainActivity : BaseActivity() {
     private lateinit var urlBar: EditText
     private lateinit var btnRefreshStop: ImageButton
 
-    // Custom nav views
-    private lateinit var btnNavGroup: FrameLayout
-    private lateinit var triangleNav: TriangleNavView
+    private lateinit var btnBack: FrameLayout
+    private lateinit var btnForward: FrameLayout
     private lateinit var btnHome: FrameLayout
     private lateinit var btnTabs: FrameLayout
     private lateinit var tabsSquare: TabsSquareView
@@ -65,9 +64,6 @@ class MainActivity : BaseActivity() {
     private var isLoading = false
     var isDesktopMode = false
 
-    // isForwardMode: true → المثلث يشير للأمام (يمين)، false → للخلف (يسار)
-    private var isForwardMode = false
-
     private val desktopUserAgent =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
         "AppleWebKit/537.36 (KHTML, like Gecko) " +
@@ -78,7 +74,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        timeTracker   = TimeTracker(this)
+        timeTracker    = TimeTracker(this)
         blockDataStore = BlockDataStore(this)
         blockEngine    = BlockEngine(blockDataStore, timeTracker)
         initViews()
@@ -115,40 +111,29 @@ class MainActivity : BaseActivity() {
     // ── Initialisation ─────────────────────────────────────────────────────
 
     private fun initViews() {
-        webViewContainer  = findViewById(R.id.webViewContainer)
-        urlBar            = findViewById(R.id.urlBar)
-        btnRefreshStop    = findViewById(R.id.btnRefreshStop)
-        tabsContainer     = findViewById(R.id.tabsContainer)
-        tabsScrollView    = findViewById(R.id.tabsScrollView)
-        btnNewTab         = findViewById(R.id.btnNewTab)
-        progressBar       = findViewById(R.id.progressBar)
+        webViewContainer = findViewById(R.id.webViewContainer)
+        urlBar           = findViewById(R.id.urlBar)
+        btnRefreshStop   = findViewById(R.id.btnRefreshStop)
+        tabsContainer    = findViewById(R.id.tabsContainer)
+        tabsScrollView   = findViewById(R.id.tabsScrollView)
+        btnNewTab        = findViewById(R.id.btnNewTab)
+        progressBar      = findViewById(R.id.progressBar)
 
-        // Custom nav views
-        btnNavGroup  = findViewById(R.id.btnNavGroup)
-        triangleNav  = findViewById(R.id.btnBack)
-        btnHome      = findViewById(R.id.btnHome)
-        btnTabs      = findViewById(R.id.btnTabs)
-        tabsSquare   = findViewById(R.id.tabsSquare)
-        btnMore      = findViewById(R.id.btnMore)
+        btnBack    = findViewById(R.id.btnBack)
+        btnForward = findViewById(R.id.btnForward)
+        btnHome    = findViewById(R.id.btnHome)
+        btnTabs    = findViewById(R.id.btnTabs)
+        tabsSquare = findViewById(R.id.tabsSquare)
+        btnMore    = findViewById(R.id.btnMore)
     }
 
     private fun setupListeners() {
-        // زر الخلف/الأمام — ضغطة قصيرة، ضغطة طويلة
-        btnNavGroup.setOnClickListener {
-            val wv = getCurrentWebView() ?: return@setOnClickListener
-            if (isForwardMode) {
-                if (wv.canGoForward()) wv.goForward()
-            } else {
-                if (wv.canGoBack()) wv.goBack()
-            }
+        btnBack.setOnClickListener {
+            getCurrentWebView()?.let { if (it.canGoBack()) it.goBack() }
         }
-        btnNavGroup.setOnLongClickListener {
-            // تبديل الوجهة عند الضغط المطوّل
-            isForwardMode = !isForwardMode
-            updateNavButtons()
-            true
+        btnForward.setOnClickListener {
+            getCurrentWebView()?.let { if (it.canGoForward()) it.goForward() }
         }
-
         btnRefreshStop.setOnClickListener {
             getCurrentWebView()?.let { wv ->
                 if (isLoading) wv.stopLoading() else wv.reload()
@@ -264,7 +249,6 @@ class MainActivity : BaseActivity() {
             tabsContainer.addView(tabView)
         }
 
-        // تحديث عداد التبويبات في الشريط السفلي
         tabsSquare.tabCount = tabs.size
     }
 
@@ -323,7 +307,7 @@ class MainActivity : BaseActivity() {
             onPageFinished = { url -> handlePageFinished(wv, url) }
         )
         wv.webChromeClient = BrowserChromeClient(
-            onTitleReceived  = { title    -> handleTitleReceived(wv, title) },
+            onTitleReceived   = { title    -> handleTitleReceived(wv, title) },
             onProgressChanged = { progress -> handleProgressChanged(wv, progress) }
         )
 
@@ -414,14 +398,8 @@ class MainActivity : BaseActivity() {
 
     private fun updateNavButtons() {
         val wv = getCurrentWebView()
-
-        // تحديث شفافية زر التنقل
-        val canNav = if (isForwardMode) wv?.canGoForward() == true
-                     else               wv?.canGoBack()    == true
-        btnNavGroup.alpha = if (canNav) 1.0f else 0.35f
-
-        // عكس المثلث عند الوضع الأمامي
-        triangleNav.scaleX = if (isForwardMode) -1f else 1f
+        btnBack.alpha    = if (wv?.canGoBack()    == true) 1.0f else 0.35f
+        btnForward.alpha = if (wv?.canGoForward() == true) 1.0f else 0.35f
     }
 
     private fun getCurrentTab()     = tabs.find { it.id == currentTabId }
@@ -441,11 +419,11 @@ class MainActivity : BaseActivity() {
     // ── Tabs Bottom Sheet ──────────────────────────────────────────────────
     private fun showTabsSheet() {
         TabsBottomSheet(
-            tabs        = tabs.toList(),
-            activeId    = currentTabId,
-            onSelect    = { tab -> switchToTab(tab.id) },
-            onClose     = { tab -> closeTab(tab.id) },
-            onNewTab    = { createNewTab() },
+            tabs                = tabs.toList(),
+            activeId            = currentTabId,
+            onSelect            = { tab -> switchToTab(tab.id) },
+            onClose             = { tab -> closeTab(tab.id) },
+            onNewTab            = { createNewTab() },
             onNewTabFromHistory = { /* ت-٣: سيُفتح HistoryActivity */ }
         ).show(supportFragmentManager, TabsBottomSheet.TAG)
     }
@@ -469,5 +447,4 @@ class MainActivity : BaseActivity() {
             }
         ).show(supportFragmentManager, MoreBottomSheet.TAG)
     }
-
 }
