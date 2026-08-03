@@ -49,6 +49,8 @@
     <string name="delete_site_title">Delete site</string>
     <string name="delete_site_message">Delete &quot;%s&quot;?</string>
     <string name="cd_delete_site">Delete</string>
+    <string name="cd_add_schedule">Add schedule</string>
+    <string name="cd_delete_domain">Delete domain</string>
     <string name="err_enter_domain">Enter a domain</string>
     <string name="err_invalid_domain">Invalid domain</string>
     <string name="err_daily_limit_positive">Daily limit must be a positive number</string>
@@ -132,7 +134,13 @@
     <string name="clear_blocking">Clear blocked sites and schedules</string>
     <string name="clear_all">&#9888;&#65039;  Clear everything</string>
     <string name="clear_all_title">&#9888;&#65039;  Clear all data?</string>
-    <string name="clear_all_message">This will delete:\n• Cookies and cache\n• Time tracking data\n• Block rules and schedules\n• PIN\n\nThis cannot be undone.</string>
+    <string name="clear_all_message">This will delete:
+• Cookies and cache
+• Time tracking data
+• Block rules and schedules
+• PIN
+
+This cannot be undone.</string>
     <string name="btn_clear_all_confirm">Yes, clear everything</string>
     <string name="toast_cleared_browsing">✓ Cookies and cache cleared</string>
     <string name="toast_cleared_tracking">✓ Time tracking data cleared</string>
