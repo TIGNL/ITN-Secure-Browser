@@ -11,28 +11,19 @@
     android:focusable="true">
 
     <TextView
-        android:id="@+id/tabSheetIndex"
-        android:layout_width="24dp"
-        android:layout_height="wrap_content"
-        android:textColor="#666688"
-        android:textSize="@dimen/text_sm"
-        android:gravity="center" />
-
-    <TextView
         android:id="@+id/tabSheetTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="12dp"
         android:textColor="@color/text_primary"
-        android:textSize="@dimen/text_sm"
+        android:textSize="16sp"
         android:maxLines="1"
         android:ellipsize="end" />
 
     <ImageButton
         android:id="@+id/tabSheetClose"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:src="@drawable/ic_close"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="10dp"

@@ -37,15 +37,15 @@ class MainActivity : BaseActivity() {
     private lateinit var btnForward: FrameLayout
     private lateinit var btnHome: FrameLayout
     private lateinit var btnTabs: FrameLayout
-    private lateinit var btnMore: FrameLayout
-    private lateinit var tabsCount: TextView
+    private lateinit var tabsSquare: TabsSquareView
+    private lateinit var btnMore: ImageButton
 
     private lateinit var tabsContainer: LinearLayout
     private lateinit var tabsScrollView: HorizontalScrollView
     private lateinit var btnNewTab: ImageButton
     private lateinit var progressBar: ProgressBar
 
-    // ── Block checker (فحص دوري كل 5 ثوانٍ) ──────────────────────────────
+    // ── Block checker (فحص دوري كل 5 ثوانٍ) ────────────────────────────────────
     private val blockHandler  = Handler(Looper.getMainLooper())
     private val blockRunnable = object : Runnable {
         override fun run() {
@@ -123,8 +123,8 @@ class MainActivity : BaseActivity() {
         btnForward = findViewById(R.id.btnForward)
         btnHome    = findViewById(R.id.btnHome)
         btnTabs    = findViewById(R.id.btnTabs)
+        tabsSquare = findViewById(R.id.tabsSquare)
         btnMore    = findViewById(R.id.btnMore)
-        tabsCount  = findViewById(R.id.tabsCount)
     }
 
     private fun setupListeners() {
@@ -229,7 +229,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun refreshTabBar() {
-        tabsCount.text = if (tabs.size > 9) "+9" else tabs.size.toString()
         tabsContainer.removeAllViews()
         tabs.forEach { tab ->
             val tabView  = layoutInflater.inflate(R.layout.item_tab, tabsContainer, false)
@@ -238,7 +237,7 @@ class MainActivity : BaseActivity() {
 
             titleTv.text = tab.title
                 .takeIf { it.isNotBlank() && it != "about:blank" }
-                ?: getString(R.string.new_tab)
+                ?: "New Tab"
 
             tabView.setBackgroundResource(
                 if (tab.id == currentTabId) R.drawable.tab_active_background
@@ -249,6 +248,8 @@ class MainActivity : BaseActivity() {
             closeBtn.setOnClickListener { closeTab(tab.id) }
             tabsContainer.addView(tabView)
         }
+
+        tabsSquare.tabCount = tabs.size
     }
 
     private fun scrollTabsToActive() {
@@ -347,7 +348,7 @@ class MainActivity : BaseActivity() {
         if (webView == getCurrentWebView()) progressBar.progress = progress
     }
 
-    // ── فحص دوري للحجب ───────────────────────────────────────────────────
+    // ── فحص دوري للحجب ──────────────────────────────────────────────────────────
 
     private fun periodicBlockCheck() {
         val wv  = getCurrentWebView() ?: return

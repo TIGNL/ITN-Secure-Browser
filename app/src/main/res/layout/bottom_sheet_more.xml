@@ -24,8 +24,8 @@
         android:focusable="true">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_desktop"
             android:tint="@color/accent"
             android:contentDescription="@string/cd_desktop_mode" />
@@ -37,7 +37,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/desktop_mode"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/text_sm" />
+            android:textSize="15sp" />
 
         <CheckBox
             android:id="@+id/switchDesktopMode"
@@ -69,8 +69,8 @@
         android:focusable="true">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_settings"
             android:tint="@color/accent"
             android:contentDescription="@string/cd_parental_settings" />
@@ -81,7 +81,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/parental_settings"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/text_sm" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -106,8 +106,8 @@
         android:focusable="true">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_settings"
             android:tint="#666688"
             android:contentDescription="@string/cd_general_settings" />
@@ -118,7 +118,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/general_settings"
             android:textColor="#666688"
-            android:textSize="@dimen/text_sm" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 

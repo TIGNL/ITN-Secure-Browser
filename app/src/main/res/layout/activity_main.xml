@@ -12,8 +12,8 @@
         android:orientation="horizontal"
         android:background="@color/bg_toolbar"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
         <EditText
             android:id="@+id/urlBar"
@@ -21,25 +21,24 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:imeOptions="actionGo|flagNoExtractUi"
             android:inputType="textUri"
             android:singleLine="true"
             android:hint="@string/hint_search"
             android:textColorHint="@color/text_secondary"
             android:textColor="@color/text_primary"
-            android:textSize="@dimen/text_sm"
+            android:textSize="16sp"
             android:selectAllOnFocus="true" />
 
         <ImageButton
             android:id="@+id/btnRefreshStop"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:src="@drawable/ic_refresh"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="0dp"
+            android:padding="16dp"
             android:contentDescription="@string/cd_refresh_stop" />
 
     </LinearLayout>
@@ -69,7 +68,7 @@
         android:background="@color/bg_tab_bar"
         android:gravity="center_vertical">
 
-        <!-- زر الخلف -->
+        <!-- زر الخلف — مثلث يشير يساراً -->
         <FrameLayout
             android:id="@+id/btnBack"
             android:layout_width="0dp"
@@ -78,15 +77,17 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView
+
+            <com.itn.securebrowser.TriangleNavView
+                android:id="@+id/triangleBack"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_triangle"
                 android:contentDescription="@string/cd_back" />
+
         </FrameLayout>
 
-        <!-- زر الأمام -->
+        <!-- زر الأمام — مثلث معكوس يشير يميناً -->
         <FrameLayout
             android:id="@+id/btnForward"
             android:layout_width="0dp"
@@ -95,16 +96,18 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView
+
+            <com.itn.securebrowser.TriangleNavView
+                android:id="@+id/triangleForward"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_triangle"
                 android:scaleX="-1"
                 android:contentDescription="@string/cd_forward" />
+
         </FrameLayout>
 
-        <!-- زر الرئيسية -->
+        <!-- زر الرئيسية — دائرة -->
         <FrameLayout
             android:id="@+id/btnHome"
             android:layout_width="0dp"
@@ -113,15 +116,16 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageView
+
+            <com.itn.securebrowser.CircleView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_circle"
                 android:contentDescription="@string/cd_home" />
+
         </FrameLayout>
 
-        <!-- زر التبويبات -->
+        <!-- زر التبويبات — مربع مع عداد -->
         <FrameLayout
             android:id="@+id/btnTabs"
             android:layout_width="0dp"
@@ -130,54 +134,36 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless">
-            <FrameLayout
+
+            <com.itn.securebrowser.TabsSquareView
+                android:id="@+id/tabsSquare"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_gravity="center">
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_square"
-                    android:contentDescription="@string/cd_tabs" />
-                <TextView
-                    android:id="@+id/tabsCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="1"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/text_xs" />
-            </FrameLayout>
+                android:layout_gravity="center"
+                android:contentDescription="@string/cd_tabs" />
+
         </FrameLayout>
 
         <!-- زر المزيد -->
-        <FrameLayout
+        <ImageButton
             android:id="@+id/btnMore"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackgroundBorderless">
-            <ImageButton
-                android:id="@+id/btnMoreInner"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_more"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="0dp"
-                android:contentDescription="@string/cd_more" />
-        </FrameLayout>
+            android:src="@drawable/ic_more"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="16dp"
+            android:contentDescription="@string/cd_more" />
 
     </LinearLayout>
 
-    <!-- شريط التبويبات — مخفي -->
+    <!-- شريط التبويبات القديم — مخفي -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
         android:orientation="horizontal">
+
         <HorizontalScrollView
             android:id="@+id/tabsScrollView"
             android:layout_width="0dp"
@@ -190,13 +176,16 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />
         </HorizontalScrollView>
+
         <ImageButton
             android:id="@+id/btnNewTab"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="0"
             android:src="@drawable/ic_add"
             android:background="?attr/selectableItemBackground"
             android:contentDescription="@string/cd_new_tab" />
+
     </LinearLayout>
 
 </LinearLayout>

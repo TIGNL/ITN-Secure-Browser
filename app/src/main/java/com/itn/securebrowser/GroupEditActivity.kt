@@ -137,12 +137,19 @@ class GroupEditActivity : BaseActivity() {
     // ── Domains ────────────────────────────────────────────────────────────
 
     private fun showAddDomainDialog() {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_domain, null)
-        val input = dialogView.findViewById<EditText>(R.id.inputDomain)
+        val input = EditText(this).apply {
+            hint = getString(R.string.add_domain_hint)
+            inputType     = android.text.InputType.TYPE_TEXT_VARIATION_URI
+            textSize      = 15f
+            setPadding(48, 32, 48, 32)
+            setTextColor(0xFFFFFFFF.toInt())
+            setHintTextColor(0xFF555577.toInt())
+            backgroundTintList = android.content.res.ColorStateList.valueOf(0xFFE94560.toInt())
+        }
 
         AlertDialog.Builder(this, R.style.DialogTheme)
             .setTitle(getString(R.string.add_domain_title))
-            .setView(dialogView)
+            .setView(input)
             .setPositiveButton(getString(R.string.btn_add)) { _, _ ->
                 val raw = input.text.toString().trim()
                     .removePrefix("https://").removePrefix("http://")
