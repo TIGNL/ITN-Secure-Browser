@@ -36,7 +36,7 @@ class ScheduleAdapter(
         notifyDataSetChanged()
     }
 
-    private fun dayToArabic(day: String) = when (day) {
+    private fun dayToEnglish(day: String) = when (day) {
         "SATURDAY"  -> "Sat"
         "SUNDAY"    -> "Sun"
         "MONDAY"    -> "Mon"
@@ -47,3 +47,4 @@ class ScheduleAdapter(
         else        -> day
     }
 }
+
