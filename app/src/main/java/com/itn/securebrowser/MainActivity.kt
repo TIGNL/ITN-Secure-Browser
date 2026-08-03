@@ -39,6 +39,7 @@ class MainActivity : BaseActivity() {
     private lateinit var btnTabs: FrameLayout
     private lateinit var tabsSquare: TabsSquareView
     private lateinit var btnMore: ImageButton
+    private lateinit var tabsCount: TextView
 
     private lateinit var tabsContainer: LinearLayout
     private lateinit var tabsScrollView: HorizontalScrollView
@@ -229,6 +230,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun refreshTabBar() {
+        // تحديث عداد التبويبات في زر شريط التنقل
+        tabsCount.text = if (tabs.size > 9) "+9" else tabs.size.toString()
         tabsContainer.removeAllViews()
         tabs.forEach { tab ->
             val tabView  = layoutInflater.inflate(R.layout.item_tab, tabsContainer, false)
