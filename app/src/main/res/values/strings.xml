@@ -1,6 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- App -->
     <string name="app_name">ITN Secure Browser</string>
     <string name="hint_search">Search or enter URL</string>
     <string name="new_tab">New Tab</string>
+
+    <!-- Navigation -->
+    <string name="cd_back">Back</string>
+    <string name="cd_forward">Forward</string>
+    <string name="cd_home">Home</string>
+    <string name="cd_tabs">Tabs</string>
+    <string name="cd_more">More</string>
+    <string name="cd_refresh_stop">Refresh or stop</string>
+    <string name="cd_new_tab">New tab</string>
+    <string name="cd_close_tab">Close tab</string>
+
+    <!-- More sheet -->
+    <string name="sheet_options">Options</string>
+    <string name="desktop_mode">Desktop Mode</string>
+    <string name="cd_desktop_mode">Desktop mode</string>
+    <string name="parental_settings">Parental Controls</string>
+    <string name="cd_parental_settings">Parental controls</string>
+    <string name="general_settings">General Settings</string>
+    <string name="cd_general_settings">General settings</string>
+
+    <!-- Tabs sheet -->
+    <string name="tab_count_one">%d tab</string>
+    <string name="tab_count_other">%d tabs</string>
+    <string name="cd_close_tab_sheet">Close tab</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="tab_sites">Sites</string>
+    <string name="tab_groups">Groups</string>
+    <string name="tab_pin">PIN</string>
+
+    <!-- Sites -->
+    <string name="sites_empty_title">No blocked sites</string>
+    <string name="sites_empty_hint">Tap + to add a site</string>
+    <string name="add_site_title">Add Site</string>
+    <string name="add_site_label">Domain</string>
+    <string name="add_site_hint">e.g. youtube.com</string>
+    <string name="daily_limit_label">Daily limit (minutes)</string>
+    <string name="daily_limit_hint">Leave empty for no limit</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_delete">Delete</string>
+    <string name="delete_site_title">Delete site</string>
+    <string name="delete_site_message">Delete &quot;%s&quot;?</string>
+    <string name="cd_delete_site">Delete</string>
+    <string name="err_enter_domain">Enter a domain</string>
+    <string name="err_invalid_domain">Invalid domain</string>
+    <string name="err_daily_limit_positive">Daily limit must be a positive number</string>
+    <string name="err_save">Save error</string>
+
+    <!-- Groups -->
+    <string name="groups_empty_title">No groups</string>
+    <string name="groups_empty_hint">Tap + to create a group</string>
+    <string name="new_group_title">New Group</string>
+    <string name="edit_group_title">Edit Group</string>
+    <string name="group_name_label">Group name</string>
+    <string name="group_name_hint">e.g. Social media</string>
+    <string name="group_daily_limit_label">Daily limit (minutes)</string>
+    <string name="group_daily_limit_hint">Leave empty for no limit</string>
+    <string name="domains_label">Domains</string>
+    <string name="btn_add_domain">+ Add</string>
+    <string name="domains_empty_hint">No domains added yet</string>
+    <string name="schedules_label">Block Schedules</string>
+    <string name="btn_add_schedule">+ Add</string>
+    <string name="schedules_empty_hint">No block schedules</string>
+    <string name="btn_save">Save</string>
+    <string name="add_domain_title">Add Domain</string>
+    <string name="add_domain_hint">e.g. instagram.com</string>
+    <string name="err_enter_group_name">Enter a group name</string>
+    <string name="err_domain_blank">Enter a domain</string>
+    <string name="err_domain_invalid">Invalid domain</string>
+    <string name="err_domain_duplicate">Domain already added</string>
+    <string name="delete_group_title">Delete group</string>
+    <string name="delete_group_message">Delete group &quot;%s&quot;? All settings will be removed.</string>
+    <string name="cd_delete_group">Delete group</string>
+    <string name="add_schedule_title">Add Block Schedule</string>
+    <string name="err_select_day">Select at least one day</string>
+
+    <!-- Schedule dialog -->
+    <string name="schedule_days_label">Block days</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_sunday">Sunday</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="schedule_time_label">Time range</string>
+    <string name="schedule_from">From</string>
+    <string name="schedule_to">To</string>
+    <string name="schedule_time_hint">Tap time to change · supports crossing midnight</string>
+    <string name="schedule_time_separator"> — </string>
+    <string name="block_schedules_label">Block Schedules</string>
+    <string name="cd_delete_schedule">Delete schedule</string>
+    <string name="no_schedules">No block schedules</string>
+    <string name="tap_plus_to_add_schedule">Tap + to add a schedule</string>
+    <string name="delete_schedule_title">Delete schedule</string>
+    <string name="delete_schedule_message">Delete this schedule?</string>
+
+    <!-- PIN -->
+    <string name="pin_title_enter">Enter PIN</string>
+    <string name="pin_title_new">Enter new PIN</string>
+    <string name="pin_title_confirm">Re-enter PIN to confirm</string>
+    <string name="pin_subtitle_open_settings">To open settings</string>
+    <string name="pin_subtitle_new">Choose a new PIN</string>
+    <string name="pin_status_active">PIN enabled ✓</string>
+    <string name="pin_status_none">No PIN set</string>
+    <string name="btn_set_pin">Set PIN</string>
+    <string name="btn_change_pin">Change PIN</string>
+    <string name="btn_clear_pin">Remove PIN</string>
+    <string name="delete_pin_title">Remove PIN</string>
+    <string name="delete_pin_message">This will remove PIN protection. Continue?</string>
+    <string name="pin_verify_first">Verify your identity first</string>
+    <string name="pin_error_wrong">Wrong PIN, try again</string>
+    <string name="pin_error_mismatch">PINs don\'t match, start over</string>
+    <string name="pin_subtitle_manage_data">To manage app data</string>
+
+    <!-- Site schedules -->
+    <string name="daily_limit_value">Daily limit: %d min</string>
+    <string name="no_daily_limit">No daily limit</string>
+
+    <!-- Manage space -->
+    <string name="manage_space_title">Manage App Data</string>
+    <string name="clear_browsing">Clear cookies and cache</string>
+    <string name="clear_tracking">Clear time tracking data</string>
+    <string name="clear_blocking">Clear blocked sites and schedules</string>
+    <string name="clear_all">&#9888;&#65039;  Clear everything</string>
+    <string name="clear_all_title">&#9888;&#65039;  Clear all data?</string>
+    <string name="clear_all_message">This will delete:\n• Cookies and cache\n• Time tracking data\n• Block rules and schedules\n• PIN\n\nThis cannot be undone.</string>
+    <string name="btn_clear_all_confirm">Yes, clear everything</string>
+    <string name="toast_cleared_browsing">✓ Cookies and cache cleared</string>
+    <string name="toast_cleared_tracking">✓ Time tracking data cleared</string>
+    <string name="toast_cleared_blocking">✓ Block data cleared</string>
+    <string name="toast_cleared_all">✓ All data cleared</string>
+
 </resources>
