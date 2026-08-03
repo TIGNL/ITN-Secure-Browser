@@ -433,8 +433,13 @@ class MainActivity : AppCompatActivity() {
                 tabs.forEach { applyUserAgent(it.webView) }
             },
             onOpenParentalSettings = {
-                val intent = Intent(this, PinEntryActivity::class.java)
-                pinForSettingsLauncher.launch(intent)
+                if (PinManager.hasPin(this)) {
+                    pinForSettingsLauncher.launch(
+                        PinEntryActivity.intentVerify(this)
+                    )
+                } else {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                }
             }
         ).show(supportFragmentManager, MoreBottomSheet.TAG)
     }
