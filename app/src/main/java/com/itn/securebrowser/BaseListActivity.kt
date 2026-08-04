@@ -35,6 +35,7 @@ open class BaseListActivity : BaseActivity() {
         @DrawableRes iconRes: Int,
         iconTint: Int = getColor(R.color.accent),
         label: String,
+        showDivider: Boolean = true,
         onClick: () -> Unit
     ) {
         val row = LayoutInflater.from(this)
@@ -48,6 +49,17 @@ open class BaseListActivity : BaseActivity() {
         row.setOnClickListener { onClick() }
 
         listContainer.addView(row)
+
+        if (showDivider) {
+            val divider = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    1
+                ).apply { marginStart = 20 }
+                setBackgroundColor(getColor(R.color.divider))
+            }
+            listContainer.addView(divider)
+        }
     }
 
     protected fun showFragment(fragment: Fragment) {

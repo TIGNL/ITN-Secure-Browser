@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/itemIcon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:contentDescription="@null" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginStart="16dp"
-        android:textColor="@color/text_primary"
+        android:textColor="#FFFFFF"
         android:textSize="@dimen/text_sm" />
 
 </LinearLayout>

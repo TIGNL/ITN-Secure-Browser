@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Switch
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -53,7 +54,7 @@ class ParentalSettingsActivity : BaseListActivity() {
             handleDisablePin()
         }
 
-        addListItem(R.drawable.ic_clock, label = getString(R.string.tab_groups)) {
+        addListItem(R.drawable.ic_clock, label = getString(R.string.tab_groups), showDivider = false) {
             showFragment(GroupsFragment())
         }
     }
@@ -86,6 +87,14 @@ class ParentalSettingsActivity : BaseListActivity() {
 
         refreshPinSwitch()
         listContainer.addView(row)
+
+        val divider = View(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 1
+            ).apply { marginStart = 20 }
+            setBackgroundColor(getColor(R.color.divider))
+        }
+        listContainer.addView(divider)
     }
 
     private fun handlePinToggle() {

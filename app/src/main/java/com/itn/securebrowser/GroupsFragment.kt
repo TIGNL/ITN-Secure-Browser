@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -38,6 +40,10 @@ class GroupsFragment : Fragment() {
         )
         groupsList.layoutManager = LinearLayoutManager(requireContext())
         groupsList.adapter = adapter
+
+        val divider = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        divider.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.bg_divider)!!)
+        groupsList.addItemDecoration(divider)
 
         btnAddGroup.setOnClickListener {
             GroupEditActivity.startNew(requireContext())
