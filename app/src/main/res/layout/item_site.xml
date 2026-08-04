@@ -3,34 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
-    android:background="@drawable/bg_item_card"
-    android:layout_marginBottom="8dp"
-    android:clickable="true"
-    android:focusable="true">
+    android:paddingStart="16dp"
+    android:paddingEnd="12dp"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
+    android:background="@drawable/bg_m3_card"
+    android:layout_marginBottom="12dp"
+    android:gravity="center_vertical">
 
-    <!-- Accent left bar -->
-    <View
-        android:layout_width="3dp"
-        android:layout_height="match_parent"
-        android:background="@color/accent"
-        android:layout_marginEnd="14dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp" />
-
+    <!-- Info block -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_gravity="center_vertical">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/siteDomain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_primary"
-            android:textSize="15sp"
+            android:textSize="@dimen/text_sm"
             android:textStyle="bold"
             android:fontFamily="monospace" />
 
@@ -39,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text_secondary"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:layout_marginTop="4dp" />
 
         <TextView
@@ -47,15 +40,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/accent"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:layout_marginTop="3dp" />
     </LinearLayout>
 
+    <!-- Delete -->
     <ImageButton
         android:id="@+id/btnDeleteSite"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_gravity="center_vertical"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/ic_close"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:tint="@color/text_secondary"
