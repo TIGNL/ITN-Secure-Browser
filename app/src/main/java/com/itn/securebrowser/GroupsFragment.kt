@@ -35,7 +35,7 @@ class GroupsFragment : Fragment() {
 
         adapter = GroupAdapter(
             groups     = emptyList(),
-            onItemClick = { group -> GroupEditActivity.startEdit(requireContext(), group.name) },
+            onItemClick = { group -> GroupEditSheet.newInstance(group.name).show(parentFragmentManager, "group_edit") },
             onDelete    = { group -> confirmDelete(group) }
         )
         groupsList.layoutManager = LinearLayoutManager(requireContext())
@@ -46,7 +46,7 @@ class GroupsFragment : Fragment() {
         groupsList.addItemDecoration(divider)
 
         btnAddGroup.setOnClickListener {
-            GroupEditActivity.startNew(requireContext())
+            GroupEditSheet.newInstance(null).show(parentFragmentManager, "group_edit")
         }
 
         refresh()

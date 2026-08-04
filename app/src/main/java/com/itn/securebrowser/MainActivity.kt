@@ -8,25 +8,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import androidx.activity.result.contract.ActivityResultContracts
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 
 class MainActivity : BaseActivity() {
-
-    // ── Settings PIN launcher ────────────────────────────────────────────────
-    private val pinForSettingsLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == PinEntryActivity.RESULT_PIN_OK) {
-            startActivity(Intent(this@MainActivity, ParentalSettingsActivity::class.java))
-        }
-    }
 
     // ── Views ──────────────────────────────────────────────────────────────
     private lateinit var webViewContainer: FrameLayout
@@ -433,15 +422,18 @@ class MainActivity : BaseActivity() {
             },
             onOpenParentalSettings   = {
                 if (PinManager.hasPin(this)) {
-                    pinForSettingsLauncher.launch(
-                        PinEntryActivity.intentVerify(this)
-                    )
+                    PinEntrySheet(
+                        mode = PinEntrySheet.MODE_VERIFY,
+                        onPinVerified = {
+                            ParentalSettingsSheet().show(supportFragmentManager, "parental")
+                        }
+                    ).show(supportFragmentManager, "pin")
                 } else {
-                    startActivity(Intent(this, ParentalSettingsActivity::class.java))
+                    ParentalSettingsSheet().show(supportFragmentManager, "parental")
                 }
             },
             onOpenGeneralSettings    = {
-                startActivity(Intent(this, GeneralSettingsActivity::class.java))
+                GeneralSettingsSheet().show(supportFragmentManager, "general")
             }
         ).show(supportFragmentManager, MoreBottomSheet.TAG)
     }

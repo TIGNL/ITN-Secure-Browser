@@ -3,14 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#0F0F1A">
+    android:background="#1A1A2E">
 
-    <!-- Header 64dp -->
+    <!-- Handle + Header + Divider -->
+    <include
+        layout="@layout/bottom_sheet_base"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Back + Title row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:orientation="horizontal"
-        android:background="@color/bg_toolbar"
         android:gravity="center_vertical"
         android:paddingStart="4dp"
         android:paddingEnd="12dp">
@@ -46,7 +51,7 @@
         android:layout_height="1dp"
         android:background="#2A2A4A" />
 
-    <!-- Scrollable list (default content) -->
+    <!-- Scrollable list -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/listScrollView"
         android:layout_width="match_parent"
@@ -62,7 +67,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Fragment container (shown when a list item is selected) -->
+    <!-- Fragment container (shown when a sub-screen is opened) -->
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"

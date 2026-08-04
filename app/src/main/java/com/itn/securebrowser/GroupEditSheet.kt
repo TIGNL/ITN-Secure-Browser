@@ -1,14 +1,17 @@
 package com.itn.securebrowser
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 
-class GroupEditActivity : BaseListActivity() {
+class GroupEditSheet : BaseBottomSheet() {
 
     private lateinit var btnSave:            TextView
     private lateinit var inputGroupName:     EditText
@@ -26,54 +29,51 @@ class GroupEditActivity : BaseListActivity() {
     private var editingGroupName: String? = null
 
     companion object {
-        private const val EXTRA_GROUP_NAME = "extra_group_name"
+        private const val ARG_GROUP_NAME = "arg_group_name"
 
-        fun startNew(context: Context) {
-            context.startActivity(Intent(context, GroupEditActivity::class.java))
-        }
-
-        fun startEdit(context: Context, groupName: String) {
-            context.startActivity(
-                Intent(context, GroupEditActivity::class.java)
-                    .putExtra(EXTRA_GROUP_NAME, groupName)
-            )
+        fun newInstance(groupName: String? = null): GroupEditSheet {
+            return GroupEditSheet().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_GROUP_NAME, groupName)
+                }
+            }
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.fragment_group_edit, container, false)
 
-        blockDataStore   = BlockDataStore(this)
-        editingGroupName = intent.getStringExtra(EXTRA_GROUP_NAME)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        setPageTitle(
+        blockDataStore   = BlockDataStore(requireContext())
+        editingGroupName = arguments?.getString(ARG_GROUP_NAME)
+
+        view.findViewById<TextView>(R.id.sheetHeaderTitle).text =
             if (editingGroupName != null) getString(R.string.edit_group_title)
             else getString(R.string.new_group_title)
-        )
 
-        val content = LayoutInflater.from(this)
-            .inflate(R.layout.activity_group_edit, listContainer, false)
+        view.findViewById<View>(R.id.btnBack).setOnClickListener { dismiss() }
 
-        bindViews(content)
-        setupListeners(content)
+        bindViews(view)
+        setupListeners(view)
         loadGroupIfEditing()
-
-        listContainer.addView(content)
     }
 
-    private fun bindViews(content: View) {
-        btnSave            = content.findViewById(R.id.btnSave)
-        inputGroupName     = content.findViewById(R.id.inputGroupName)
-        inputLimit         = content.findViewById(R.id.inputLimit)
-        btnAddDomain       = content.findViewById(R.id.btnAddDomain)
-        domainsContainer   = content.findViewById(R.id.domainsContainer)
-        domainsEmptyHint   = content.findViewById(R.id.domainsEmptyHint)
-        btnAddSchedule     = content.findViewById(R.id.btnAddSchedule)
-        schedulesContainer = content.findViewById(R.id.schedulesContainer)
-        schedulesEmptyHint = content.findViewById(R.id.schedulesEmptyHint)
+    private fun bindViews(root: View) {
+        btnSave            = root.findViewById(R.id.btnSave)
+        inputGroupName     = root.findViewById(R.id.inputGroupName)
+        inputLimit         = root.findViewById(R.id.inputLimit)
+        btnAddDomain       = root.findViewById(R.id.btnAddDomain)
+        domainsContainer   = root.findViewById(R.id.domainsContainer)
+        domainsEmptyHint   = root.findViewById(R.id.domainsEmptyHint)
+        btnAddSchedule     = root.findViewById(R.id.btnAddSchedule)
+        schedulesContainer = root.findViewById(R.id.schedulesContainer)
+        schedulesEmptyHint = root.findViewById(R.id.schedulesEmptyHint)
     }
 
-    private fun setupListeners(content: View) {
+    private fun setupListeners(root: View) {
         btnSave.setOnClickListener        { trySave() }
         btnAddDomain.setOnClickListener   { showAddDomainDialog() }
         btnAddSchedule.setOnClickListener { showAddScheduleDialog() }
@@ -83,7 +83,7 @@ class GroupEditActivity : BaseListActivity() {
         val name = editingGroupName ?: return
 
         val group = blockDataStore.getGroups().find { it.name == name } ?: run {
-            finish(); return
+            dismiss(); return
         }
 
         inputGroupName.setText(group.name)
@@ -98,8 +98,6 @@ class GroupEditActivity : BaseListActivity() {
         refreshDomainsView()
         refreshSchedulesView()
     }
-
-    // ── Save ───────────────────────────────────────────────────────────────
 
     private fun trySave() {
         val name = inputGroupName.text.toString().trim()
@@ -125,16 +123,14 @@ class GroupEditActivity : BaseListActivity() {
                     schedules   = schedules.toList()
                 )
             )
-            finish()
+            dismiss()
         } catch (e: IllegalStateException) {
             toast(e.message ?: getString(R.string.err_save))
         }
     }
 
-    // ── Domains ────────────────────────────────────────────────────────────
-
     private fun showAddDomainDialog() {
-        val input = EditText(this).apply {
+        val input = EditText(requireContext()).apply {
             hint = getString(R.string.add_domain_hint)
             inputType     = android.text.InputType.TYPE_TEXT_VARIATION_URI
             textSize      = 15f
@@ -144,7 +140,7 @@ class GroupEditActivity : BaseListActivity() {
             backgroundTintList = android.content.res.ColorStateList.valueOf(0xFFE94560.toInt())
         }
 
-        AlertDialog.Builder(this, R.style.DialogTheme)
+        AlertDialog.Builder(requireContext(), R.style.DialogTheme)
             .setTitle(getString(R.string.add_domain_title))
             .setView(input)
             .setPositiveButton(getString(R.string.btn_add)) { _, _ ->
@@ -170,7 +166,7 @@ class GroupEditActivity : BaseListActivity() {
         domainsEmptyHint.visibility = if (domains.isEmpty()) View.VISIBLE else View.GONE
 
         domains.forEachIndexed { index, domain ->
-            val row = LayoutInflater.from(this)
+            val row = LayoutInflater.from(requireContext())
                 .inflate(R.layout.item_domain_chip, domainsContainer, false)
             row.findViewById<TextView>(R.id.domainText).text = domain
             row.findViewById<ImageButton>(R.id.btnRemoveDomain).setOnClickListener {
@@ -181,13 +177,11 @@ class GroupEditActivity : BaseListActivity() {
         }
     }
 
-    // ── Schedules ──────────────────────────────────────────────────────────
-
     private fun showAddScheduleDialog() {
         AddBlockScheduleDialog { schedule ->
             schedules.add(schedule)
             refreshSchedulesView()
-        }.show(supportFragmentManager, "add_schedule")
+        }.show(parentFragmentManager, "add_schedule")
     }
 
     private fun refreshSchedulesView() {
@@ -195,7 +189,7 @@ class GroupEditActivity : BaseListActivity() {
         schedulesEmptyHint.visibility = if (schedules.isEmpty()) View.VISIBLE else View.GONE
 
         schedules.forEachIndexed { index, schedule ->
-            val row = LayoutInflater.from(this)
+            val row = LayoutInflater.from(requireContext())
                 .inflate(R.layout.item_schedule_inline, schedulesContainer, false)
 
             row.findViewById<TextView>(R.id.scheduleDays).text =
@@ -210,8 +204,6 @@ class GroupEditActivity : BaseListActivity() {
         }
     }
 
-    // ── Helper ─────────────────────────────────────────────────────────────
-
     private fun dayAr(d: String) = when (d) {
         "SATURDAY"  -> getString(R.string.day_saturday)
         "SUNDAY"    -> getString(R.string.day_sunday)
@@ -224,5 +216,5 @@ class GroupEditActivity : BaseListActivity() {
     }
 
     private fun toast(msg: String) =
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
 }
