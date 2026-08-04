@@ -6,6 +6,6 @@ class GeneralSettingsActivity : BaseListActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHeaderTitle(getString(R.string.general_settings))
+        setPageTitle(getString(R.string.general_settings))
     }
 }
