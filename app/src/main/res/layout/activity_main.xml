@@ -34,12 +34,9 @@
 
         <ImageButton
             android:id="@+id/btnRefreshStop"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            style="@style/NavButton"
             android:src="@drawable/ic_refresh"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="18dp"
-            android:contentDescription="Refresh or stop" />
+            android:contentDescription="@string/cd_refresh_stop" />
 
     </LinearLayout>
 
@@ -70,61 +67,49 @@
 
         <ImageButton
             android:id="@+id/btnBack"
+            style="@style/NavButton"
             android:layout_width="0dp"
-            android:layout_height="64dp"
             android:layout_weight="1"
             android:src="@drawable/ic_back"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="18dp"
             android:alpha="0.35"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/cd_back" />
 
         <ImageButton
             android:id="@+id/btnForward"
+            style="@style/NavButton"
             android:layout_width="0dp"
-            android:layout_height="64dp"
             android:layout_weight="1"
             android:src="@drawable/ic_forward"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="18dp"
             android:alpha="0.35"
-            android:contentDescription="Forward" />
+            android:contentDescription="@string/cd_forward" />
 
         <ImageButton
             android:id="@+id/btnHome"
+            style="@style/NavButton"
             android:layout_width="0dp"
-            android:layout_height="64dp"
             android:layout_weight="1"
             android:src="@drawable/ic_home"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="18dp"
-            android:contentDescription="Home" />
+            android:contentDescription="@string/cd_home" />
 
-        <!-- زر التبويبات — يفتح bottom sheet في وحدة ٢ -->
         <ImageButton
             android:id="@+id/btnTabs"
+            style="@style/NavButton"
             android:layout_width="0dp"
-            android:layout_height="64dp"
             android:layout_weight="1"
             android:src="@drawable/ic_tabs"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="18dp"
-            android:contentDescription="Tabs" />
+            android:contentDescription="@string/cd_tabs" />
 
-        <!-- ثلاث نقاط -->
         <ImageButton
             android:id="@+id/btnMore"
+            style="@style/NavButton"
             android:layout_width="0dp"
-            android:layout_height="64dp"
             android:layout_weight="1"
             android:src="@drawable/ic_more"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="18dp"
-            android:contentDescription="More" />
+            android:contentDescription="@string/cd_more" />
 
     </LinearLayout>
 
-    <!-- شريط التبويبات القديم — مخفي، يُبقي الكود يعمل حتى وحدة ٢ -->
+    <!-- شريط التبويبات القديم — مخفي، يُبقي الكود يعمل -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -146,12 +131,11 @@
 
         <ImageButton
             android:id="@+id/btnNewTab"
+            style="@style/NavButton.Accent"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="0"
             android:src="@drawable/ic_add"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="New tab" />
+            android:contentDescription="@string/cd_new_tab" />
 
     </LinearLayout>
 
