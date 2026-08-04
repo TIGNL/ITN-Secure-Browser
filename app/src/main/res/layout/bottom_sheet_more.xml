@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:background="#1A1A2E">
 
-    <!-- الهيكل المشترك: Handle + Header + Divider -->
     <include
         layout="@layout/bottom_sheet_base"
         android:layout_width="match_parent"
@@ -24,20 +23,20 @@
         android:clickable="true"
         android:focusable="true">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <ImageButton
+            style="@style/NavButton.Accent"
             android:src="@drawable/ic_desktop"
-            android:tint="@color/accent"
-            android:contentDescription="@string/cd_desktop_mode" />
+            android:contentDescription="@string/cd_desktop_mode"
+            android:clickable="false"
+            android:focusable="false" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/desktop_mode"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="15sp" />
 
         <androidx.appcompat.widget.SwitchCompat
@@ -49,7 +48,6 @@
 
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -69,24 +67,23 @@
         android:clickable="true"
         android:focusable="true">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <ImageButton
+            style="@style/NavButton.Accent"
             android:src="@drawable/ic_settings"
-            android:tint="@color/accent"
-            android:contentDescription="@string/cd_parental_settings" />
+            android:contentDescription="@string/cd_parental_settings"
+            android:clickable="false"
+            android:focusable="false" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/parental_settings"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="15sp" />
 
     </LinearLayout>
 
-    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -106,17 +103,17 @@
         android:clickable="true"
         android:focusable="true">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+        <ImageButton
+            style="@style/NavButton.Dimmed"
             android:src="@drawable/ic_settings"
-            android:tint="#666688"
-            android:contentDescription="@string/cd_general_settings" />
+            android:contentDescription="@string/cd_general_settings"
+            android:clickable="false"
+            android:focusable="false" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:text="@string/general_settings"
             android:textColor="#666688"
             android:textSize="15sp" />
