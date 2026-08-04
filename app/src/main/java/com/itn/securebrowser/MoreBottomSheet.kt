@@ -38,13 +38,11 @@ class MoreBottomSheet(
         // ── 2. إعدادات الرقابة ─────────────────────────────────────────────
         view.findViewById<View>(R.id.rowParentalSettings).setOnClickListener {
             onOpenParentalSettings()
-            dismiss()
         }
 
         // ── 3. الإعدادات العامة ──────────────────────────────────────────
         view.findViewById<View>(R.id.rowGeneralSettings).setOnClickListener {
             onOpenGeneralSettings()
-            dismiss()
         }
     }
 

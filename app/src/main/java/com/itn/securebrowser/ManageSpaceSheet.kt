@@ -22,6 +22,28 @@ class ManageSpaceSheet : BaseBottomSheet() {
         view.findViewById<TextView>(R.id.sheetHeaderTitle).text =
             getString(R.string.manage_space_title)
 
+        if (PinManager.hasPin(requireContext())) {
+            view.findViewById<View>(R.id.rowClearBrowsing).isEnabled = false
+            view.findViewById<View>(R.id.rowClearTracking).isEnabled = false
+            view.findViewById<View>(R.id.rowClearBlocking).isEnabled = false
+            view.findViewById<View>(R.id.rowClearAll).isEnabled = false
+
+            PinEntrySheet(
+                mode = PinEntrySheet.MODE_VERIFY,
+                subtitle = getString(R.string.pin_subtitle_manage_data),
+                onPinVerified = { enableRows(view) }
+            ).show(requireActivity().supportFragmentManager, "pin")
+        } else {
+            enableRows(view)
+        }
+    }
+
+    private fun enableRows(view: View) {
+        view.findViewById<View>(R.id.rowClearBrowsing).isEnabled = true
+        view.findViewById<View>(R.id.rowClearTracking).isEnabled = true
+        view.findViewById<View>(R.id.rowClearBlocking).isEnabled = true
+        view.findViewById<View>(R.id.rowClearAll).isEnabled = true
+
         view.findViewById<View>(R.id.rowClearBrowsing).setOnClickListener { clearBrowsing() }
         view.findViewById<View>(R.id.rowClearTracking).setOnClickListener { clearTracking() }
         view.findViewById<View>(R.id.rowClearBlocking).setOnClickListener { clearBlocking() }
