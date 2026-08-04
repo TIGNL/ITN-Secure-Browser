@@ -46,9 +46,14 @@
             </intent-filter>
         </activity>
 
-
         <activity
             android:name=".ParentalSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
+        <activity
+            android:name=".GeneralSettingsActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize|keyboardHidden" />
@@ -59,13 +64,11 @@
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-
         <activity
             android:name=".GroupEditActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize|keyboardHidden" />
-
 
         <activity
             android:name=".PinEntryActivity"
@@ -73,10 +76,6 @@
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
-        <!--
-             هذا النشاط يُستدعى من إعدادات النظام (مسح البيانات).
-             exported="true" مطلوب حتى يستطيع النظام تشغيله.
-        -->
         <activity
             android:name=".ManageSpaceActivity"
             android:exported="true"

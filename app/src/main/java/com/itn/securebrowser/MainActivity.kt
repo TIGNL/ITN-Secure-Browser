@@ -426,12 +426,12 @@ class MainActivity : BaseActivity() {
     // ── More Bottom Sheet ──────────────────────────────────────────────────
     private fun showMoreSheet() {
         MoreBottomSheet(
-            isDesktopMode          = isDesktopMode,
-            onDesktopModeToggled   = { enabled ->
+            isDesktopMode            = isDesktopMode,
+            onDesktopModeToggled     = { enabled ->
                 isDesktopMode = enabled
                 tabs.forEach { applyUserAgent(it.webView) }
             },
-            onOpenParentalSettings = {
+            onOpenParentalSettings   = {
                 if (PinManager.hasPin(this)) {
                     pinForSettingsLauncher.launch(
                         PinEntryActivity.intentVerify(this)
@@ -439,6 +439,9 @@ class MainActivity : BaseActivity() {
                 } else {
                     startActivity(Intent(this, ParentalSettingsActivity::class.java))
                 }
+            },
+            onOpenGeneralSettings    = {
+                startActivity(Intent(this, GeneralSettingsActivity::class.java))
             }
         ).show(supportFragmentManager, MoreBottomSheet.TAG)
     }

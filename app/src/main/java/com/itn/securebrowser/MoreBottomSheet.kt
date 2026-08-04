@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 
 class MoreBottomSheet(
-    private val isDesktopMode:          Boolean,
-    private val onDesktopModeToggled:   (Boolean) -> Unit,
-    private val onOpenParentalSettings: () -> Unit
+    private val isDesktopMode:            Boolean,
+    private val onDesktopModeToggled:     (Boolean) -> Unit,
+    private val onOpenParentalSettings:   () -> Unit,
+    private val onOpenGeneralSettings:    () -> Unit
 ) : BaseBottomSheet() {
 
     override fun onCreateView(
@@ -40,8 +41,9 @@ class MoreBottomSheet(
             dismiss()
         }
 
-        // ── 3. الإعدادات العامة (placeholder) ──────────────────────────────
+        // ── 3. الإعدادات العامة ──────────────────────────────────────────
         view.findViewById<View>(R.id.rowGeneralSettings).setOnClickListener {
+            onOpenGeneralSettings()
             dismiss()
         }
     }

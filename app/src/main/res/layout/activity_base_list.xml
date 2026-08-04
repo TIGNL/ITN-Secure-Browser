@@ -1,56 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_toolbar">
+    android:background="#0F0F1A">
 
-    <!-- شريط علوي 64dp -->
-    <RelativeLayout
+    <!-- Header 64dp -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="@color/bg_toolbar">
+        android:orientation="horizontal"
+        android:background="@color/bg_toolbar"
+        android:gravity="center_vertical"
+        android:paddingStart="4dp"
+        android:paddingEnd="12dp">
 
-        <!-- زر رجوع -->
         <ImageButton
             android:id="@+id/btnBack"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentStart="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:src="@drawable/ic_back"
-            android:contentDescription="@null" />
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="10dp"
+            android:contentDescription="@string/cd_back" />
 
-        <!-- العنوان في المنتصف -->
         <TextView
             android:id="@+id/headerTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textSize="@dimen/text_sm"
+            android:layout_weight="1"
             android:textColor="@color/text_primary"
-            android:textStyle="bold" />
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:gravity="center" />
 
-        <!-- عنصر موازن يمين -->
+        <!-- Balancing spacer -->
         <View
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentEnd="true" />
+            android:layout_width="44dp"
+            android:layout_height="44dp" />
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <!-- خط فاصل -->
+    <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/tab_active" />
+        android:background="#2A2A4A" />
 
-    <!-- القائمة -->
-    <LinearLayout
-        android:id="@+id/listContainer"
+    <!-- Scrollable list (default content) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/listScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/listContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Fragment container (shown when a list item is selected) -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone" />
 
 </LinearLayout>
