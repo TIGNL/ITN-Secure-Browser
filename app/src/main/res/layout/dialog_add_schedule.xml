@@ -1,183 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_card">
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
+
+    <!-- Days label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_days_label"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:textAllCaps="true"
+        android:layout_marginBottom="10dp" />
+
+    <!-- Day checkboxes in 2-column grid -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/cbSaturday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/day_saturday"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/accent" />
+
+        <CheckBox
+            android:id="@+id/cbSunday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/day_sunday"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/accent" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="20dp">
-
-        <!-- Days label -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/schedule_days_label"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:paddingBottom="10dp" />
-
-        <!-- Day checkboxes in 2-column grid -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cbSaturday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/day_saturday"
-                android:textColor="@color/text_primary"
-                android:buttonTint="@color/accent" />
-
-            <CheckBox
-                android:id="@+id/cbSunday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/day_sunday"
-                android:textColor="@color/text_primary"
-                android:buttonTint="@color/accent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cbMonday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/day_monday"
-                android:textColor="@color/text_primary"
-                android:buttonTint="@color/accent" />
-
-            <CheckBox
-                android:id="@+id/cbTuesday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/day_tuesday"
-                android:textColor="@color/text_primary"
-                android:buttonTint="@color/accent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cbWednesday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/day_wednesday"
-                android:textColor="@color/text_primary"
-                android:buttonTint="@color/accent" />
-
-            <CheckBox
-                android:id="@+id/cbThursday"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/day_thursday"
-                android:textColor="@color/text_primary"
-                android:buttonTint="@color/accent" />
-        </LinearLayout>
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <CheckBox
-            android:id="@+id/cbFriday"
-            android:layout_width="wrap_content"
+            android:id="@+id/cbMonday"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/day_friday"
+            android:layout_weight="1"
+            android:text="@string/day_monday"
             android:textColor="@color/text_primary"
-            android:buttonTint="@color/accent"
-            android:layout_marginBottom="16dp" />
+            android:buttonTint="@color/accent" />
 
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Time label -->
-        <TextView
-            android:layout_width="wrap_content"
+        <CheckBox
+            android:id="@+id/cbTuesday"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/schedule_time_label"
-            android:textColor="@color/text_secondary"
-            android:textSize="12sp"
-            android:textAllCaps="true"
-            android:paddingBottom="12dp" />
-
-        <!-- Time row -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schedule_from"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"
-                android:paddingRight="8dp" />
-
-            <TextView
-                android:id="@+id/btnFromTime"
-                android:layout_width="80dp"
-                android:layout_height="44dp"
-                android:gravity="center"
-                android:background="@drawable/bg_field"
-                android:textColor="@color/accent"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/schedule_to"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"
-                android:paddingLeft="16dp"
-                android:paddingRight="8dp" />
-
-            <TextView
-                android:id="@+id/btnToTime"
-                android:layout_width="80dp"
-                android:layout_height="44dp"
-                android:gravity="center"
-                android:background="@drawable/bg_field"
-                android:textColor="@color/accent"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:clickable="true"
-                android:focusable="true" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/schedule_time_hint"
-            android:textColor="@color/text_hint"
-            android:textSize="11sp"
-            android:paddingTop="8dp" />
-
+            android:layout_weight="1"
+            android:text="@string/day_tuesday"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/accent" />
     </LinearLayout>
-</ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:id="@+id/cbWednesday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/day_wednesday"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/accent" />
+
+        <CheckBox
+            android:id="@+id/cbThursday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/day_thursday"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/accent" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cbFriday"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:text="@string/day_friday"
+        android:textColor="@color/text_primary"
+        android:buttonTint="@color/accent"
+        android:gravity="center_vertical" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Time label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_time_label"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:textAllCaps="true"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Time row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_from"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:paddingRight="8dp" />
+
+        <TextView
+            android:id="@+id/btnFromTime"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/bg_field"
+            android:textColor="@color/accent"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_to"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:paddingLeft="16dp"
+            android:paddingRight="8dp" />
+
+        <TextView
+            android:id="@+id/btnToTime"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/bg_field"
+            android:textColor="@color/accent"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_time_hint"
+        android:textColor="@color/text_hint"
+        android:textSize="11sp"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

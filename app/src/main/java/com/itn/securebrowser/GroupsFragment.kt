@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class GroupsFragment : Fragment() {
 
     private lateinit var blockDataStore: BlockDataStore
     private lateinit var emptyState: LinearLayout
     private lateinit var groupsList: RecyclerView
-    private lateinit var fabAdd: FloatingActionButton
+    private lateinit var btnAddGroup: ImageButton
     private lateinit var adapter: GroupAdapter
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class GroupsFragment : Fragment() {
 
         emptyState = view.findViewById(R.id.emptyState)
         groupsList = view.findViewById(R.id.groupsList)
-        fabAdd     = view.findViewById(R.id.fabAddGroup)
+        btnAddGroup = view.findViewById(R.id.btnAddGroup)
 
         adapter = GroupAdapter(
             groups     = emptyList(),
@@ -39,7 +39,7 @@ class GroupsFragment : Fragment() {
         groupsList.layoutManager = LinearLayoutManager(requireContext())
         groupsList.adapter = adapter
 
-        fabAdd.setOnClickListener {
+        btnAddGroup.setOnClickListener {
             GroupEditActivity.startNew(requireContext())
         }
 

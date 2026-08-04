@@ -34,28 +34,18 @@
     <string name="settings_title">Parental Settings</string>
     <string name="parental_settings_title">Parental Settings</string>
     <string name="settings_subtitle">Parental Controls</string>
-    <string name="tab_sites">Sites</string>
-    <string name="tab_groups">Groups</string>
+    <string name="tab_groups">Limit websites time</string>
     <string name="tab_pin">PIN</string>
     <string name="pin_section_title">Parental PIN</string>
     <string name="pin_section_message">Set a PIN to lock these settings so only you can change blocked sites, groups, and schedules.</string>
+    <string name="lock_settings">Lock settings</string>
+    <string name="lock_settings_message">Require PIN to open parental settings</string>
+    <string name="btn_ok">OK</string>
 
-    <!-- Sites -->
-    <string name="sites_empty_title">No blocked sites</string>
-    <string name="sites_empty_hint">Tap + to add a site</string>
-    <string name="add_site_title">Add Site</string>
-    <string name="add_site_label">Domain</string>
-    <string name="add_site_hint">e.g. youtube.com</string>
-    <string name="daily_limit_label">Daily limit (minutes)</string>
-    <string name="daily_limit_hint">Leave empty for no limit</string>
+    <!-- Common buttons -->
     <string name="btn_add">Add</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_delete">Delete</string>
-    <string name="delete_site_title">Delete site</string>
-    <string name="delete_site_message">Delete &quot;%s&quot;?</string>
-    <string name="cd_delete_site">Delete</string>
-    <string name="err_enter_domain">Enter a domain</string>
-    <string name="err_invalid_domain">Invalid domain</string>
     <string name="err_daily_limit_positive">Daily limit must be a positive number</string>
     <string name="err_save">Save error</string>
 
@@ -125,10 +115,6 @@
     <string name="pin_error_wrong">Wrong PIN, try again</string>
     <string name="pin_error_mismatch">PINs don\'t match, start over</string>
     <string name="pin_subtitle_manage_data">To manage app data</string>
-
-    <!-- Site schedules -->
-    <string name="daily_limit_value">Daily limit: %d min</string>
-    <string name="no_daily_limit">No daily limit</string>
 
     <!-- Manage space -->
     <string name="manage_space_title">Manage App Data</string>

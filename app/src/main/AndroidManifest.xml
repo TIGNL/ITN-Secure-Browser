@@ -59,12 +59,6 @@
             android:configChanges="orientation|screenSize|keyboardHidden" />
 
         <activity
-            android:name=".SiteSchedulesActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
-
-        <activity
             android:name=".GroupEditActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"

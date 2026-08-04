@@ -41,7 +41,7 @@
         <EditText
             android:id="@+id/inputGroupName"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="64dp"
             android:hint="@string/group_name_hint"
             android:inputType="text"
             android:textColor="@color/text_primary"
@@ -65,7 +65,7 @@
         <EditText
             android:id="@+id/inputLimit"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="64dp"
             android:hint="@string/group_daily_limit_hint"
             android:inputType="number"
             android:textColor="@color/text_primary"
@@ -79,7 +79,7 @@
         <!-- Domains section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginBottom="10dp">
@@ -127,7 +127,7 @@
         <!-- Schedules section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginBottom="10dp">
