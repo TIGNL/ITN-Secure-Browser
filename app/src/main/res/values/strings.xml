@@ -32,6 +32,7 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
+    <string name="parental_settings_title">Parental Settings</string>
     <string name="settings_subtitle">Parental Controls</string>
     <string name="tab_sites">Sites</string>
     <string name="tab_groups">Groups</string>
