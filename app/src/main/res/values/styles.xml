@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        NavButton — الزر الافتراضي لكل أزرار التطبيق
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        الحجم   : 64×64dp (يتسع مع layout_weight في الشريط السفلي)
+        الأيقونة: 32×32dp من Material Symbols (Fill=1, Wght=400, Grad=0, opsz=32)
+        اللون   : text_primary (#FFFFFF) — يتغير للـ accent عند الحاجة بـ android:tint
+        الخلفية : selectableItemBackground (ripple تلقائي من النظام)
+        النوع   : ImageButton
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        الاستخدام في XML:
+            style="@style/NavButton"
+            android:src="@drawable/ic_xxx"
+
+        لتغيير لون أيقونة بعينها:
+            android:tint="@color/accent"
+    -->
+    <style name="NavButton">
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:tint">@color/text_primary</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <!--
+        NavButton.Accent — نفس NavButton لكن بلون accent
+        الاستخدام: للأزرار التي تحتاج تمييزاً بصرياً (مثل زر تبويبة جديدة)
+    -->
+    <style name="NavButton.Accent">
+        <item name="android:tint">@color/accent</item>
+    </style>
+
+    <!--
+        NavButton.Dimmed — نفس NavButton لكن بشفافية 35%
+        الاستخدام: للأزرار المعطلة (back/forward عند عدم التوفر)
+        ملاحظة: يُفضل التحكم في alpha برمجياً من Kotlin
+    -->
+    <style name="NavButton.Dimmed">
+        <item name="android:alpha">0.35</item>
+    </style>
+
+</resources>
