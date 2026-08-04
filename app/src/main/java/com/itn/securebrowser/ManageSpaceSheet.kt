@@ -22,38 +22,10 @@ class ManageSpaceSheet : BaseBottomSheet() {
         view.findViewById<TextView>(R.id.sheetHeaderTitle).text =
             getString(R.string.manage_space_title)
 
-        if (PinManager.hasPin(requireContext())) {
-            PinEntrySheet(
-                mode = PinEntrySheet.MODE_VERIFY,
-                subtitle = getString(R.string.pin_subtitle_manage_data),
-                onPinVerified = { showOptions() }
-            ).show(parentFragmentManager, "pin")
-        } else {
-            showOptions()
-        }
-    }
-
-    private fun showOptions() {
-        AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-            .setTitle(getString(R.string.manage_space_title))
-            .setItems(
-                arrayOf(
-                    getString(R.string.clear_browsing),
-                    getString(R.string.clear_tracking),
-                    getString(R.string.clear_blocking),
-                    getString(R.string.clear_all)
-                )
-            ) { _, which ->
-                when (which) {
-                    0 -> clearBrowsing()
-                    1 -> clearTracking()
-                    2 -> clearBlocking()
-                    3 -> confirmClearAll()
-                }
-            }
-            .setNegativeButton(getString(R.string.btn_cancel)) { _, _ -> dismiss() }
-            .setOnCancelListener { dismiss() }
-            .show()
+        view.findViewById<View>(R.id.rowClearBrowsing).setOnClickListener { clearBrowsing() }
+        view.findViewById<View>(R.id.rowClearTracking).setOnClickListener { clearTracking() }
+        view.findViewById<View>(R.id.rowClearBlocking).setOnClickListener { clearBlocking() }
+        view.findViewById<View>(R.id.rowClearAll).setOnClickListener { confirmClearAll() }
     }
 
     private fun clearBrowsing() {
@@ -92,7 +64,7 @@ class ManageSpaceSheet : BaseBottomSheet() {
                 toast(getString(R.string.toast_cleared_all))
                 dismiss()
             }
-            .setNegativeButton(getString(R.string.btn_cancel)) { _, _ -> dismiss() }
+            .setNegativeButton(getString(R.string.btn_cancel)) { _, _ -> }
             .show()
     }
 
