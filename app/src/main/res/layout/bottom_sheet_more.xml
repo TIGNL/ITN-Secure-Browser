@@ -38,12 +38,13 @@
             android:layout_marginStart="16dp"
             android:text="@string/desktop_mode"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_sm" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <CheckBox
             android:id="@+id/switchDesktopMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/accent"
             android:clickable="false"
             android:focusable="false" />
 
@@ -77,12 +78,13 @@
             android:contentDescription="@string/cd_parental_settings" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginStart="16dp"
             android:text="@string/parental_settings"
             android:textColor="#FFFFFF"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_sm" />
 
     </LinearLayout>
 
@@ -93,7 +95,7 @@
         android:layout_marginStart="20dp"
         android:background="#2A2A4A" />
 
-    <!-- 3. الإعدادات العامة (placeholder) -->
+    <!-- 3. الإعدادات العامة -->
     <LinearLayout
         android:id="@+id/rowGeneralSettings"
         android:layout_width="match_parent"
@@ -109,17 +111,18 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_settings"
-            android:tint="#666688"
+            android:src="@drawable/ic_gear"
+            android:tint="@color/accent"
             android:contentDescription="@string/cd_general_settings" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginStart="16dp"
             android:text="@string/general_settings"
-            android:textColor="#666688"
-            android:textSize="15sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/text_sm" />
 
     </LinearLayout>
 

@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
-import androidx.appcompat.widget.SwitchCompat
 
 class MoreBottomSheet(
     private val isDesktopMode:            Boolean,
@@ -25,14 +25,14 @@ class MoreBottomSheet(
         view.findViewById<TextView>(R.id.sheetHeaderTitle).text = getString(R.string.sheet_options)
 
         // ── 1. وضع سطح المكتب ──────────────────────────────────────────────
-        val switchDesktop = view.findViewById<SwitchCompat>(R.id.switchDesktopMode)
-        switchDesktop.isChecked = isDesktopMode
-        switchDesktop.setOnCheckedChangeListener { _: CompoundButton, checked: Boolean ->
+        val checkDesktop = view.findViewById<CheckBox>(R.id.switchDesktopMode)
+        checkDesktop.isChecked = isDesktopMode
+        checkDesktop.setOnCheckedChangeListener { _: CompoundButton, checked: Boolean ->
             onDesktopModeToggled(checked)
             dismiss()
         }
         view.findViewById<View>(R.id.rowDesktopMode).setOnClickListener {
-            switchDesktop.toggle()
+            checkDesktop.toggle()
         }
 
         // ── 2. إعدادات الرقابة ─────────────────────────────────────────────
@@ -52,4 +52,3 @@ class MoreBottomSheet(
         const val TAG = "MoreBottomSheet"
     }
 }
-
