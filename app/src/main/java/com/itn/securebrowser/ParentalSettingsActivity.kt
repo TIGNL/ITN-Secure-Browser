@@ -1,6 +1,5 @@
 package com.itn.securebrowser
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,80 +11,103 @@ import androidx.appcompat.app.AlertDialog
 
 class ParentalSettingsActivity : BaseListActivity() {
 
-    private val pinLauncher = registerForActivityResult(
+    private var pinSwitch: Switch? = null
+    private var suppressSwitchListener = false
+
+    private val setPinLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == PinEntryActivity.RESULT_PIN_OK) {
-            // PIN was set/verified successfully
-            updateLockSwitch()
+            refreshPinSwitch()
         }
     }
 
-    private var lockSwitch: Switch? = null
+    private val verifyForChangePin = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == PinEntryActivity.RESULT_PIN_OK) {
+            setPinLauncher.launch(PinEntryActivity.intentSet(this))
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setPageTitle(getString(R.string.parental_settings))
 
-        // Add lock settings checkbox at the top
-        addLockSettingsItem()
+        addPinToggleItem()
 
-        // Add "Limit websites time" (groups) option
-        addListItem(R.drawable.ic_groups, label = getString(R.string.tab_groups)) {
-            showFragment(GroupsFragment())
+        addListItem(R.drawable.ic_pin, label = getString(R.string.btn_change_pin)) {
+            handleChangePin()
         }
 
-        // Add PIN option
-        addListItem(R.drawable.ic_pin, label = getString(R.string.tab_pin)) {
-            showFragment(PinFragment())
+        addListItem(R.drawable.ic_clock, label = getString(R.string.tab_groups)) {
+            showFragment(GroupsFragment())
         }
     }
 
     override fun onResume() {
         super.onResume()
-        updateLockSwitch()
+        refreshPinSwitch()
     }
 
-    private fun addLockSettingsItem() {
+    private fun addPinToggleItem() {
         val row = LayoutInflater.from(this)
-            .inflate(R.layout.item_lock_settings, listContainer, false)
+            .inflate(R.layout.item_list_row, listContainer, false) as android.widget.LinearLayout
 
-        row.findViewById<TextView>(R.id.itemLabel).text = getString(R.string.lock_settings)
+        row.findViewById<ImageView>(R.id.itemIcon)
+            .setImageResource(R.drawable.ic_pin)
+        row.findViewById<TextView>(R.id.itemLabel).text = getString(R.string.tab_pin)
 
-        lockSwitch = row.findViewById(R.id.lockSwitch)
-        updateLockSwitch()
+        pinSwitch = Switch(this).apply {
+            thumbTintList = android.content.res.ColorStateList.valueOf(getColor(R.color.accent))
+            trackTintList = android.content.res.ColorStateList.valueOf(getColor(R.color.bg_field))
+            setPadding(0, 0, 0, 0)
+        }
+        row.addView(pinSwitch)
 
-        lockSwitch?.setOnCheckedChangeListener { _, isChecked ->
-            handleLockToggle(isChecked)
+        row.setOnClickListener { pinSwitch?.performClick() }
+
+        pinSwitch?.setOnCheckedChangeListener { _, _ ->
+            if (!suppressSwitchListener) handlePinToggle()
         }
 
+        refreshPinSwitch()
         listContainer.addView(row)
     }
 
-    private fun handleLockToggle(isChecked: Boolean) {
-        if (isChecked) {
-            // If turning ON: open PIN set page
-            if (!PinManager.hasPin(this)) {
-                pinLauncher.launch(PinEntryActivity.intentSet(this))
-            }
+    private fun handlePinToggle() {
+        val hasPin = PinManager.hasPin(this)
+        if (hasPin) {
+            AlertDialog.Builder(this, R.style.DialogTheme)
+                .setTitle(getString(R.string.tab_pin))
+                .setMessage(getString(R.string.delete_pin_message))
+                .setPositiveButton(getString(R.string.btn_delete)) { _, _ ->
+                    PinManager.clear(this)
+                    refreshPinSwitch()
+                }
+                .setNegativeButton(getString(R.string.btn_cancel)) { _, _ ->
+                    refreshPinSwitch()
+                }
+                .setOnCancelListener { refreshPinSwitch() }
+                .show()
         } else {
-            // If turning OFF: verify PIN first, then clear it
-            if (PinManager.hasPin(this)) {
-                AlertDialog.Builder(this, R.style.DialogTheme)
-                    .setTitle(getString(R.string.lock_settings))
-                    .setMessage(getString(R.string.delete_pin_message))
-                    .setPositiveButton(getString(R.string.btn_delete)) { _, _ ->
-                        PinManager.clear(this)
-                        updateLockSwitch()
-                    }
-                    .setNegativeButton(getString(R.string.btn_cancel), null)
-                    .show()
-            }
+            setPinLauncher.launch(PinEntryActivity.intentSet(this))
         }
     }
 
-    private fun updateLockSwitch() {
-        val hasPin = PinManager.hasPin(this)
-        lockSwitch?.isChecked = hasPin
+    private fun handleChangePin() {
+        if (PinManager.hasPin(this)) {
+            verifyForChangePin.launch(
+                PinEntryActivity.intentVerify(this, getString(R.string.pin_verify_first))
+            )
+        } else {
+            setPinLauncher.launch(PinEntryActivity.intentSet(this))
+        }
+    }
+
+    private fun refreshPinSwitch() {
+        suppressSwitchListener = true
+        pinSwitch?.isChecked = PinManager.hasPin(this)
+        suppressSwitchListener = false
     }
 }

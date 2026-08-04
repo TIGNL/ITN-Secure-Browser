@@ -38,8 +38,6 @@
     <string name="tab_pin">PIN</string>
     <string name="pin_section_title">Parental PIN</string>
     <string name="pin_section_message">Set a PIN to lock these settings so only you can change blocked sites, groups, and schedules.</string>
-    <string name="lock_settings">Lock settings</string>
-    <string name="lock_settings_message">Require PIN to open parental settings</string>
     <string name="btn_ok">OK</string>
 
     <!-- Common buttons -->
@@ -104,12 +102,7 @@
     <string name="pin_title_confirm">Re-enter PIN to confirm</string>
     <string name="pin_subtitle_open_settings">To open settings</string>
     <string name="pin_subtitle_new">Choose a new PIN</string>
-    <string name="pin_status_active">PIN enabled ✓</string>
-    <string name="pin_status_none">No PIN set</string>
-    <string name="btn_set_pin">Set PIN</string>
     <string name="btn_change_pin">Change PIN</string>
-    <string name="btn_clear_pin">Remove PIN</string>
-    <string name="delete_pin_title">Remove PIN</string>
     <string name="delete_pin_message">This will remove PIN protection. Continue?</string>
     <string name="pin_verify_first">Verify your identity first</string>
     <string name="pin_error_wrong">Wrong PIN, try again</string>
