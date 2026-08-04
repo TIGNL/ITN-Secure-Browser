@@ -35,12 +35,12 @@ class MoreBottomSheet(
             checkDesktop.toggle()
         }
 
-        // ── 2. إعدادات الرقابة ─────────────────────────────────────────────
+        // ── 2. Parental Settings ──────────────────────────────────────────
         view.findViewById<View>(R.id.rowParentalSettings).setOnClickListener {
             onOpenParentalSettings()
         }
 
-        // ── 3. الإعدادات العامة ──────────────────────────────────────────
+        // ── 3. General Settings ───────────────────────────────────────────
         view.findViewById<View>(R.id.rowGeneralSettings).setOnClickListener {
             onOpenGeneralSettings()
         }
