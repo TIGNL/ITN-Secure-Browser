@@ -30,6 +30,15 @@ class ParentalSettingsActivity : BaseListActivity() {
         }
     }
 
+    private val verifyForDisablePin = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == PinEntryActivity.RESULT_PIN_OK) {
+            PinManager.clear(this)
+            refreshPinSwitch()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setPageTitle(getString(R.string.parental_settings))
@@ -38,6 +47,10 @@ class ParentalSettingsActivity : BaseListActivity() {
 
         addListItem(R.drawable.ic_pin, label = getString(R.string.btn_change_pin)) {
             handleChangePin()
+        }
+
+        addListItem(R.drawable.ic_close, label = getString(R.string.btn_disable_pin)) {
+            handleDisablePin()
         }
 
         addListItem(R.drawable.ic_clock, label = getString(R.string.tab_groups)) {
@@ -102,6 +115,14 @@ class ParentalSettingsActivity : BaseListActivity() {
             )
         } else {
             setPinLauncher.launch(PinEntryActivity.intentSet(this))
+        }
+    }
+
+    private fun handleDisablePin() {
+        if (PinManager.hasPin(this)) {
+            verifyForDisablePin.launch(
+                PinEntryActivity.intentVerify(this, getString(R.string.pin_verify_first))
+            )
         }
     }
 

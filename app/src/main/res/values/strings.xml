@@ -103,6 +103,7 @@
     <string name="pin_subtitle_open_settings">To open settings</string>
     <string name="pin_subtitle_new">Choose a new PIN</string>
     <string name="btn_change_pin">Change PIN</string>
+    <string name="btn_disable_pin">Disable PIN</string>
     <string name="delete_pin_message">This will remove PIN protection. Continue?</string>
     <string name="pin_verify_first">Verify your identity first</string>
     <string name="pin_error_wrong">Wrong PIN, try again</string>
