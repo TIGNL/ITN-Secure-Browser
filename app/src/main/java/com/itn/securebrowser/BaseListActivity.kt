@@ -1,7 +1,7 @@
 package com.itn.securebrowser
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
  *       }
  *   }
  */
-abstract class BaseListActivity : AppCompatActivity() {
+abstract class BaseListActivity : BaseActivity() {
 
     protected lateinit var baseRecyclerView: RecyclerView
 

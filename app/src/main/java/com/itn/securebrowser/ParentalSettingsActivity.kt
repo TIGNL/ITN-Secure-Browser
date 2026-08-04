@@ -7,7 +7,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
-class SettingsActivity : BaseActivity() {
+class ParentalSettingsActivity : BaseActivity() {
 
     private lateinit var tabSites: TextView
     private lateinit var tabGroups: TextView
