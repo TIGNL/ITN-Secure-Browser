@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 
 open class BaseListActivity : BaseActivity() {
@@ -36,8 +35,6 @@ open class BaseListActivity : BaseActivity() {
         @DrawableRes iconRes: Int,
         iconTint: Int = getColor(R.color.accent),
         label: String,
-        subtitle: String? = null,
-        showChevron: Boolean = true,
         onClick: () -> Unit
     ) {
         val row = LayoutInflater.from(this)
@@ -48,15 +45,6 @@ open class BaseListActivity : BaseActivity() {
             setColorFilter(iconTint)
         }
         row.findViewById<TextView>(R.id.itemLabel).text = label
-
-        val subtitleView = row.findViewById<TextView>(R.id.itemSubtitle)
-        if (subtitle != null) {
-            subtitleView.text = subtitle
-            subtitleView.isVisible = true
-        }
-
-        row.findViewById<ImageView>(R.id.itemChevron).isVisible = showChevron
-
         row.setOnClickListener { onClick() }
 
         listContainer.addView(row)
