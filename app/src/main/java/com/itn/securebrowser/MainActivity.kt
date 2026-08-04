@@ -24,7 +24,7 @@ class MainActivity : BaseActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == PinEntryActivity.RESULT_PIN_OK) {
-            startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+            startActivity(Intent(this@MainActivity, ParentalSettingsActivity::class.java))
         }
     }
 
@@ -437,7 +437,7 @@ class MainActivity : BaseActivity() {
                         PinEntryActivity.intentVerify(this)
                     )
                 } else {
-                    startActivity(Intent(this, SettingsActivity::class.java))
+                    startActivity(Intent(this, ParentalSettingsActivity::class.java))
                 }
             }
         ).show(supportFragmentManager, MoreBottomSheet.TAG)
