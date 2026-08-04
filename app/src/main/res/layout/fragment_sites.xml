@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#0F0F1A">
+    android:background="@color/bg_page">
 
     <!-- Empty state -->
     <LinearLayout
@@ -13,29 +14,40 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🌐"
-            android:textSize="48sp"
-            android:layout_marginBottom="16dp" />
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_empty_state_card"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌐"
+                android:textSize="36sp"
+                android:layout_gravity="center" />
+        </FrameLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sites_empty_title"
-            android:textColor="#888888"
-            android:textSize="16sp" />
+            android:textColor="@color/text_primary"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sites_empty_hint"
-            android:textColor="#555577"
-            android:textSize="13sp"
-            android:layout_marginTop="8dp" />
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:gravity="center" />
     </LinearLayout>
 
     <!-- Sites list -->
@@ -46,7 +58,10 @@
         android:layout_weight="1"
         android:visibility="gone"
         android:clipToPadding="false"
-        android:paddingBottom="80dp" />
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="88dp" />
 
     <!-- FAB add button -->
     <FrameLayout
@@ -63,7 +78,7 @@
             android:contentDescription="Add site"
             app:backgroundTint="@color/accent"
             app:tint="#FFFFFF"
-            xmlns:app="http://schemas.android.com/apk/res-auto" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.FAB" />
     </FrameLayout>
 
 </LinearLayout>

@@ -4,13 +4,19 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:background="#1E1E30"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_item_card"
+    android:layout_marginBottom="8dp"
     android:clickable="true"
     android:focusable="true">
+
+    <!-- Accent left bar -->
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:background="@color/accent"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,25 +29,26 @@
             android:id="@+id/siteDomain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="15sp"
+            android:textStyle="bold"
             android:fontFamily="monospace" />
 
         <TextView
             android:id="@+id/siteLimitInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#888888"
+            android:textColor="@color/text_secondary"
             android:textSize="12sp"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/siteScheduleInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#E94560"
+            android:textColor="@color/accent"
             android:textSize="11sp"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="3dp" />
     </LinearLayout>
 
     <ImageButton
@@ -51,7 +58,7 @@
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_close"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:tint="#E94560"
+        android:tint="@color/text_secondary"
         android:contentDescription="@string/cd_delete_site" />
 
 </LinearLayout>

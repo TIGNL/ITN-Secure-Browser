@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/bg_card">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp">
 
         <!-- Days label -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/schedule_days_label"
-            android:textColor="#AAAAAA"
+            android:textColor="@color/text_secondary"
             android:textSize="12sp"
             android:textAllCaps="true"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="10dp" />
 
-        <!-- Row 1 -->
+        <!-- Day checkboxes in 2-column grid -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/day_saturday"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary"
+                android:buttonTint="@color/accent" />
 
             <CheckBox
                 android:id="@+id/cbSunday"
@@ -42,10 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/day_sunday"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary"
+                android:buttonTint="@color/accent" />
         </LinearLayout>
 
-        <!-- Row 2 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/day_monday"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary"
+                android:buttonTint="@color/accent" />
 
             <CheckBox
                 android:id="@+id/cbTuesday"
@@ -65,10 +68,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/day_tuesday"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary"
+                android:buttonTint="@color/accent" />
         </LinearLayout>
 
-        <!-- Row 3 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,7 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/day_wednesday"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary"
+                android:buttonTint="@color/accent" />
 
             <CheckBox
                 android:id="@+id/cbThursday"
@@ -88,23 +92,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/day_thursday"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/text_primary"
+                android:buttonTint="@color/accent" />
         </LinearLayout>
 
-        <!-- Row 4 -->
         <CheckBox
             android:id="@+id/cbFriday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/day_friday"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/accent"
             android:layout_marginBottom="16dp" />
 
         <!-- Divider -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#333355"
+            android:background="@color/divider"
             android:layout_marginBottom="16dp" />
 
         <!-- Time label -->
@@ -112,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/schedule_time_label"
-            android:textColor="#AAAAAA"
+            android:textColor="@color/text_secondary"
             android:textSize="12sp"
             android:textAllCaps="true"
             android:paddingBottom="12dp" />
@@ -128,16 +133,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/schedule_from"
-                android:textColor="#888888"
+                android:textColor="@color/text_secondary"
                 android:textSize="13sp"
                 android:paddingRight="8dp" />
 
             <TextView
                 android:id="@+id/btnFromTime"
                 android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_height="44dp"
                 android:gravity="center"
-                android:background="#252545"
+                android:background="@drawable/bg_field"
                 android:textColor="@color/accent"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -148,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/schedule_to"
-                android:textColor="#888888"
+                android:textColor="@color/text_secondary"
                 android:textSize="13sp"
                 android:paddingLeft="16dp"
                 android:paddingRight="8dp" />
@@ -156,9 +161,9 @@
             <TextView
                 android:id="@+id/btnToTime"
                 android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_height="44dp"
                 android:gravity="center"
-                android:background="#252545"
+                android:background="@drawable/bg_field"
                 android:textColor="@color/accent"
                 android:textSize="17sp"
                 android:textStyle="bold"
@@ -170,7 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/schedule_time_hint"
-            android:textColor="#555577"
+            android:textColor="@color/text_hint"
             android:textSize="11sp"
             android:paddingTop="8dp" />
 

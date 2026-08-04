@@ -4,27 +4,30 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="24dp"
-    android:background="#1A1A2E">
+    android:background="@color/bg_card">
 
     <!-- Domain field -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_site_label"
-        android:textColor="#888888"
+        android:textColor="@color/text_secondary"
         android:textSize="12sp"
-        android:layout_marginBottom="4dp" />
+        android:textAllCaps="true"
+        android:layout_marginBottom="6dp" />
 
     <EditText
         android:id="@+id/inputDomain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:hint="@string/add_site_hint"
         android:inputType="textUri"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#555577"
-        android:backgroundTint="#E94560"
-        android:layout_marginBottom="24dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_hint"
+        android:background="@drawable/bg_field"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:layout_marginBottom="20dp"
         android:imeOptions="actionNext" />
 
     <!-- Daily limit field -->
@@ -32,19 +35,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/daily_limit_label"
-        android:textColor="#888888"
+        android:textColor="@color/text_secondary"
         android:textSize="12sp"
-        android:layout_marginBottom="4dp" />
+        android:textAllCaps="true"
+        android:layout_marginBottom="6dp" />
 
     <EditText
         android:id="@+id/inputLimit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:hint="@string/daily_limit_hint"
         android:inputType="number"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#555577"
-        android:backgroundTint="#E94560"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_hint"
+        android:background="@drawable/bg_field"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
         android:imeOptions="actionDone" />
 
 </LinearLayout>

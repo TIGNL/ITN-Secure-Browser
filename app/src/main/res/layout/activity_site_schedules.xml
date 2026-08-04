@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_toolbar">
+    android:background="@color/bg_page">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,12 +13,12 @@
         <!-- Toolbar -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="60dp"
             android:orientation="horizontal"
-            android:background="@color/bg_tab_bar"
+            android:background="@color/bg_toolbar"
             android:gravity="center_vertical"
-            android:paddingLeft="4dp"
-            android:paddingRight="16dp">
+            android:paddingStart="4dp"
+            android:paddingEnd="16dp">
 
             <ImageButton
                 android:id="@+id/btnBack"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingLeft="4dp">
+                android:paddingStart="4dp">
 
                 <TextView
                     android:id="@+id/headerDomain"
@@ -72,12 +72,27 @@
             android:gravity="center"
             android:visibility="visible">
 
+            <FrameLayout
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/bg_empty_state_card"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📅"
+                    android:textSize="32sp"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_schedules"
-                android:textColor="@color/text_secondary"
-                android:textSize="16sp" />
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,7 +100,7 @@
                 android:text="@string/tap_plus_to_add_schedule"
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp"
-                android:paddingTop="8dp" />
+                android:paddingTop="6dp" />
         </LinearLayout>
 
         <!-- Schedules list -->
@@ -95,8 +110,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:visibility="gone"
-            android:padding="12dp"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="88dp" />
 
     </LinearLayout>
 
@@ -110,6 +126,7 @@
         android:src="@drawable/ic_add"
         android:contentDescription="@string/cd_add_schedule"
         app:backgroundTint="@color/accent"
-        app:tint="@color/text_primary" />
+        app:tint="@color/text_primary"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.FAB" />
 
 </FrameLayout>

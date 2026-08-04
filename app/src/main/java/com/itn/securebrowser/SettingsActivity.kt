@@ -1,6 +1,5 @@
 package com.itn.securebrowser
 
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -12,7 +11,6 @@ class SettingsActivity : BaseActivity() {
     private lateinit var tabSites: TextView
     private lateinit var tabGroups: TextView
     private lateinit var tabPin: TextView
-    private lateinit var tabIndicator: View
     private lateinit var settingsContent: FrameLayout
 
     private var currentTab = 0   // 0=sites, 1=groups, 2=pin
@@ -24,7 +22,6 @@ class SettingsActivity : BaseActivity() {
         tabSites        = findViewById(R.id.tabSites)
         tabGroups       = findViewById(R.id.tabGroups)
         tabPin          = findViewById(R.id.tabPin)
-        tabIndicator    = findViewById(R.id.tabIndicator)
         settingsContent = findViewById(R.id.settingsContent)
 
         findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
@@ -40,24 +37,19 @@ class SettingsActivity : BaseActivity() {
     private fun selectTab(index: Int) {
         currentTab = index
 
-        // Update text colours
-        val activeColour   = 0xFFFFFFFF.toInt()
-        val inactiveColour = 0xFF888888.toInt()
-        tabSites.setTextColor( if (index == 0) activeColour else inactiveColour)
-        tabGroups.setTextColor(if (index == 1) activeColour else inactiveColour)
-        tabPin.setTextColor(   if (index == 2) activeColour else inactiveColour)
+        val tabs = listOf(tabSites, tabGroups, tabPin)
+        val activeColor   = 0xFFFFFFFF.toInt()
+        val inactiveColor = 0xFF777799.toInt()
 
-        // Slide indicator
-        tabIndicator.post {
-            val tabWidth = tabSites.width
-            val targetX  = (index * tabWidth).toFloat()
-            val anim = ValueAnimator.ofFloat(tabIndicator.translationX, targetX)
-            anim.duration = 200
-            anim.addUpdateListener { tabIndicator.translationX = it.animatedValue as Float }
-            anim.start()
-            // Set indicator width = one tab
-            tabIndicator.layoutParams = tabIndicator.layoutParams.also {
-                it.width = tabWidth
+        tabs.forEachIndexed { i, tab ->
+            if (i == index) {
+                tab.setTextColor(activeColor)
+                tab.background = getDrawable(R.drawable.bg_tab_active_pill)
+                tab.typeface = android.graphics.Typeface.DEFAULT_BOLD
+            } else {
+                tab.setTextColor(inactiveColor)
+                tab.background = getDrawable(R.drawable.bg_tab_active_pill)
+                tab.typeface = android.graphics.Typeface.DEFAULT
             }
         }
 
