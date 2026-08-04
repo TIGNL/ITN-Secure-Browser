@@ -22,15 +22,16 @@ abstract class BaseCenteredDialogFragment : DialogFragment() {
     abstract fun onContentCreated(contentView: View)
     abstract fun onOkClicked()
 
-    override fun onCreateDialog(savedInstanceState: Dialog?): Dialog {
-        return super.onCreateDialog(savedInstanceState).apply {
-            window?.setLayout(
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.let { window ->
+            window.setLayout(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT
             )
-            window?.setBackgroundDrawableResource(android.R.color.transparent)
-            setCanceledOnTouchOutside(true)
+            window.setBackgroundDrawableResource(android.R.color.transparent)
         }
+        dialog?.setCanceledOnTouchOutside(true)
     }
 
     override fun onCreateView(
