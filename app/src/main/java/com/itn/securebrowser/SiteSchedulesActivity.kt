@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
@@ -14,12 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class SiteSchedulesActivity : BaseActivity() {
+class SiteSchedulesActivity : BaseListActivity() {
 
     private lateinit var blockDataStore: BlockDataStore
     private lateinit var adapter: ScheduleAdapter
-    private lateinit var headerDomain: TextView
-    private lateinit var headerLimit: TextView
     private lateinit var emptyState: LinearLayout
     private lateinit var schedulesList: RecyclerView
     private lateinit var fabAdd: FloatingActionButton
@@ -39,20 +38,20 @@ class SiteSchedulesActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_site_schedules)
 
         siteDomain = intent.getStringExtra(EXTRA_DOMAIN) ?: run { finish(); return }
         blockDataStore = BlockDataStore(this)
 
-        headerDomain  = findViewById(R.id.headerDomain)
-        headerLimit   = findViewById(R.id.headerLimit)
-        emptyState    = findViewById(R.id.emptyState)
-        schedulesList = findViewById(R.id.schedulesList)
-        fabAdd        = findViewById(R.id.fabAddSchedule)
+        setPageTitle(siteDomain)
 
-        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
+        val content = LayoutInflater.from(this)
+            .inflate(R.layout.activity_site_schedules, listContainer, false)
 
-        headerDomain.text = siteDomain
+        emptyState    = content.findViewById(R.id.emptyState)
+        schedulesList = content.findViewById(R.id.schedulesList)
+        fabAdd        = content.findViewById(R.id.fabAddSchedule)
+
+        listContainer.addView(content)
 
         adapter = ScheduleAdapter(emptyList()) { schedule -> confirmDeleteSchedule(schedule) }
         schedulesList.layoutManager = LinearLayoutManager(this)
@@ -71,10 +70,6 @@ class SiteSchedulesActivity : BaseActivity() {
     private fun refresh() {
         val site = getSite() ?: run { finish(); return }
 
-        val limitMins = site.dailyLimits.values.firstOrNull()
-        headerLimit.text = if (limitMins != null) getString(R.string.daily_limit_value, limitMins)
-                           else getString(R.string.no_daily_limit)
-
         adapter.updateSchedules(site.schedules)
 
         val empty = site.schedules.isEmpty()
@@ -87,7 +82,6 @@ class SiteSchedulesActivity : BaseActivity() {
     private fun showAddScheduleDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_schedule, null)
 
-        // Day checkboxes
         val cbSat = dialogView.findViewById<CheckBox>(R.id.cbSaturday)
         val cbSun = dialogView.findViewById<CheckBox>(R.id.cbSunday)
         val cbMon = dialogView.findViewById<CheckBox>(R.id.cbMonday)
@@ -96,7 +90,6 @@ class SiteSchedulesActivity : BaseActivity() {
         val cbThu = dialogView.findViewById<CheckBox>(R.id.cbThursday)
         val cbFri = dialogView.findViewById<CheckBox>(R.id.cbFriday)
 
-        // Time buttons
         val btnFrom = dialogView.findViewById<TextView>(R.id.btnFromTime)
         val btnTo   = dialogView.findViewById<TextView>(R.id.btnToTime)
 

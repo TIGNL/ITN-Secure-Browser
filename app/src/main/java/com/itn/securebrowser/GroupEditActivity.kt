@@ -9,10 +9,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 
-class GroupEditActivity : BaseActivity() {
+class GroupEditActivity : BaseListActivity() {
 
-    // ── Views ──────────────────────────────────────────────────────────────
-    private lateinit var headerTitle:        TextView
     private lateinit var btnSave:            TextView
     private lateinit var inputGroupName:     EditText
     private lateinit var inputLimit:         EditText
@@ -23,11 +21,10 @@ class GroupEditActivity : BaseActivity() {
     private lateinit var schedulesContainer: LinearLayout
     private lateinit var schedulesEmptyHint: TextView
 
-    // ── State ──────────────────────────────────────────────────────────────
     private lateinit var blockDataStore: BlockDataStore
     private val domains   = mutableListOf<String>()
     private val schedules = mutableListOf<BlockSchedule>()
-    private var editingGroupName: String? = null   // null = new group
+    private var editingGroupName: String? = null
 
     companion object {
         private const val EXTRA_GROUP_NAME = "extra_group_name"
@@ -44,53 +41,54 @@ class GroupEditActivity : BaseActivity() {
         }
     }
 
-    // ── Lifecycle ──────────────────────────────────────────────────────────
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_group_edit)
 
         blockDataStore   = BlockDataStore(this)
         editingGroupName = intent.getStringExtra(EXTRA_GROUP_NAME)
 
-        bindViews()
-        setupListeners()
+        setPageTitle(
+            if (editingGroupName != null) getString(R.string.edit_group_title)
+            else getString(R.string.new_group_title)
+        )
+
+        val content = LayoutInflater.from(this)
+            .inflate(R.layout.activity_group_edit, listContainer, false)
+
+        bindViews(content)
+        setupListeners(content)
         loadGroupIfEditing()
+
+        listContainer.addView(content)
     }
 
-    private fun bindViews() {
-        headerTitle        = findViewById(R.id.headerTitle)
-        btnSave            = findViewById(R.id.btnSave)
-        inputGroupName     = findViewById(R.id.inputGroupName)
-        inputLimit         = findViewById(R.id.inputLimit)
-        btnAddDomain       = findViewById(R.id.btnAddDomain)
-        domainsContainer   = findViewById(R.id.domainsContainer)
-        domainsEmptyHint   = findViewById(R.id.domainsEmptyHint)
-        btnAddSchedule     = findViewById(R.id.btnAddSchedule)
-        schedulesContainer = findViewById(R.id.schedulesContainer)
-        schedulesEmptyHint = findViewById(R.id.schedulesEmptyHint)
+    private fun bindViews(content: View) {
+        btnSave            = content.findViewById(R.id.btnSave)
+        inputGroupName     = content.findViewById(R.id.inputGroupName)
+        inputLimit         = content.findViewById(R.id.inputLimit)
+        btnAddDomain       = content.findViewById(R.id.btnAddDomain)
+        domainsContainer   = content.findViewById(R.id.domainsContainer)
+        domainsEmptyHint   = content.findViewById(R.id.domainsEmptyHint)
+        btnAddSchedule     = content.findViewById(R.id.btnAddSchedule)
+        schedulesContainer = content.findViewById(R.id.schedulesContainer)
+        schedulesEmptyHint = content.findViewById(R.id.schedulesEmptyHint)
     }
 
-    private fun setupListeners() {
-        findViewById<View>(R.id.btnBack).setOnClickListener { finish() }
+    private fun setupListeners(content: View) {
         btnSave.setOnClickListener        { trySave() }
         btnAddDomain.setOnClickListener   { showAddDomainDialog() }
         btnAddSchedule.setOnClickListener { showAddScheduleDialog() }
     }
 
     private fun loadGroupIfEditing() {
-        val name = editingGroupName ?: run {
-            headerTitle.text = getString(R.string.new_group_title)
-            return
-        }
-        headerTitle.text = getString(R.string.edit_group_title)
+        val name = editingGroupName ?: return
 
         val group = blockDataStore.getGroups().find { it.name == name } ?: run {
             finish(); return
         }
 
         inputGroupName.setText(group.name)
-        inputGroupName.isEnabled = false   // الاسم لا يتغير عند التعديل
+        inputGroupName.isEnabled = false
 
         val limitMins = group.dailyLimits.values.firstOrNull()
         if (limitMins != null) inputLimit.setText(limitMins.toString())

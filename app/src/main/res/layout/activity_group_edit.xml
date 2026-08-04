@@ -1,216 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_page">
+    android:background="#0F0F1A"
+    android:clipToPadding="false"
+    android:paddingBottom="80dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <!-- Header -->
+        <!-- Save button -->
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/btn_save"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Group name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/group_name_label"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/inputGroupName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/group_name_hint"
+            android:inputType="text"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:background="@drawable/bg_field"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="24dp"
+            android:imeOptions="actionNext" />
+
+        <!-- Daily limit -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/group_daily_limit_label"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:textAllCaps="true"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/inputLimit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/group_daily_limit_hint"
+            android:inputType="number"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:background="@drawable/bg_field"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:layout_marginBottom="28dp"
+            android:imeOptions="actionDone" />
+
+        <!-- Domains section -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/bg_toolbar"
             android:gravity="center_vertical"
-            android:paddingStart="4dp"
-            android:paddingEnd="12dp">
-
-            <ImageButton
-                android:id="@+id/btnBack"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_back"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="12dp"
-                android:contentDescription="@string/cd_back" />
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:id="@+id/headerTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/new_group_title"
-                android:textColor="@color/text_primary"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:gravity="center" />
+                android:text="@string/domains_label"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:textAllCaps="true" />
 
             <TextView
-                android:id="@+id/btnSave"
+                android:id="@+id/btnAddDomain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_save"
+                android:text="@string/btn_add_domain"
                 android:textColor="@color/accent"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
-                android:padding="8dp"
+                android:padding="4dp"
                 android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless" />
+                android:focusable="true" />
         </LinearLayout>
 
-        <ScrollView
+        <!-- Domains list container -->
+        <LinearLayout
+            android:id="@+id/domainsContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:clipToPadding="false"
-            android:paddingBottom="80dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/domainsEmptyHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/domains_empty_hint"
+            android:textColor="@color/text_hint"
+            android:textSize="13sp"
+            android:layout_marginBottom="28dp"
+            android:visibility="visible" />
+
+        <!-- Schedules section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_weight="1"
+                android:text="@string/schedules_label"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:textAllCaps="true" />
 
-                <!-- Group name -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/group_name_label"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp"
-                    android:textAllCaps="true"
-                    android:layout_marginBottom="6dp" />
+            <TextView
+                android:id="@+id/btnAddSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_add_schedule"
+                android:textColor="@color/accent"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/inputGroupName"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="@string/group_name_hint"
-                    android:inputType="text"
-                    android:textColor="@color/text_primary"
-                    android:textColorHint="@color/text_hint"
-                    android:background="@drawable/bg_field"
-                    android:paddingStart="14dp"
-                    android:paddingEnd="14dp"
-                    android:layout_marginBottom="24dp"
-                    android:imeOptions="actionNext" />
+        <!-- Schedules list container -->
+        <LinearLayout
+            android:id="@+id/schedulesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
 
-                <!-- Daily limit -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/group_daily_limit_label"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp"
-                    android:textAllCaps="true"
-                    android:layout_marginBottom="6dp" />
+        <TextView
+            android:id="@+id/schedulesEmptyHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedules_empty_hint"
+            android:textColor="@color/text_hint"
+            android:textSize="13sp"
+            android:visibility="visible" />
 
-                <EditText
-                    android:id="@+id/inputLimit"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="@string/group_daily_limit_hint"
-                    android:inputType="number"
-                    android:textColor="@color/text_primary"
-                    android:textColorHint="@color/text_hint"
-                    android:background="@drawable/bg_field"
-                    android:paddingStart="14dp"
-                    android:paddingEnd="14dp"
-                    android:layout_marginBottom="28dp"
-                    android:imeOptions="actionDone" />
-
-                <!-- Domains section -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="10dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/domains_label"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="12sp"
-                        android:textAllCaps="true" />
-
-                    <TextView
-                        android:id="@+id/btnAddDomain"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btn_add_domain"
-                        android:textColor="@color/accent"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:padding="4dp"
-                        android:clickable="true"
-                        android:focusable="true" />
-                </LinearLayout>
-
-                <!-- Domains list container -->
-                <LinearLayout
-                    android:id="@+id/domainsContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="8dp" />
-
-                <TextView
-                    android:id="@+id/domainsEmptyHint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/domains_empty_hint"
-                    android:textColor="@color/text_hint"
-                    android:textSize="13sp"
-                    android:layout_marginBottom="28dp"
-                    android:visibility="visible" />
-
-                <!-- Schedules section -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="10dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/schedules_label"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="12sp"
-                        android:textAllCaps="true" />
-
-                    <TextView
-                        android:id="@+id/btnAddSchedule"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btn_add_schedule"
-                        android:textColor="@color/accent"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:padding="4dp"
-                        android:clickable="true"
-                        android:focusable="true" />
-                </LinearLayout>
-
-                <!-- Schedules list container -->
-                <LinearLayout
-                    android:id="@+id/schedulesContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-
-                <TextView
-                    android:id="@+id/schedulesEmptyHint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/schedules_empty_hint"
-                    android:textColor="@color/text_hint"
-                    android:textSize="13sp"
-                    android:visibility="visible" />
-
-            </LinearLayout>
-        </ScrollView>
     </LinearLayout>
-
-</FrameLayout>
+</ScrollView>
