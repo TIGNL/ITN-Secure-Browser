@@ -95,29 +95,38 @@ fun SheetScaffold(
     }
 }
 
-/** Tappable settings-style row with optional leading icon and trailing content. */
+/** Tappable settings-style row with optional leading icon and trailing content.
+ *  Height is always exactly 64dp. Any trailing content is capped at 32dp height. */
 @Composable
 fun SheetRow(
     icon: ImageVector?,
     title: String,
     subtitle: String? = null,
     trailing: @Composable () -> Unit = {},
-    onClick: () -> Unit
+    onClick: (() -> Unit)? = null
 ) {
+    val modifier = Modifier
+        .fillMaxWidth()
+        .height(64.dp)
+        .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
+        .padding(horizontal = 20.dp)
+
     Row(
-        Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(horizontal = 20.dp, vertical = 18.dp),
+        modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (icon != null) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(24.dp)
-            )
+            Box(
+                modifier = Modifier.size(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
             Spacer(Modifier.width(16.dp))
         }
         Column(Modifier.weight(1f)) {
@@ -130,7 +139,12 @@ fun SheetRow(
                 )
             }
         }
-        trailing()
+        Box(
+            modifier = Modifier.height(32.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            trailing()
+        }
     }
 }
 
