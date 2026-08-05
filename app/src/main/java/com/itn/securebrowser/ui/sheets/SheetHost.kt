@@ -29,6 +29,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
@@ -102,6 +103,7 @@ fun SheetRow(
     icon: ImageVector?,
     title: String,
     subtitle: String? = null,
+    titleColor: Color = Color.Unspecified,
     trailing: @Composable () -> Unit = {},
     onClick: (() -> Unit)? = null
 ) {
@@ -130,7 +132,7 @@ fun SheetRow(
             Spacer(Modifier.width(16.dp))
         }
         Column(Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.bodyLarge)
+            Text(title, style = MaterialTheme.typography.bodyLarge, color = titleColor)
             if (subtitle != null) {
                 Text(
                     subtitle,

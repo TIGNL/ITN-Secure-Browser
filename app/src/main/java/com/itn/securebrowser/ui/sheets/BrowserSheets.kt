@@ -1,15 +1,11 @@
 package com.itn.securebrowser.ui.sheets
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -26,10 +22,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.itn.securebrowser.MainActivity
 import com.itn.securebrowser.R
@@ -55,36 +49,24 @@ fun TabsSheet(sheet: Sheet.Tabs, activity: MainActivity, dismiss: () -> Unit) {
             LazyColumn(Modifier.weight(1f)) {
                 items(sheet.tabs, key = { it.id }) { tab ->
                     val active = tab.id == sheet.activeId
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .background(
-                                if (active) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
-                                else Color.Transparent
-                            )
-                            .clickable {
-                                activity.switchToTab(tab.id)
+                    SheetRow(
+                        icon = null,
+                        title = tab.title.ifBlank { stringResource(R.string.new_tab) },
+                        titleColor = if (active) MaterialTheme.colorScheme.onSurface
+                        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                        trailing = {
+                            IconButton(onClick = {
+                                activity.closeTab(tab.id)
                                 dismiss()
+                            }) {
+                                Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.cd_close_tab))
                             }
-                            .padding(start = 20.dp, end = 8.dp, top = 10.dp, bottom = 10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = tab.title.ifBlank { stringResource(R.string.new_tab) },
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = if (active) MaterialTheme.colorScheme.onSurface
-                            else MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.weight(1f)
-                        )
-                        IconButton(onClick = {
-                            activity.closeTab(tab.id)
+                        },
+                        onClick = {
+                            activity.switchToTab(tab.id)
                             dismiss()
-                        }) {
-                            Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.cd_close_tab))
                         }
-                    }
+                    )
                 }
             }
         }
