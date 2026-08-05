@@ -34,7 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.offset
+import androidx.compose.ui.draw.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -96,7 +96,7 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
                 )
             })
             SheetDivider()
-            SheetRow(icon = null, title = stringResource(R.string.btn_clear_pin), onClick = pushVerifyThenClear)
+            SheetRow(icon = null, title = stringResource(R.string.btn_clear_pin), onClick = { pushVerifyThenClear() })
         }
     }
 }
@@ -206,7 +206,7 @@ fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () ->
         Column(
             Modifier
                 .fillMaxSize()
-                .offset(x = shakeOffset.value.dp)
+                .graphicsLayer { translationX = shakeOffset.value }
                 .padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center

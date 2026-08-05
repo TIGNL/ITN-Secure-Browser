@@ -42,6 +42,7 @@
 
     <!-- Common buttons -->
     <string name="btn_add">Add</string>
+    <string name="btn_add_group">Add</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_delete">Delete</string>
     <string name="err_daily_limit_positive">Daily limit must be a positive number</string>

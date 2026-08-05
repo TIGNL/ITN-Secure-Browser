@@ -47,7 +47,7 @@ fun SheetHost(
     Box(Modifier.fillMaxSize()) {
         stack.forEachIndexed { index, sheet ->
             val isTop = index == stack.lastIndex
-            val dismiss = { stack.remove(sheet) }
+            val dismiss: () -> Unit = { stack.remove(sheet) }
             key(sheet) {
                 ModalBottomSheet(
                     onDismissRequest = dismiss,
