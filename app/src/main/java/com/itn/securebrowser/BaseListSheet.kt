@@ -57,7 +57,7 @@ open class BaseListSheet : BaseBottomSheet() {
     protected fun showFragment(fragment: Fragment) {
         listScrollView.visibility    = View.GONE
         fragmentContainer.visibility = View.VISIBLE
-        parentFragmentManager.beginTransaction()
+        childFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
