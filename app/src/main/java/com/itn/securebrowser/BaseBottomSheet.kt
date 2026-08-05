@@ -7,7 +7,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
  * الكلاس الأساسي لجميع الصفحات المنبثقة في التطبيق.
- * يضمن: ارتفاع 75% — skipCollapsed — STATE_EXPANDED
+ * يضمن: ارتفاع 75% — skipCollapsed — STATE_EXPANDED.
  */
 abstract class BaseBottomSheet : BottomSheetDialogFragment() {
 
