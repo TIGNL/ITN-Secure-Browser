@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  item_base_list.xml
+  القالب الموحد لعناصر قوائم BaseListActivity.
+
+  الاتفاق: كل صفحة ترث من BaseListActivity تستخدم هذا القالب حصراً.
+  لا تغير ارتفاع العنصر (64dp) ولا تضف layout خارجي آخر.
+
+  المحتوى القابل للتخصيص:
+    • itemIcon  — أيقونة على اليسار (اختياري، يختفي إن لم يُعيَّن)
+    • itemTitle — النص الرئيسي
+    • itemEnd   — عنصر على اليمين (سهم أو مفتاح أو غيره، اختياري)
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- الأيقونة -->
+    <ImageView
+        android:id="@+id/itemIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:padding="16dp"
+        android:visibility="gone" />
+
+    <!-- النص -->
+    <TextView
+        android:id="@+id/itemTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp" />
+
+    <!-- عنصر اليمين -->
+    <FrameLayout
+        android:id="@+id/itemEnd"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:visibility="gone" />
+
+</LinearLayout>
