@@ -5,13 +5,16 @@
     android:orientation="vertical"
     android:background="#1A1A2E">
 
-    <!-- Header مشترك -->
-    <include
-        layout="@layout/bottom_sheet_base"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!-- Handle فقط — بدون header text -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#444466" />
 
-    <!-- صف الـ Toggle -->
+    <!-- صف الـ Toggle — 64dp مباشرة بعد الـ handle -->
     <LinearLayout
         android:id="@+id/toggleRow"
         android:layout_width="match_parent"
