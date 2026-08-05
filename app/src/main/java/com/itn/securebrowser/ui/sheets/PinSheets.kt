@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -60,22 +59,20 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
     }
 
     SheetScaffold(title = "PIN", onClose = dismiss) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .clickable { if (hasPin) pushVerifyThenClear() else push(setPinEntry(context) { hasPin = PinManager.hasPin(context) }) }
-                .padding(horizontal = 20.dp, vertical = 18.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text("PIN", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-            Switch(
-                checked = hasPin,
-                onCheckedChange = { enabled ->
-                    if (enabled) push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
-                    else pushVerifyThenClear()
-                }
-            )
-        }
+        SheetRow(
+            icon = null,
+            title = "PIN",
+            onClick = { if (hasPin) pushVerifyThenClear() else push(setPinEntry(context) { hasPin = PinManager.hasPin(context) }) },
+            trailing = {
+                Switch(
+                    checked = hasPin,
+                    onCheckedChange = { enabled ->
+                        if (enabled) push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
+                        else pushVerifyThenClear()
+                    }
+                )
+            }
+        )
         SheetDivider()
 
         if (hasPin) {

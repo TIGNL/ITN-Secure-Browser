@@ -2,7 +2,6 @@ package com.itn.securebrowser.ui.sheets
 
 import android.app.TimePickerDialog
 import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -141,32 +140,27 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
         } else {
             LazyColumn(Modifier.weight(1f)) {
                 items(groups, key = { it.name }) { group ->
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .clickable { push(Sheet.GroupEdit(group.name)) }
-                            .padding(start = 20.dp, end = 8.dp, top = 12.dp, bottom = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(Modifier.weight(1f)) {
-                            Text(group.name, style = MaterialTheme.typography.bodyLarge)
-                            Text(
-                                domainsPreview(group.domains),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                    SheetRow(
+                        icon = null,
+                        title = group.name,
+                        subtitle = domainsPreview(group.domains),
+                        onClick = { push(Sheet.GroupEdit(group.name)) },
+                        trailing = {
+                            IconButton(onClick = {
+                                push(Sheet.DeleteGroup(group.name) {
+                                    store.deleteGroup(group.name)
+                                    groups = store.getGroups()
+                                })
+                            }) {
+                                Icon(
+                                    Icons.Filled.Delete,
+                                    contentDescription = stringResource(R.string.cd_delete_group),
+                                    tint = MaterialTheme.colorScheme.error
+                                )
+                            }
                         }
-                        IconButton(onClick = { push(Sheet.DeleteGroup(group.name) {
-                            store.deleteGroup(group.name)
-                            groups = store.getGroups()
-                        }) }) {
-                            Icon(
-                                Icons.Filled.Delete,
-                                contentDescription = stringResource(R.string.cd_delete_group),
-                                tint = MaterialTheme.colorScheme.error
-                            )
-                        }
-                    }
+                    )
+                    SheetDivider()
                 }
             }
         }
@@ -296,22 +290,21 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                 )
             } else {
                 domains.forEachIndexed { index, domain ->
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(domain, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
-                        IconButton(onClick = { domains.removeAt(index) }) {
-                            Icon(
-                                Icons.Filled.Close,
-                                contentDescription = stringResource(R.string.cd_delete_domain),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(18.dp)
-                            )
+                    SheetRow(
+                        icon = null,
+                        title = domain,
+                        trailing = {
+                            IconButton(onClick = { domains.removeAt(index) }) {
+                                Icon(
+                                    Icons.Filled.Close,
+                                    contentDescription = stringResource(R.string.cd_delete_domain),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
                         }
-                    }
+                    )
+                    SheetDivider()
                 }
             }
             TextButton(onClick = { push(Sheet.AddDomain(domains.toList()) { d -> domains.add(d) }) }) {
@@ -329,32 +322,22 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                 )
             } else {
                 schedules.forEachIndexed { index, schedule ->
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(Modifier.weight(1f)) {
-                            Text(
-                                schedule.days.joinToString(", ") { dayNames[it] ?: it },
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            Text(
-                                "${schedule.from} — ${schedule.to}",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                    SheetRow(
+                        icon = null,
+                        title = schedule.days.joinToString(", ") { dayNames[it] ?: it },
+                        subtitle = "${schedule.from} — ${schedule.to}",
+                        trailing = {
+                            IconButton(onClick = { schedules.removeAt(index) }) {
+                                Icon(
+                                    Icons.Filled.Close,
+                                    contentDescription = stringResource(R.string.cd_delete_schedule),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                            }
                         }
-                        IconButton(onClick = { schedules.removeAt(index) }) {
-                            Icon(
-                                Icons.Filled.Close,
-                                contentDescription = stringResource(R.string.cd_delete_schedule),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(18.dp)
-                            )
-                        }
-                    }
+                    )
+                    SheetDivider()
                 }
             }
             TextButton(onClick = { push(Sheet.AddSchedule { s -> schedules.add(s) }) }) {
