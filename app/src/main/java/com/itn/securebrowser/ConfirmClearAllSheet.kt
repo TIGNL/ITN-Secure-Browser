@@ -20,7 +20,7 @@ class ConfirmClearAllSheet(
         view.findViewById<TextView>(R.id.sheetHeaderTitle).text =
             getString(R.string.clear_all_title)
 
-        view.findViewById<TextView>(R.id.message).text =
+        view.findViewById<TextView>(R.id.tvDeleteMessage).text =
             getString(R.string.clear_all_message)
 
         view.findViewById<TextView>(R.id.btnConfirmDelete).text =
@@ -31,7 +31,7 @@ class ConfirmClearAllSheet(
             dismiss()
         }
 
-        view.findViewById<View>(R.id.btnCancel).setOnClickListener {
+        view.findViewById<View>(R.id.btnCancelDelete).setOnClickListener {
             dismiss()
         }
     }
