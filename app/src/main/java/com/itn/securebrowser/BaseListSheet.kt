@@ -28,7 +28,15 @@ open class BaseListSheet : BaseBottomSheet() {
         listScrollView    = view.findViewById(R.id.listScrollView)
         fragmentContainer = view.findViewById(R.id.fragmentContainer)
 
-        view.findViewById<View>(R.id.btnBack).setOnClickListener { dismiss() }
+        view.findViewById<View>(R.id.btnBack).setOnClickListener {
+            if (childFragmentManager.backStackEntryCount > 0) {
+                childFragmentManager.popBackStack()
+                fragmentContainer.visibility = View.GONE
+                listScrollView.visibility    = View.VISIBLE
+            } else {
+                dismiss()
+            }
+        }
     }
 
     protected fun setPageTitle(title: String) {
@@ -57,7 +65,7 @@ open class BaseListSheet : BaseBottomSheet() {
     protected fun showFragment(fragment: Fragment) {
         listScrollView.visibility    = View.GONE
         fragmentContainer.visibility = View.VISIBLE
-        parentFragmentManager.beginTransaction()
+        childFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
