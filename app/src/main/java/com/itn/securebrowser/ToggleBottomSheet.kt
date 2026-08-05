@@ -7,31 +7,54 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
  * ToggleBottomSheet — قالب عام لصفحة منبثقة تحتوي toggle switch
  * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ * مستقلة عن BaseBottomSheet — نفس الخصائص (75%، skipCollapsed)
+ * لكن بدون header — الـ toggle مباشرة في الأعلى.
+ *
  * الهيكل:
- *   • Header مشترك (من bottom_sheet_base)
- *   • صف toggle مع عنوان وswitch
- *   • منطقة محتوى ديناميكية تتغير بحسب حالة الـ toggle
+ *   • صف toggle (64dp) في الأعلى مباشرة
+ *   • Divider
+ *   • منطقة محتوى ON (تظهر عند تشغيل الـ toggle)
+ *   • منطقة محتوى OFF (تظهر عند إيقاف الـ toggle)
  *
  * الاستخدام:
  *   class MySheet : ToggleBottomSheet(
- *       title       = "عنوان الصفحة",
- *       toggleLabel = "اسم الخيار",
+ *       toggleLabel  = "اسم الخيار",
  *       initialState = false,
- *       onContent   = { container -> /* أضف views لحالة ON */ },
- *       offContent  = { container -> /* أضف views لحالة OFF */ }
+ *       onContent    = { container -> },
+ *       offContent   = { container -> }
  *   )
  */
 abstract class ToggleBottomSheet(
-    private val title:        String,
     private val toggleLabel:  String,
     private val initialState: Boolean,
     private val onContent:    (ViewGroup) -> Unit,
     private val offContent:   (ViewGroup) -> Unit = {}
-) : BaseBottomSheet() {
+) : BottomSheetDialogFragment() {
+
+    // نفس خصائص BaseBottomSheet (75%، skipCollapsed)
+    override fun onStart() {
+        super.onStart()
+        val dialog = dialog as? BottomSheetDialog ?: return
+        val sheet  = dialog.findViewById<View>(
+            com.google.android.material.R.id.design_bottom_sheet
+        ) ?: return
+
+        val screenHeight = resources.displayMetrics.heightPixels
+        sheet.layoutParams.height = (screenHeight * 0.75).toInt()
+
+        BottomSheetBehavior.from(sheet).apply {
+            peekHeight    = (screenHeight * 0.75).toInt()
+            state         = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
+        }
+    }
 
     private var suppressListener = false
 
@@ -42,24 +65,20 @@ abstract class ToggleBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.sheetHeaderTitle).text = title
-        view.findViewById<TextView>(R.id.toggleLabel).text      = toggleLabel
+        view.findViewById<TextView>(R.id.toggleLabel).text = toggleLabel
 
-        val toggleSwitch   = view.findViewById<SwitchCompat>(R.id.toggleSwitch)
-        val contentOn      = view.findViewById<ViewGroup>(R.id.contentOn)
-        val contentOff     = view.findViewById<ViewGroup>(R.id.contentOff)
+        val toggleSwitch = view.findViewById<SwitchCompat>(R.id.toggleSwitch)
+        val contentOn    = view.findViewById<ViewGroup>(R.id.contentOn)
+        val contentOff   = view.findViewById<ViewGroup>(R.id.contentOff)
 
-        // بناء المحتوى مرة واحدة
         onContent(contentOn)
         offContent(contentOff)
 
-        // الحالة الأولية
         suppressListener = true
         toggleSwitch.isChecked = initialState
         suppressListener = false
         applyState(initialState, contentOn, contentOff)
 
-        // صف الـ toggle كاملاً قابل للنقر
         view.findViewById<View>(R.id.toggleRow).setOnClickListener {
             toggleSwitch.performClick()
         }
@@ -77,14 +96,8 @@ abstract class ToggleBottomSheet(
         contentOff.visibility = if (on) View.GONE    else View.VISIBLE
     }
 
-    /**
-     * يُستدعى عند تغيير حالة الـ toggle.
-     * الكلاس الوارث يمكنه تجاوزه لإضافة منطق (مثل طلب PIN).
-     * إن أراد إلغاء التغيير يستدعي [revertToggle].
-     */
     open fun onToggleChanged(isOn: Boolean) {}
 
-    /** يُعيد الـ toggle لحالته السابقة بدون استدعاء onToggleChanged */
     protected fun revertToggle(view: View?) {
         val toggleSwitch = view?.findViewById<SwitchCompat>(R.id.toggleSwitch) ?: return
         suppressListener = true
