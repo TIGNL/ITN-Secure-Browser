@@ -9,7 +9,6 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 
 class GroupEditSheet : BaseBottomSheet() {
 
@@ -57,7 +56,7 @@ class GroupEditSheet : BaseBottomSheet() {
         view.findViewById<View>(R.id.btnBack).setOnClickListener { dismiss() }
 
         bindViews(view)
-        setupListeners(view)
+        setupListeners()
         loadGroupIfEditing()
     }
 
@@ -73,9 +72,9 @@ class GroupEditSheet : BaseBottomSheet() {
         schedulesEmptyHint = root.findViewById(R.id.schedulesEmptyHint)
     }
 
-    private fun setupListeners(root: View) {
+    private fun setupListeners() {
         btnSave.setOnClickListener        { trySave() }
-        btnAddDomain.setOnClickListener   { showAddDomainDialog() }
+        btnAddDomain.setOnClickListener   { showAddDomainSheet() }
         btnAddSchedule.setOnClickListener { showAddScheduleDialog() }
     }
 
@@ -129,36 +128,11 @@ class GroupEditSheet : BaseBottomSheet() {
         }
     }
 
-    private fun showAddDomainDialog() {
-        val input = EditText(requireContext()).apply {
-            hint = getString(R.string.add_domain_hint)
-            inputType     = android.text.InputType.TYPE_TEXT_VARIATION_URI
-            textSize      = 15f
-            setPadding(48, 32, 48, 32)
-            setTextColor(0xFFFFFFFF.toInt())
-            setHintTextColor(0xFF555577.toInt())
-            backgroundTintList = android.content.res.ColorStateList.valueOf(0xFFE94560.toInt())
-        }
-
-        AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-            .setTitle(getString(R.string.add_domain_title))
-            .setView(input)
-            .setPositiveButton(getString(R.string.btn_add)) { _, _ ->
-                val raw = input.text.toString().trim()
-                    .removePrefix("https://").removePrefix("http://")
-                    .removePrefix("www.").trimEnd('/').lowercase()
-                when {
-                    raw.isBlank()      -> toast(getString(R.string.err_domain_blank))
-                    !raw.contains('.') -> toast(getString(R.string.err_domain_invalid))
-                    raw in domains     -> toast(getString(R.string.err_domain_duplicate))
-                    else -> {
-                        domains.add(raw)
-                        refreshDomainsView()
-                    }
-                }
-            }
-            .setNegativeButton("إلغاء", null)
-            .show()
+    private fun showAddDomainSheet() {
+        AddDomainSheet(domains) { domain ->
+            domains.add(domain)
+            refreshDomainsView()
+        }.show(parentFragmentManager, "add_domain")
     }
 
     private fun refreshDomainsView() {
