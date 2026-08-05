@@ -178,7 +178,7 @@ class GroupEditSheet : BaseBottomSheet() {
     }
 
     private fun showAddScheduleDialog() {
-        AddBlockScheduleDialog { schedule ->
+        AddBlockScheduleSheet { schedule ->
             schedules.add(schedule)
             refreshSchedulesView()
         }.show(parentFragmentManager, "add_schedule")

@@ -15,7 +15,7 @@ class ParentalSettingsSheet : BaseListSheet() {
         }
 
         addListItem(R.drawable.ic_clock, label = getString(R.string.tab_groups)) {
-            showFragment(GroupsFragment())
+            showFragment(GroupsSheet())
         }
     }
 }
