@@ -5,14 +5,22 @@
     android:orientation="vertical"
     android:background="#1A1A2E">
 
-    <!-- Handle فقط — بدون header text -->
-    <View
-        android:layout_width="40dp"
-        android:layout_height="4dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="#444466" />
+    <!-- Handle — مطابق لـ bottom_sheet_base -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@color/accent"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:background="#FFFFFF" />
+
+    </LinearLayout>
 
     <!-- صف الـ Toggle — 64dp مباشرة بعد الـ handle -->
     <LinearLayout
@@ -48,7 +56,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#2A2A4A" />
+        android:background="#2A2A4A"
+        android:layout_marginBottom="4dp" />
 
     <!-- محتوى حالة ON -->
     <LinearLayout
