@@ -1,5 +1,6 @@
 package com.itn.securebrowser
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 
-class ManageSpaceSheet : BaseBottomSheet() {
+class ManageSpaceSheet(
+    private val onDismissed: () -> Unit = {}
+) : BaseBottomSheet() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -26,6 +29,11 @@ class ManageSpaceSheet : BaseBottomSheet() {
         view.findViewById<View>(R.id.rowClearTracking).setOnClickListener { clearTracking() }
         view.findViewById<View>(R.id.rowClearBlocking).setOnClickListener { clearBlocking() }
         view.findViewById<View>(R.id.rowClearAll).setOnClickListener { confirmClearAll() }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissed()
     }
 
     private fun clearBrowsing() {
