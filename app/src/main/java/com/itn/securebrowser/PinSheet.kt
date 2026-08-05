@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 class PinSheet : ToggleBottomSheet(
-    title        = "PIN",
     toggleLabel  = "PIN",
-    initialState = false, // placeholder — تُحدَّث في onViewCreated
+    initialState = false,
     onContent    = {},
     offContent   = {}
 ) {
@@ -19,16 +18,14 @@ class PinSheet : ToggleBottomSheet(
     }
 
     private fun refresh(root: View) {
-        val hasPin    = PinManager.hasPin(requireContext())
-        val toggle    = root.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.toggleSwitch)
-        val contentOn = root.findViewById<ViewGroup>(R.id.contentOn)
-        val contentOff= root.findViewById<ViewGroup>(R.id.contentOff)
+        val hasPin     = PinManager.hasPin(requireContext())
+        val toggle     = root.findViewById<androidx.appcompat.widget.SwitchCompat>(R.id.toggleSwitch)
+        val contentOn  = root.findViewById<ViewGroup>(R.id.contentOn)
+        val contentOff = root.findViewById<ViewGroup>(R.id.contentOff)
 
-        // ضبط الـ toggle بدون استدعاء onToggleChanged
         toggle.setOnCheckedChangeListener(null)
         toggle.isChecked = hasPin
 
-        // إعادة بناء المحتوى
         contentOn.removeAllViews()
         contentOff.removeAllViews()
 
@@ -40,10 +37,7 @@ class PinSheet : ToggleBottomSheet(
         contentOn.visibility  = if (hasPin) View.VISIBLE else View.GONE
         contentOff.visibility = if (hasPin) View.GONE    else View.VISIBLE
 
-        // إعادة ربط الـ listener بعد الضبط
-        toggle.setOnCheckedChangeListener { _, checked ->
-            onToggleChanged(checked)
-        }
+        toggle.setOnCheckedChangeListener { _, checked -> onToggleChanged(checked) }
     }
 
     override fun onToggleChanged(isOn: Boolean) {
@@ -52,21 +46,14 @@ class PinSheet : ToggleBottomSheet(
                 mode          = PinEntrySheet.MODE_SET,
                 subtitle      = getString(R.string.pin_subtitle_new),
                 onPinVerified = { refresh(requireView()) },
-                onDismissed   = {
-                    if (!PinManager.hasPin(requireContext())) revertToggle(view)
-                }
+                onDismissed   = { if (!PinManager.hasPin(requireContext())) revertToggle(view) }
             ).show(parentFragmentManager, "pin_set")
         } else {
             PinEntrySheet(
                 mode          = PinEntrySheet.MODE_VERIFY,
                 subtitle      = getString(R.string.pin_verify_first),
-                onPinVerified = {
-                    PinManager.clear(requireContext())
-                    refresh(requireView())
-                },
-                onDismissed   = {
-                    if (PinManager.hasPin(requireContext())) revertToggle(view)
-                }
+                onPinVerified = { PinManager.clear(requireContext()); refresh(requireView()) },
+                onDismissed   = { if (PinManager.hasPin(requireContext())) revertToggle(view) }
             ).show(parentFragmentManager, "pin_verify")
         }
     }
@@ -89,10 +76,7 @@ class PinSheet : ToggleBottomSheet(
         PinEntrySheet(
             mode          = PinEntrySheet.MODE_VERIFY,
             subtitle      = getString(R.string.pin_verify_first),
-            onPinVerified = {
-                PinManager.clear(requireContext())
-                refresh(requireView())
-            }
+            onPinVerified = { PinManager.clear(requireContext()); refresh(requireView()) }
         ).show(parentFragmentManager, "pin_verify")
     }
 
