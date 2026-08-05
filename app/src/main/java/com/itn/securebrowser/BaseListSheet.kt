@@ -8,7 +8,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 
@@ -30,31 +29,6 @@ open class BaseListSheet : BaseBottomSheet() {
         fragmentContainer = view.findViewById(R.id.fragmentContainer)
 
         view.findViewById<View>(R.id.btnBack).setOnClickListener { dismiss() }
-
-        if (childFragmentManager.backStackEntryCount > 0) {
-            listScrollView.visibility = View.GONE
-            fragmentContainer.visibility = View.VISIBLE
-        }
-
-        childFragmentManager.addOnBackStackChangedListener {
-            if (childFragmentManager.backStackEntryCount == 0) {
-                listScrollView.visibility = View.VISIBLE
-                fragmentContainer.visibility = View.GONE
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (childFragmentManager.backStackEntryCount > 0) {
-                        childFragmentManager.popBackStack()
-                    } else {
-                        isEnabled = false
-                        requireActivity().onBackPressedDispatcher.onBackPressed()
-                    }
-                }
-            }
-        )
     }
 
     protected fun setPageTitle(title: String) {
@@ -83,7 +57,7 @@ open class BaseListSheet : BaseBottomSheet() {
     protected fun showFragment(fragment: Fragment) {
         listScrollView.visibility    = View.GONE
         fragmentContainer.visibility = View.VISIBLE
-        childFragmentManager.beginTransaction()
+        parentFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
