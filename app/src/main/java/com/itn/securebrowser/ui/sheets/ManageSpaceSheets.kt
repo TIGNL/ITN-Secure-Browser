@@ -3,26 +3,15 @@ package com.itn.securebrowser.ui.sheets
 import android.webkit.CookieManager
 import android.webkit.WebStorage
 import android.widget.Toast
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -98,18 +87,18 @@ fun ManageSpaceSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
 fun ConfirmClearAllSheet(sheet: Sheet.ConfirmClearAll, dismiss: () -> Unit) {
     val context = LocalContext.current
     SheetScaffold(title = stringResource(R.string.clear_all_title), onClose = dismiss) {
-        Column(Modifier.padding(20.dp)) {
-            Text(stringResource(R.string.clear_all_message))
-            androidx.compose.foundation.layout.Spacer(Modifier.padding(24.dp))
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextButton(onClick = { dismiss() }) { Text(stringResource(R.string.btn_cancel)) }
-                androidx.compose.foundation.layout.Spacer(Modifier.padding(8.dp))
-                Button(onClick = { sheet.onConfirm(); dismiss() }) { Text(stringResource(R.string.btn_clear_all_confirm)) }
-            }
-        }
+        Text(
+            stringResource(R.string.clear_all_message),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)
+        )
+        SheetDivider()
+        SheetRow(
+            icon = Icons.Filled.DeleteSweep,
+            title = stringResource(R.string.btn_clear_all_confirm),
+            titleColor = MaterialTheme.colorScheme.error,
+            onClick = { sheet.onConfirm(); dismiss() }
+        )
     }
 }

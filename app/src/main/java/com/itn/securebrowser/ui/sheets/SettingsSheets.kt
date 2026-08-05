@@ -2,23 +2,14 @@ package com.itn.securebrowser.ui.sheets
 
 import android.app.TimePickerDialog
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
@@ -26,15 +17,10 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Schedule
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -253,43 +239,38 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
         title = stringResource(if (editing != null) R.string.edit_group_title else R.string.new_group_title),
         onClose = dismiss
     ) {
-        Column(
-            Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp)
-        ) {
-            OutlinedTextField(
-                value = name,
-                onValueChange = { if (editing == null) name = it },
-                label = { Text(stringResource(R.string.group_name_label)) },
-                placeholder = { Text(stringResource(R.string.group_name_hint)) },
-                singleLine = true,
-                enabled = editing == null,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(Modifier.height(8.dp))
-            OutlinedTextField(
-                value = limit,
-                onValueChange = { limit = it },
-                label = { Text(stringResource(R.string.group_daily_limit_label)) },
-                placeholder = { Text(stringResource(R.string.group_daily_limit_hint)) },
-                singleLine = true,
-                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(Modifier.height(16.dp))
-
-            Text(stringResource(R.string.domains_label), style = MaterialTheme.typography.titleSmall)
-            Spacer(Modifier.height(4.dp))
-            if (domains.isEmpty()) {
-                Text(
-                    stringResource(R.string.domains_empty_hint),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+        LazyColumn(Modifier.weight(1f)) {
+            item {
+                TextFieldRow(
+                    label = stringResource(R.string.group_name_label),
+                    value = name,
+                    onValueChange = { if (editing == null) name = it },
+                    placeholder = stringResource(R.string.group_name_hint),
+                    enabled = editing == null
                 )
+                SheetDivider()
+                TextFieldRow(
+                    label = stringResource(R.string.group_daily_limit_label),
+                    value = limit,
+                    onValueChange = { limit = it },
+                    placeholder = stringResource(R.string.group_daily_limit_hint),
+                    keyboardType = KeyboardType.Number
+                )
+                SheetDivider()
+                SheetRow(icon = Icons.Filled.Public, title = stringResource(R.string.domains_label))
+            }
+            if (domains.isEmpty()) {
+                item {
+                    SheetDivider()
+                    SheetRow(
+                        icon = null,
+                        title = stringResource(R.string.domains_empty_hint),
+                        titleColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             } else {
-                domains.forEachIndexed { index, domain ->
+                itemsIndexed(domains) { index, domain ->
+                    SheetDivider()
                     SheetRow(
                         icon = null,
                         title = domain,
@@ -304,24 +285,30 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                             }
                         }
                     )
-                    SheetDivider()
                 }
             }
-            TextButton(onClick = { push(Sheet.AddDomain(domains.toList()) { d -> domains.add(d) }) }) {
-                Text(stringResource(R.string.btn_add_domain))
-            }
-
-            Spacer(Modifier.height(8.dp))
-            Text(stringResource(R.string.schedules_label), style = MaterialTheme.typography.titleSmall)
-            Spacer(Modifier.height(4.dp))
-            if (schedules.isEmpty()) {
-                Text(
-                    stringResource(R.string.schedules_empty_hint),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+            item {
+                SheetDivider()
+                SheetRow(
+                    icon = Icons.Filled.Add,
+                    title = stringResource(R.string.btn_add_domain),
+                    onClick = { push(Sheet.AddDomain(domains.toList()) { d -> domains.add(d) }) }
                 )
+                SheetDivider()
+                SheetRow(icon = Icons.Filled.Schedule, title = stringResource(R.string.schedules_label))
+            }
+            if (schedules.isEmpty()) {
+                item {
+                    SheetDivider()
+                    SheetRow(
+                        icon = null,
+                        title = stringResource(R.string.schedules_empty_hint),
+                        titleColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             } else {
-                schedules.forEachIndexed { index, schedule ->
+                itemsIndexed(schedules) { index, schedule ->
+                    SheetDivider()
                     SheetRow(
                         icon = null,
                         title = schedule.days.joinToString(", ") { dayNames[it] ?: it },
@@ -337,19 +324,24 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                             }
                         }
                     )
-                    SheetDivider()
                 }
             }
-            TextButton(onClick = { push(Sheet.AddSchedule { s -> schedules.add(s) }) }) {
-                Text(stringResource(R.string.btn_add_schedule))
+            item {
+                SheetDivider()
+                SheetRow(
+                    icon = Icons.Filled.Add,
+                    title = stringResource(R.string.btn_add_schedule),
+                    onClick = { push(Sheet.AddSchedule { s -> schedules.add(s) }) }
+                )
             }
-
-            Spacer(Modifier.height(8.dp))
-            Button(onClick = { trySave() }, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.btn_save))
-            }
-            Spacer(Modifier.height(16.dp))
         }
+        SheetDivider()
+        SheetRow(
+            icon = null,
+            title = stringResource(R.string.btn_save),
+            titleColor = MaterialTheme.colorScheme.primary,
+            onClick = { trySave() }
+        )
     }
 }
 
@@ -359,39 +351,30 @@ fun AddDomainSheet(sheet: Sheet.AddDomain, dismiss: () -> Unit) {
     var input by rememberSaveable { mutableStateOf("") }
 
     SheetScaffold(title = stringResource(R.string.add_domain_title), onClose = dismiss) {
-        Column(Modifier.padding(20.dp)) {
-            OutlinedTextField(
-                value = input,
-                onValueChange = { input = it },
-                placeholder = { Text(stringResource(R.string.add_domain_hint)) },
-                singleLine = true,
-                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = KeyboardType.Uri),
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(Modifier.height(16.dp))
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextButton(onClick = { dismiss() }) { Text(stringResource(R.string.btn_cancel)) }
-                Spacer(Modifier.width(8.dp))
-                Button(onClick = {
-                    val raw = input.trim()
-                        .removePrefix("https://").removePrefix("http://")
-                        .removePrefix("www.").trimEnd('/').lowercase()
-                    when {
-                        raw.isBlank() -> toast(context, context.getString(R.string.err_domain_blank))
-                        !raw.contains('.') -> toast(context, context.getString(R.string.err_domain_invalid))
-                        raw in sheet.existing -> toast(context, context.getString(R.string.err_domain_duplicate))
-                        else -> {
-                            sheet.onAdd(raw)
-                            dismiss()
-                        }
-                    }
-                }) { Text(stringResource(R.string.btn_add)) }
+        TextFieldRow(
+            label = stringResource(R.string.add_domain_hint),
+            value = input,
+            onValueChange = { input = it },
+            placeholder = "e.g. instagram.com",
+            keyboardType = KeyboardType.Uri
+        )
+        SheetDivider()
+        SheetRow(
+            icon = Icons.Filled.Add,
+            title = stringResource(R.string.btn_add),
+            titleColor = MaterialTheme.colorScheme.primary,
+            onClick = {
+                val raw = input.trim()
+                    .removePrefix("https://").removePrefix("http://")
+                    .removePrefix("www.").trimEnd('/').lowercase()
+                when {
+                    raw.isBlank() -> toast(context, context.getString(R.string.err_domain_blank))
+                    !raw.contains('.') -> toast(context, context.getString(R.string.err_domain_invalid))
+                    raw in sheet.existing -> toast(context, context.getString(R.string.err_domain_duplicate))
+                    else -> { sheet.onAdd(raw); dismiss() }
+                }
             }
-        }
+        )
     }
 }
 
@@ -419,71 +402,74 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
     )
 
     SheetScaffold(title = stringResource(R.string.add_schedule_title), onClose = dismiss) {
-        Column(
-            Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState())
-                .padding(20.dp)
-        ) {
-            Text(stringResource(R.string.schedule_days_label), style = MaterialTheme.typography.titleSmall)
-            Spacer(Modifier.height(8.dp))
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                dayLabels.forEach { (key, label) ->
-                    FilterChip(
-                        selected = key in days,
-                        onClick = {
-                            days = if (key in days) days - key else days + key
-                        },
-                        label = { Text(label) }
-                    )
-                }
+        LazyColumn(Modifier.weight(1f)) {
+            item {
+                SheetRow(icon = Icons.Filled.Schedule, title = stringResource(R.string.schedule_days_label))
             }
-
-            Spacer(Modifier.height(24.dp))
-            Text(stringResource(R.string.schedule_time_label), style = MaterialTheme.typography.titleSmall)
-            Spacer(Modifier.height(4.dp))
-            Text(
-                stringResource(R.string.schedule_time_hint),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(Modifier.height(8.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = {
-                    TimePickerDialog(context, { _, h, m -> fromHour = h; fromMin = m }, fromHour, fromMin, true).show()
-                }) { Text(fmt(fromHour, fromMin)) }
-                Text(stringResource(R.string.schedule_time_separator))
-                TextButton(onClick = {
-                    TimePickerDialog(context, { _, h, m -> toHour = h; toMin = m }, toHour, toMin, true).show()
-                }) { Text(fmt(toHour, toMin)) }
+            items(dayLabels) { (key, label) ->
+                SheetDivider()
+                SheetRow(
+                    icon = null,
+                    title = label,
+                    trailing = {
+                        androidx.compose.material3.Checkbox(
+                            checked = key in days,
+                            onCheckedChange = null
+                        )
+                    },
+                    onClick = { days = if (key in days) days - key else days + key }
+                )
+            }
+            item {
+                SheetDivider()
+                SheetRow(icon = Icons.Filled.Schedule, title = stringResource(R.string.schedule_time_label))
+                SheetDivider()
+                SheetRow(
+                    icon = null,
+                    title = stringResource(R.string.schedule_from),
+                    trailing = {
+                        Text(
+                            fmt(fromHour, fromMin),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    },
+                    onClick = {
+                        TimePickerDialog(context, { _, h, m -> fromHour = h; fromMin = m }, fromHour, fromMin, true).show()
+                    }
+                )
+                SheetDivider()
+                SheetRow(
+                    icon = null,
+                    title = stringResource(R.string.schedule_to),
+                    trailing = {
+                        Text(
+                            fmt(toHour, toMin),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    },
+                    onClick = {
+                        TimePickerDialog(context, { _, h, m -> toHour = h; toMin = m }, toHour, toMin, true).show()
+                    }
+                )
             }
         }
-
-        Button(
+        SheetDivider()
+        SheetRow(
+            icon = null,
+            title = stringResource(R.string.btn_ok),
+            titleColor = MaterialTheme.colorScheme.primary,
             onClick = {
                 val selectedDays = ALL_DAYS.split(",").filter { it in days }
                 if (selectedDays.isEmpty()) {
                     toast(context, context.getString(R.string.err_select_day))
                 } else {
-                    sheet.onAdd(
-                        BlockSchedule(
-                            days = selectedDays,
-                            from = fmt(fromHour, fromMin),
-                            to = fmt(toHour, toMin)
-                        )
-                    )
+                    sheet.onAdd(BlockSchedule(days = selectedDays, from = fmt(fromHour, fromMin), to = fmt(toHour, toMin)))
                     dismiss()
                 }
-            },
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(vertical = 8.dp)
-        ) {
-            Text(stringResource(R.string.btn_ok))
-        }
+            }
+        )
     }
 }
 
@@ -491,21 +477,17 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
 fun DeleteGroupSheet(sheet: Sheet.DeleteGroup, dismiss: () -> Unit) {
     val context = LocalContext.current
     SheetScaffold(title = stringResource(R.string.delete_group_title), onClose = dismiss) {
-        Column(Modifier.padding(20.dp)) {
-            Text(stringResource(R.string.delete_group_message, sheet.groupName))
-            Spacer(Modifier.height(24.dp))
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextButton(onClick = { dismiss() }) { Text(stringResource(R.string.btn_cancel)) }
-                Spacer(Modifier.width(8.dp))
-                Button(onClick = {
-                    sheet.onConfirm()
-                    dismiss()
-                }) { Text(stringResource(R.string.btn_delete)) }
-            }
-        }
+        SheetRow(
+            icon = null,
+            title = stringResource(R.string.delete_group_message, sheet.groupName),
+            titleColor = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        SheetDivider()
+        SheetRow(
+            icon = Icons.Filled.Delete,
+            title = stringResource(R.string.btn_delete),
+            titleColor = MaterialTheme.colorScheme.error,
+            onClick = { sheet.onConfirm(); dismiss() }
+        )
     }
 }
