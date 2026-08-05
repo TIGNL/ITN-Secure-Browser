@@ -28,6 +28,8 @@ class PinEntrySheet(
 
     private val entered  = StringBuilder()
     private var firstPin = ""
+    // يمنع استدعاء onDismissed بعد نجاح التحقق
+    private var pinSucceeded = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -55,7 +57,8 @@ class PinEntrySheet(
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        onDismissed()
+        // لا تُغلق الـ Activity إن كان التحقق نجح
+        if (!pinSucceeded) onDismissed()
     }
 
     private fun wireKeys(root: View) {
@@ -97,6 +100,7 @@ class PinEntrySheet(
 
     private fun verifyPin(pin: String) {
         if (PinManager.verify(requireContext(), pin)) {
+            pinSucceeded = true
             onPinVerified()
             dismiss()
         } else {
@@ -115,6 +119,7 @@ class PinEntrySheet(
             pinSubtitle.text = ""
         } else {
             if (pin == firstPin) {
+                pinSucceeded = true
                 PinManager.savePin(requireContext(), pin)
                 onPinVerified()
                 dismiss()
