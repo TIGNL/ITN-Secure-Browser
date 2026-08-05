@@ -3,6 +3,7 @@ package com.itn.securebrowser
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,8 @@ import android.widget.TextView
 class PinEntrySheet(
     private val mode: String = MODE_VERIFY,
     private val subtitle: String = "",
-    private val onPinVerified: () -> Unit = {}
+    private val onPinVerified: () -> Unit = {},
+    private val onDismissed: () -> Unit = {}
 ) : BaseBottomSheet() {
 
     companion object {
@@ -49,6 +51,11 @@ class PinEntrySheet(
 
         wireKeys(view)
         refreshDots()
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissed()
     }
 
     private fun wireKeys(root: View) {
