@@ -35,16 +35,14 @@ class MoreBottomSheet(
             checkDesktop.toggle()
         }
 
-        // ── 2. إعدادات الرقابة ─────────────────────────────────────────────
+        // ── 2. إعدادات الرقابة — تبقى MoreBottomSheet مفتوحة خلفها ────────
         view.findViewById<View>(R.id.rowParentalSettings).setOnClickListener {
             onOpenParentalSettings()
-            dismiss()
         }
 
-        // ── 3. الإعدادات العامة ──────────────────────────────────────────
+        // ── 3. الإعدادات العامة — تبقى MoreBottomSheet مفتوحة خلفها ───────
         view.findViewById<View>(R.id.rowGeneralSettings).setOnClickListener {
             onOpenGeneralSettings()
-            dismiss()
         }
     }
 
