@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 open class BaseListSheet : BaseBottomSheet() {
 
     protected lateinit var listContainer: LinearLayout
-    private lateinit var listScrollView: View
+    protected lateinit var listScrollView: View
     private lateinit var fragmentContainer: FrameLayout
 
     override fun onCreateView(
@@ -61,5 +61,11 @@ open class BaseListSheet : BaseBottomSheet() {
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    protected fun showView(contentView: View) {
+        listScrollView.visibility    = View.GONE
+        fragmentContainer.visibility = View.VISIBLE
+        fragmentContainer.addView(contentView)
     }
 }

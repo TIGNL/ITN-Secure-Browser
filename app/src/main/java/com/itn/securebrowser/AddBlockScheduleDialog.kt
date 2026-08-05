@@ -1,17 +1,18 @@
 package com.itn.securebrowser
 
 import android.app.TimePickerDialog
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 
 class AddBlockScheduleDialog(
     private val onScheduleAdded: (BlockSchedule) -> Unit
-) : BaseCenteredDialogFragment() {
-
-    override val title: String get() = getString(R.string.add_schedule_title)
-    override val contentLayoutRes: Int = R.layout.dialog_add_schedule
+) : BaseListSheet() {
 
     private lateinit var cbSat: CheckBox
     private lateinit var cbSun: CheckBox
@@ -28,7 +29,13 @@ class AddBlockScheduleDialog(
     private var toHour = 23
     private var toMin = 0
 
-    override fun onContentCreated(contentView: View) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setPageTitle(getString(R.string.add_schedule_title))
+
+        val contentView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_add_schedule, listContainer, false)
+
         cbSat = contentView.findViewById(R.id.cbSaturday)
         cbSun = contentView.findViewById(R.id.cbSunday)
         cbMon = contentView.findViewById(R.id.cbMonday)
@@ -53,9 +60,29 @@ class AddBlockScheduleDialog(
                 toHour = h; toMin = m; btnTo.text = fmt(h, m)
             }, toHour, toMin, true).show()
         }
+
+        val wrapper = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(contentView)
+
+            val btnOk = TextView(requireContext()).apply {
+                text = getString(R.string.btn_ok)
+                setTextColor(requireContext().getColor(R.color.accent))
+                textSize = 16f
+                gravity = android.view.Gravity.CENTER
+                setPadding(0, 32, 0, 32)
+                setBackgroundResource(android.R.attr.selectableItemBackground)
+                isClickable = true
+                isFocusable = true
+                setOnClickListener { onOkClicked() }
+            }
+            addView(btnOk)
+        }
+
+        showView(wrapper)
     }
 
-    override fun onOkClicked() {
+    private fun onOkClicked() {
         fun fmt(h: Int, m: Int) = "%02d:%02d".format(h, m)
 
         val days = buildList {

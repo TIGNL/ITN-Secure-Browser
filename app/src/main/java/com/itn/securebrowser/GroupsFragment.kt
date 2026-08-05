@@ -3,17 +3,15 @@ package com.itn.securebrowser
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class GroupsFragment : Fragment() {
+class GroupsFragment : BaseListSheet() {
 
     private lateinit var blockDataStore: BlockDataStore
     private lateinit var emptyState: LinearLayout
@@ -21,17 +19,18 @@ class GroupsFragment : Fragment() {
     private lateinit var btnAddGroup: ImageButton
     private lateinit var adapter: GroupAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_groups, container, false)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setPageTitle(getString(R.string.tab_groups))
+
+        val contentView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.fragment_groups, listContainer, false)
+
         blockDataStore = BlockDataStore(requireContext())
 
-        emptyState = view.findViewById(R.id.emptyState)
-        groupsList = view.findViewById(R.id.groupsList)
-        btnAddGroup = view.findViewById(R.id.btnAddGroup)
+        emptyState = contentView.findViewById(R.id.emptyState)
+        groupsList = contentView.findViewById(R.id.groupsList)
+        btnAddGroup = contentView.findViewById(R.id.btnAddGroup)
 
         adapter = GroupAdapter(
             groups     = emptyList(),
@@ -49,6 +48,7 @@ class GroupsFragment : Fragment() {
             GroupEditSheet.newInstance(null).show(parentFragmentManager, "group_edit")
         }
 
+        showView(contentView)
         refresh()
     }
 
