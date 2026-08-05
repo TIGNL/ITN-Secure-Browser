@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,12 +27,12 @@ class GroupsFragment : BaseListSheet() {
 
         blockDataStore = BlockDataStore(requireContext())
 
-        emptyState = contentView.findViewById(R.id.emptyState)
-        groupsList = contentView.findViewById(R.id.groupsList)
+        emptyState  = contentView.findViewById(R.id.emptyState)
+        groupsList  = contentView.findViewById(R.id.groupsList)
         btnAddGroup = contentView.findViewById(R.id.btnAddGroup)
 
         adapter = GroupAdapter(
-            groups     = emptyList(),
+            groups      = emptyList(),
             onItemClick = { group -> GroupEditSheet.newInstance(group.name).show(parentFragmentManager, "group_edit") },
             onDelete    = { group -> confirmDelete(group) }
         )
@@ -71,14 +70,9 @@ class GroupsFragment : BaseListSheet() {
     }
 
     private fun confirmDelete(group: BlockGroup) {
-        AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-            .setTitle(getString(R.string.delete_group_title))
-            .setMessage(getString(R.string.delete_group_message, group.name))
-            .setPositiveButton(getString(R.string.btn_delete)) { _, _ ->
-                blockDataStore.deleteGroup(group.name)
-                refresh()
-            }
-            .setNegativeButton(getString(R.string.btn_cancel), null)
-            .show()
+        DeleteGroupSheet(group.name) {
+            blockDataStore.deleteGroup(group.name)
+            refresh()
+        }.show(parentFragmentManager, "delete_group")
     }
 }
