@@ -4,43 +4,54 @@
   القالب الموحد لعناصر قوائم BaseListActivity.
 
   الاتفاق: كل صفحة ترث من BaseListActivity تستخدم هذا القالب حصراً.
-  لا تغير ارتفاع العنصر (64dp) ولا تضف layout خارجي آخر.
-
-  المحتوى القابل للتخصيص:
-    • itemIcon  — أيقونة على اليسار (اختياري، يختفي إن لم يُعيَّن)
-    • itemTitle — النص الرئيسي
-    • itemEnd   — عنصر على اليمين (سهم أو مفتاح أو غيره، اختياري)
+  المكون المستخدم هو com.google.android.material.card.MaterialCardView
+  من مكتبة Material You 1.12.0 لضمان توحيد التصميم تلقائياً.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:background="?attr/selectableItemBackground">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="0dp"
+    android:layout_marginVertical="0dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:rippleColor="?attr/colorControlHighlight">
 
-    <!-- الأيقونة -->
-    <ImageView
-        android:id="@+id/itemIcon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:padding="16dp"
-        android:visibility="gone" />
-
-    <!-- النص -->
-    <TextView
-        android:id="@+id/itemTitle"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingStart="16dp"
-        android:textColor="@color/text_primary"
-        android:textSize="16sp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:minHeight="64dp">
 
-    <!-- عنصر اليمين -->
-    <FrameLayout
-        android:id="@+id/itemEnd"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:visibility="gone" />
+        <!-- الأيقونة -->
+        <ImageView
+            android:id="@+id/itemIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:padding="8dp"
+            android:visibility="gone" />
 
-</LinearLayout>
+        <!-- النص -->
+        <TextView
+            android:id="@+id/itemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingStart="16dp"
+            android:textColor="?attr/colorOnSurface"
+            android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+        <!-- عنصر اليمين -->
+        <FrameLayout
+            android:id="@+id/itemEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
