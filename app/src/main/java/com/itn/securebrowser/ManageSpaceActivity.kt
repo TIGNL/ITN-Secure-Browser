@@ -12,28 +12,21 @@ class ManageSpaceActivity : BaseActivity() {
                 mode     = PinEntrySheet.MODE_VERIFY,
                 subtitle = getString(R.string.pin_subtitle_manage_data),
                 onPinVerified = { openManageSpace() }
-            ).show(supportFragmentManager, "pin")
+            ).also { sheet ->
+                sheet.show(supportFragmentManager, "pin")
+                // إن أغلق الـ PIN sheet بدون تحقق أغلق الـ Activity
+                supportFragmentManager.setFragmentResultListener("pin_dismissed", this) { _, _ ->
+                    if (!isFinishing) finish()
+                }
+            }
         } else {
             openManageSpace()
         }
     }
 
     private fun openManageSpace() {
-        val sheet = ManageSpaceSheet()
-        sheet.show(supportFragmentManager, "manage_space")
-
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.fragments.none { it is ManageSpaceSheet }) {
-                finish()
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val hasSheet = supportFragmentManager.fragments.any {
-            it is ManageSpaceSheet || it is PinEntrySheet
-        }
-        if (!hasSheet && !isFinishing) finish()
+        ManageSpaceSheet(
+            onDismissed = { if (!isFinishing) finish() }
+        ).show(supportFragmentManager, "manage_space")
     }
 }
