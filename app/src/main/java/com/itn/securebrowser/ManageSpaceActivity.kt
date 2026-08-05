@@ -9,16 +9,11 @@ class ManageSpaceActivity : BaseActivity() {
 
         if (PinManager.hasPin(this)) {
             PinEntrySheet(
-                mode     = PinEntrySheet.MODE_VERIFY,
-                subtitle = getString(R.string.pin_subtitle_manage_data),
-                onPinVerified = { openManageSpace() }
-            ).also { sheet ->
-                sheet.show(supportFragmentManager, "pin")
-                // إن أغلق الـ PIN sheet بدون تحقق أغلق الـ Activity
-                supportFragmentManager.setFragmentResultListener("pin_dismissed", this) { _, _ ->
-                    if (!isFinishing) finish()
-                }
-            }
+                mode          = PinEntrySheet.MODE_VERIFY,
+                subtitle      = getString(R.string.pin_subtitle_manage_data),
+                onPinVerified = { openManageSpace() },
+                onDismissed   = { if (!isFinishing) finish() }
+            ).show(supportFragmentManager, "pin")
         } else {
             openManageSpace()
         }
