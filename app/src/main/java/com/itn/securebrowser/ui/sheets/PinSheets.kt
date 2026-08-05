@@ -1,8 +1,6 @@
 package com.itn.securebrowser.ui.sheets
 
 import android.widget.Toast
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,12 +27,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.itn.securebrowser.PinManager
 import com.itn.securebrowser.R
-import kotlinx.coroutines.launch
 
 @Composable
 fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
@@ -125,9 +120,6 @@ fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () ->
     var showSuccessSpacer by remember { mutableStateOf(true) }
     var pinSucceeded by remember { mutableStateOf(false) }
 
-    val shakeOffset = remember { Animatable(0f) }
-    val scope = rememberCoroutineScope()
-
     // Call onDismissed when disposed without success (user swiped away / pressed back)
     androidx.compose.runtime.DisposableEffect(Unit) {
         onDispose { if (!pinSucceeded) onDismissed() }
@@ -139,16 +131,7 @@ fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () ->
     }
 
     fun shakeAndClear() {
-        scope.launch {
-            shakeOffset.animateTo(-18f, tween(50))
-            shakeOffset.animateTo(18f, tween(50))
-            shakeOffset.animateTo(-14f, tween(50))
-            shakeOffset.animateTo(14f, tween(50))
-            shakeOffset.animateTo(-8f, tween(50))
-            shakeOffset.animateTo(8f, tween(50))
-            shakeOffset.animateTo(0f, tween(50))
-            entered = ""
-        }
+        entered = ""
     }
 
     fun handleComplete(pin: String) {
@@ -206,7 +189,6 @@ fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () ->
         Column(
             Modifier
                 .fillMaxSize()
-                .graphicsLayer { translationX = shakeOffset.value }
                 .padding(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
