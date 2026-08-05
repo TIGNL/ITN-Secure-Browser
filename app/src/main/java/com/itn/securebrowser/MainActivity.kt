@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
         private set
     var isLoading by mutableStateOf(false)
         private set
-    var progress by mutableIntStateOf(0)
+    var loadProgress by mutableIntStateOf(0)
         private set
     var urlFocused by mutableStateOf(false)
     var focusRequestToken by mutableIntStateOf(0)
@@ -297,7 +297,7 @@ class MainActivity : BaseActivity() {
         if (webView != getCurrentWebView()) return
         isLoading = true
         updateUrlBar(pageUrl)
-        progress = 0
+        loadProgress = 0
         timeTracker.onDomainChanged(null)
     }
 
@@ -313,7 +313,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun handleProgressChanged(webView: WebView, p: Int) {
-        if (webView == getCurrentWebView()) progress = p
+        if (webView == getCurrentWebView()) loadProgress = p
     }
 
     // ── Periodic block check ─────────────────────────────────────────────────

@@ -152,7 +152,7 @@ fun BrowserScreen(
         // ── Progress bar ──
         if (activity.isLoading) {
             LinearProgressIndicator(
-                progress = { activity.progress / 100f },
+                progress = { activity.loadProgress / 100f },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(3.dp)
