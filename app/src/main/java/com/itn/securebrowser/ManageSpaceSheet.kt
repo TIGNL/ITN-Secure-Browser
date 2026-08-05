@@ -9,7 +9,6 @@ import android.webkit.CookieManager
 import android.webkit.WebStorage
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 
 class ManageSpaceSheet(
     private val onDismissed: () -> Unit = {}
@@ -58,22 +57,17 @@ class ManageSpaceSheet(
     }
 
     private fun confirmClearAll() {
-        AlertDialog.Builder(requireContext(), R.style.DialogTheme)
-            .setTitle(getString(R.string.clear_all_title))
-            .setMessage(getString(R.string.clear_all_message))
-            .setPositiveButton(getString(R.string.btn_clear_all_confirm)) { _, _ ->
-                CookieManager.getInstance().removeAllCookies(null)
-                CookieManager.getInstance().flush()
-                WebStorage.getInstance().deleteAllData()
-                requireContext().cacheDir.deleteRecursively()
-                requireContext().getSharedPreferences("itn_time_tracker", 0).edit().clear().apply()
-                requireContext().getSharedPreferences("itn_block_data", 0).edit().clear().apply()
-                PinManager.clear(requireContext())
-                toast(getString(R.string.toast_cleared_all))
-                dismiss()
-            }
-            .setNegativeButton(getString(R.string.btn_cancel)) { _, _ -> }
-            .show()
+        ConfirmClearAllSheet {
+            CookieManager.getInstance().removeAllCookies(null)
+            CookieManager.getInstance().flush()
+            WebStorage.getInstance().deleteAllData()
+            requireContext().cacheDir.deleteRecursively()
+            requireContext().getSharedPreferences("itn_time_tracker", 0).edit().clear().apply()
+            requireContext().getSharedPreferences("itn_block_data", 0).edit().clear().apply()
+            PinManager.clear(requireContext())
+            toast(getString(R.string.toast_cleared_all))
+            dismiss()
+        }.show(parentFragmentManager, "confirm_clear_all")
     }
 
     private fun toast(msg: String) =
