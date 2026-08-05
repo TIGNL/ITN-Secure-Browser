@@ -103,6 +103,7 @@
     <string name="pin_subtitle_open_settings">To open settings</string>
     <string name="pin_subtitle_new">Choose a new PIN</string>
     <string name="btn_change_pin">Change PIN</string>
+    <string name="btn_clear_pin">Delete PIN</string>
     <string name="btn_disable_pin">Disable PIN</string>
     <string name="delete_pin_message">This will remove PIN protection. Continue?</string>
     <string name="pin_verify_first">Verify your identity first</string>
@@ -117,7 +118,13 @@
     <string name="clear_blocking">Clear blocked sites and schedules</string>
     <string name="clear_all">&#9888;&#65039;  Clear everything</string>
     <string name="clear_all_title">&#9888;&#65039;  Clear all data?</string>
-    <string name="clear_all_message">This will delete:\n• Cookies and cache\n• Time tracking data\n• Block rules and schedules\n• PIN\n\nThis cannot be undone.</string>
+    <string name="clear_all_message">This will delete:
+• Cookies and cache
+• Time tracking data
+• Block rules and schedules
+• PIN
+
+This cannot be undone.</string>
     <string name="btn_clear_all_confirm">Yes, clear everything</string>
     <string name="toast_cleared_browsing">✓ Cookies and cache cleared</string>
     <string name="toast_cleared_tracking">✓ Time tracking data cleared</string>
@@ -136,4 +143,3 @@
     </plurals>
 
 </resources>
-
