@@ -1,0 +1,115 @@
+package com.itn.securebrowser.ui.sheets
+
+import android.webkit.CookieManager
+import android.webkit.WebStorage
+import android.widget.Toast
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.DeleteSweep
+import androidx.compose.material.icons.filled.Timer
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.itn.securebrowser.PinManager
+import com.itn.securebrowser.R
+
+@Composable
+fun ManageSpaceSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
+    val context = LocalContext.current
+
+    fun clearBrowsing() {
+        CookieManager.getInstance().removeAllCookies(null)
+        CookieManager.getInstance().flush()
+        WebStorage.getInstance().deleteAllData()
+        context.cacheDir.deleteRecursively()
+        Toast.makeText(context, context.getString(R.string.toast_cleared_browsing), Toast.LENGTH_SHORT).show()
+        dismiss()
+    }
+
+    fun clearTracking() {
+        context.getSharedPreferences("itn_time_tracker", 0).edit().clear().apply()
+        Toast.makeText(context, context.getString(R.string.toast_cleared_tracking), Toast.LENGTH_SHORT).show()
+        dismiss()
+    }
+
+    fun clearBlocking() {
+        context.getSharedPreferences("itn_block_data", 0).edit().clear().apply()
+        Toast.makeText(context, context.getString(R.string.toast_cleared_blocking), Toast.LENGTH_SHORT).show()
+        dismiss()
+    }
+
+    fun clearAll() {
+        CookieManager.getInstance().removeAllCookies(null)
+        CookieManager.getInstance().flush()
+        WebStorage.getInstance().deleteAllData()
+        context.cacheDir.deleteRecursively()
+        context.getSharedPreferences("itn_time_tracker", 0).edit().clear().apply()
+        context.getSharedPreferences("itn_block_data", 0).edit().clear().apply()
+        PinManager.clear(context)
+        Toast.makeText(context, context.getString(R.string.toast_cleared_all), Toast.LENGTH_SHORT).show()
+        dismiss()
+    }
+
+    SheetScaffold(title = stringResource(R.string.manage_space_title), onClose = dismiss) {
+        SheetRow(
+            icon = Icons.Filled.Close,
+            title = stringResource(R.string.clear_browsing),
+            onClick = { clearBrowsing() }
+        )
+        SheetDivider()
+        SheetRow(
+            icon = Icons.Filled.Timer,
+            title = stringResource(R.string.clear_tracking),
+            onClick = { clearTracking() }
+        )
+        SheetDivider()
+        SheetRow(
+            icon = Icons.Filled.Block,
+            title = stringResource(R.string.clear_blocking),
+            onClick = { clearBlocking() }
+        )
+        SheetDivider()
+        SheetRow(
+            icon = Icons.Filled.DeleteSweep,
+            title = stringResource(R.string.clear_all),
+            onClick = { push(Sheet.ConfirmClearAll(onConfirm = ::clearAll)) }
+        )
+    }
+}
+
+@Composable
+fun ConfirmClearAllSheet(sheet: Sheet.ConfirmClearAll, dismiss: () -> Unit) {
+    val context = LocalContext.current
+    SheetScaffold(title = stringResource(R.string.clear_all_title), onClose = dismiss) {
+        Column(Modifier.padding(20.dp)) {
+            Text(stringResource(R.string.clear_all_message))
+            androidx.compose.foundation.layout.Spacer(Modifier.padding(24.dp))
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(onClick = { dismiss() }) { Text(stringResource(R.string.btn_cancel)) }
+                androidx.compose.foundation.layout.Spacer(Modifier.padding(8.dp))
+                Button(onClick = { sheet.onConfirm(); dismiss() }) { Text(stringResource(R.string.btn_clear_all_confirm)) }
+            }
+        }
+    }
+}

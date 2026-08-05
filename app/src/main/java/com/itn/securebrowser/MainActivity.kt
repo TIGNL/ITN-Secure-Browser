@@ -1,40 +1,63 @@
 package com.itn.securebrowser
 
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.MotionEvent
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.os.Handler
 import android.os.Looper
+import android.view.MotionEvent
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.widget.*
+import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.focus.FocusRequester
+import com.itn.securebrowser.ui.sheets.BrowserScreen
+import com.itn.securebrowser.ui.sheets.Sheet
+import com.itn.securebrowser.ui.sheets.SheetHost
+import com.itn.securebrowser.ui.sheets.SheetStack
+import com.itn.securebrowser.ui.theme.ITNSecureBrowserTheme
 
 class MainActivity : BaseActivity() {
 
-    // ── Views ──────────────────────────────────────────────────────────────
-    private lateinit var webViewContainer: FrameLayout
-    private lateinit var urlBar: EditText
-    private lateinit var btnBack: ImageButton
-    private lateinit var btnForward: ImageButton
-    private lateinit var btnRefreshStop: ImageButton
+    // ── WebView ─────────────────────────────────────────────────────────────
+    lateinit var webViewContainer: FrameLayout
+        private set
 
-    private lateinit var btnHome: ImageButton
-    private lateinit var btnTabs: ImageButton
-    private lateinit var btnMore: ImageButton
-    private lateinit var tabsContainer: LinearLayout
-    private lateinit var tabsScrollView: HorizontalScrollView
-    private lateinit var btnNewTab: ImageButton
-    private lateinit var progressBar: ProgressBar
+    // ── Core logic state ─────────────────────────────────────────────────────
+    private lateinit var timeTracker: TimeTracker
+    private lateinit var blockDataStore: BlockDataStore
+    private lateinit var blockEngine: BlockEngine
+    private val tabs = mutableListOf<BrowserTab>()
+    private var currentTabId = -1
+    private var nextTabId = 0
+    private var isLoadingInternal = false
 
+    val isDesktopMode: Boolean get() = _isDesktopMode
+    private var _isDesktopMode = false
 
-    // ── Block checker (فحص دوري كل 5 ثوانٍ) ────────────────────────────────────
-    private val blockHandler  = Handler(Looper.getMainLooper())
+    private val desktopUserAgent =
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+        "AppleWebKit/537.36 (KHTML, like Gecko) " +
+        "Chrome/120.0.0.0 Safari/537.36"
+
+    // ── Compose-observable state ─────────────────────────────────────────────
+    var url by mutableStateOf("")
+        private set
+    var isLoading by mutableStateOf(false)
+        private set
+    var progress by mutableIntStateOf(0)
+        private set
+    var urlFocused by mutableStateOf(false)
+    var focusRequestToken by mutableIntStateOf(0)
+    val sheetStack = SheetStack()
+    val urlFocusRequester = FocusRequester()
+
+    // ── Block checker (every 5 s) ────────────────────────────────────────────
+    private val blockHandler = Handler(Looper.getMainLooper())
     private val blockRunnable = object : Runnable {
         override fun run() {
             periodicBlockCheck()
@@ -42,37 +65,35 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    // ── State ──────────────────────────────────────────────────────────────
-    private lateinit var timeTracker: TimeTracker
-    private lateinit var blockDataStore: BlockDataStore
-    private lateinit var blockEngine: BlockEngine
-    private val tabs = mutableListOf<BrowserTab>()
-    private var currentTabId = -1
-    private var nextTabId = 0
-    private var isLoading = false
-    var isDesktopMode = false
-
-    private val desktopUserAgent =
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
-        "AppleWebKit/537.36 (KHTML, like Gecko) " +
-        "Chrome/120.0.0.0 Safari/537.36"
-
-    // ── Lifecycle ──────────────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════════
+    // Lifecycle
+    // ══════════════════════════════════════════════════════════════════════════
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        webViewContainer = FrameLayout(this)
         timeTracker   = TimeTracker(this)
         blockDataStore = BlockDataStore(this)
         blockEngine    = BlockEngine(blockDataStore, timeTracker)
-        initViews()
-        setupListeners()
+
+        setContent {
+            ITNSecureBrowserTheme {
+                SheetHost(stack = sheetStack.stack) { sheet, isTop, dismiss ->
+                    com.itn.securebrowser.ui.sheets.BrowserSheetContent(
+                        sheet = sheet,
+                        stack = sheetStack.stack,
+                        activity = this@MainActivity,
+                        isTop = isTop,
+                        dismiss = dismiss
+                    )
+                }
+                BrowserScreen(activity = this)
+            }
+        }
+
         setupBackHandler()
         createNewTab()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
     }
 
     override fun onPause() {
@@ -96,62 +117,17 @@ class MainActivity : BaseActivity() {
         super.onDestroy()
     }
 
-    // ── Initialisation ─────────────────────────────────────────────────────
-
-    private fun initViews() {
-        webViewContainer  = findViewById(R.id.webViewContainer)
-        urlBar            = findViewById(R.id.urlBar)
-        btnBack           = findViewById(R.id.btnBack)
-        btnForward        = findViewById(R.id.btnForward)
-        btnRefreshStop    = findViewById(R.id.btnRefreshStop)
-        tabsContainer     = findViewById(R.id.tabsContainer)
-        tabsScrollView    = findViewById(R.id.tabsScrollView)
-        btnNewTab         = findViewById(R.id.btnNewTab)
-        progressBar       = findViewById(R.id.progressBar)
-        btnHome           = findViewById(R.id.btnHome)
-        btnTabs           = findViewById(R.id.btnTabs)
-        btnMore           = findViewById(R.id.btnMore)
-    }
-
-    private fun setupListeners() {
-        btnBack.setOnClickListener {
-            getCurrentWebView()?.let { if (it.canGoBack()) it.goBack() }
-        }
-        btnForward.setOnClickListener {
-            getCurrentWebView()?.let { if (it.canGoForward()) it.goForward() }
-        }
-        btnRefreshStop.setOnClickListener {
-            getCurrentWebView()?.let { wv ->
-                if (isLoading) wv.stopLoading() else wv.reload()
-            }
-        }
-        btnNewTab.setOnClickListener { createNewTab() }
-        btnHome.setOnClickListener {
-            hideKeyboard()
-            createNewTab()
-        }
-        btnTabs.setOnClickListener { showTabsSheet() }
-        btnMore.setOnClickListener { showMoreSheet() }
-
-        urlBar.setOnEditorActionListener { _, actionId, event ->
-            val isGo    = actionId == EditorInfo.IME_ACTION_GO
-            val isEnter = event?.keyCode == KeyEvent.KEYCODE_ENTER &&
-                          event.action  == KeyEvent.ACTION_DOWN
-            if (isGo || isEnter) {
-                navigateTo(urlBar.text.toString().trim())
-                hideKeyboard()
-                true
-            } else false
-        }
-
-        urlBar.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) urlBar.post { urlBar.selectAll() }
-        }
-    }
+    // ══════════════════════════════════════════════════════════════════════════
+    // Back handler — sheet stack first, then WebView back
+    // ══════════════════════════════════════════════════════════════════════════
 
     private fun setupBackHandler() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                if (sheetStack.stack.isNotEmpty()) {
+                    sheetStack.pop()
+                    return
+                }
                 val wv = getCurrentWebView()
                 if (wv != null && wv.canGoBack()) {
                     wv.goBack()
@@ -163,12 +139,14 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    // ── Tab Management ─────────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════════
+    // Tab Management
+    // ══════════════════════════════════════════════════════════════════════════
 
-    private fun createNewTab(url: String = "") {
+    fun createNewTab(url: String = "") {
         val webView = buildWebView()
-        val id      = nextTabId++
-        val tab     = BrowserTab(id, webView)
+        val id = nextTabId++
+        val tab = BrowserTab(id, webView)
         tabs.add(tab)
 
         webViewContainer.addView(
@@ -183,22 +161,18 @@ class MainActivity : BaseActivity() {
         if (url.isNotEmpty()) webView.loadUrl(url)
     }
 
-    private fun switchToTab(id: Int) {
+    fun switchToTab(id: Int) {
         tabs.forEach { tab ->
-            tab.webView.visibility = if (tab.id == id) View.VISIBLE else View.GONE
+            tab.webView.visibility = if (tab.id == id) android.view.View.VISIBLE else android.view.View.GONE
         }
         currentTabId = id
         updateUrlBar(getCurrentWebView()?.url ?: "")
-        updateNavButtons()
-        refreshTabBar()
-        scrollTabsToActive()
         timeTracker.onDomainChanged(TimeTracker.extractDomain(getCurrentWebView()?.url))
     }
 
-    private fun closeTab(id: Int) {
+    fun closeTab(id: Int) {
         val index = tabs.indexOfFirst { it.id == id }
         if (index == -1) return
-
         val tab = tabs[index]
         webViewContainer.removeView(tab.webView)
         tab.webView.destroy()
@@ -210,42 +184,56 @@ class MainActivity : BaseActivity() {
                 val newIndex = if (index >= tabs.size) tabs.size - 1 else index
                 switchToTab(tabs[newIndex].id)
             }
-            else -> refreshTabBar()
         }
     }
 
-    private fun refreshTabBar() {
-        tabsContainer.removeAllViews()
-        tabs.forEach { tab ->
-            val tabView  = layoutInflater.inflate(R.layout.item_tab, tabsContainer, false)
-            val titleTv  = tabView.findViewById<TextView>(R.id.tabTitle)
-            val closeBtn = tabView.findViewById<ImageButton>(R.id.tabClose)
+    // ══════════════════════════════════════════════════════════════════════════
+    // Navigation
+    // ══════════════════════════════════════════════════════════════════════════
 
-            titleTv.text = tab.title
-                .takeIf { it.isNotBlank() && it != "about:blank" }
-                ?: "New Tab"
-
-            tabView.setBackgroundResource(
-                if (tab.id == currentTabId) R.drawable.tab_active_background
-                else R.drawable.tab_inactive_background
-            )
-
-            tabView.setOnClickListener  { switchToTab(tab.id) }
-            closeBtn.setOnClickListener { closeTab(tab.id) }
-            tabsContainer.addView(tabView)
+    fun navigateTo(input: String) {
+        if (input.isBlank()) return
+        val webViewUrl = when {
+            input.startsWith("http://") || input.startsWith("https://") -> input
+            input.contains(".") && !input.contains(" ") -> "https://$input"
+            else -> "https://www.google.com/search?q=${input.replace(" ", "+")}"
         }
-    }
-
-    private fun scrollTabsToActive() {
-        tabsScrollView.post {
-            val index = tabs.indexOfFirst { it.id == currentTabId }
-            if (index >= 0 && tabsContainer.childCount > index) {
-                tabsScrollView.smoothScrollTo(tabsContainer.getChildAt(index).left, 0)
+        val domain = TimeTracker.extractDomain(webViewUrl)
+        if (domain != null) {
+            val reason = blockEngine.check(domain)
+            if (reason != null) {
+                getCurrentWebView()?.loadDataWithBaseURL(
+                    null, BrowserWebViewClient.buildBlockPage(domain, reason),
+                    "text/html", "UTF-8", null
+                )
+                return
             }
         }
+        getCurrentWebView()?.loadUrl(webViewUrl)
     }
 
-    // ── WebView Construction ───────────────────────────────────────────────
+    // ── Public action methods called from BrowserScreen ──────────────────────
+
+    fun goBack() { getCurrentWebView()?.let { if (it.canGoBack()) it.goBack() } }
+    fun goForward() { getCurrentWebView()?.let { if (it.canGoForward()) it.goForward() } }
+    fun canGoBack() = getCurrentWebView()?.canGoBack() == true
+    fun canGoForward() = getCurrentWebView()?.canGoForward() == true
+    fun goHome() { hideKeyboard(); createNewTab() }
+    fun showTabs() { sheetStack.push(Sheet.Tabs(tabs.toList(), currentTabId)) }
+    fun showMore() { sheetStack.push(Sheet.More) }
+
+    fun toggleRefreshStop() {
+        getCurrentWebView()?.let { wv -> if (isLoading) wv.stopLoading() else wv.reload() }
+    }
+
+    fun setDesktopMode(enabled: Boolean) {
+        _isDesktopMode = enabled
+        tabs.forEach { applyUserAgent(it.webView) }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // WebView Construction
+    // ══════════════════════════════════════════════════════════════════════════
 
     private fun buildWebView(): WebView {
         val wv = WebView(this)
@@ -269,20 +257,18 @@ class MainActivity : BaseActivity() {
 
         wv.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                if (urlBar.isFocused) {
+                if (urlFocused) {
                     hideKeyboard()
                     return@setOnTouchListener true
                 }
-                val url = wv.url
-                if (url.isNullOrBlank() || url == "about:blank") {
-                    urlBar.requestFocus()
-                    urlBar.post { showKeyboard() }
+                val webViewUrl = wv.url
+                if (webViewUrl.isNullOrBlank() || webViewUrl == "about:blank") {
+                    focusRequestToken++
                     return@setOnTouchListener true
                 }
             }
-            val url = wv.url
-            if (url.isNullOrBlank() || url == "about:blank" || urlBar.isFocused) true
-            else false
+            val webViewUrl = wv.url
+            webViewUrl.isNullOrBlank() || webViewUrl == "about:blank" || urlFocused
         }
 
         wv.webViewClient = BrowserWebViewClient(
@@ -292,52 +278,50 @@ class MainActivity : BaseActivity() {
         )
         wv.webChromeClient = BrowserChromeClient(
             onTitleReceived  = { title    -> handleTitleReceived(wv, title) },
-            onProgressChanged = { progress -> handleProgressChanged(wv, progress) }
+            onProgressChanged = { p -> handleProgressChanged(wv, p) }
         )
 
-        wv.visibility = View.GONE
+        wv.visibility = android.view.View.GONE
         return wv
     }
 
-    // ── WebView Callbacks ──────────────────────────────────────────────────
+    fun applyUserAgent(webView: WebView) {
+        webView.settings.userAgentString = if (_isDesktopMode) desktopUserAgent else null
+    }
 
-    private fun handlePageStarted(webView: WebView, url: String) {
+    // ══════════════════════════════════════════════════════════════════════════
+    // WebView Callbacks
+    // ══════════════════════════════════════════════════════════════════════════
+
+    private fun handlePageStarted(webView: WebView, pageUrl: String) {
         if (webView != getCurrentWebView()) return
         isLoading = true
-        updateUrlBar(url)
-        updateNavButtons()
-        btnRefreshStop.setImageResource(R.drawable.ic_stop)
-        progressBar.visibility = View.VISIBLE
+        updateUrlBar(pageUrl)
+        progress = 0
         timeTracker.onDomainChanged(null)
     }
 
-    private fun handlePageFinished(webView: WebView, url: String) {
+    private fun handlePageFinished(webView: WebView, pageUrl: String) {
         if (webView != getCurrentWebView()) return
         isLoading = false
-        updateUrlBar(url)
-        updateNavButtons()
-        btnRefreshStop.setImageResource(R.drawable.ic_refresh)
-        progressBar.visibility = View.GONE
-        timeTracker.onDomainChanged(TimeTracker.extractDomain(url))
+        updateUrlBar(pageUrl)
+        timeTracker.onDomainChanged(TimeTracker.extractDomain(pageUrl))
     }
 
     private fun handleTitleReceived(webView: WebView, title: String) {
-        tabs.find { it.webView == webView }?.let { tab ->
-            tab.title = title
-            refreshTabBar()
-        }
+        tabs.find { it.webView == webView }?.let { it.title = title }
     }
 
-    private fun handleProgressChanged(webView: WebView, progress: Int) {
-        if (webView == getCurrentWebView()) progressBar.progress = progress
+    private fun handleProgressChanged(webView: WebView, p: Int) {
+        if (webView == getCurrentWebView()) progress = p
     }
 
-    // ── فحص دوري للحجب ──────────────────────────────────────────────────────────
+    // ── Periodic block check ─────────────────────────────────────────────────
 
     private fun periodicBlockCheck() {
-        val wv  = getCurrentWebView() ?: return
-        val url = wv.url?.takeIf { it.isNotBlank() && it != "about:blank" } ?: return
-        val domain = TimeTracker.extractDomain(url) ?: return
+        val wv = getCurrentWebView() ?: return
+        val webViewUrl = wv.url?.takeIf { it.isNotBlank() && it != "about:blank" } ?: return
+        val domain = TimeTracker.extractDomain(webViewUrl) ?: return
         val reason = blockEngine.check(domain) ?: return
         wv.loadDataWithBaseURL(
             null, BrowserWebViewClient.buildBlockPage(domain, reason),
@@ -345,97 +329,20 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    // ── Navigation ─────────────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════════════
+    // UI Helpers
+    // ══════════════════════════════════════════════════════════════════════════
 
-    private fun navigateTo(input: String) {
-        if (input.isBlank()) return
-        val url = when {
-            input.startsWith("http://") || input.startsWith("https://") -> input
-            input.contains(".") && !input.contains(" ")                  -> "https://$input"
-            else -> "https://www.google.com/search?q=${input.replace(" ", "+")}"
-        }
-        val domain = TimeTracker.extractDomain(url)
-        if (domain != null) {
-            val reason = blockEngine.check(domain)
-            if (reason != null) {
-                getCurrentWebView()?.loadDataWithBaseURL(
-                    null, BrowserWebViewClient.buildBlockPage(domain, reason),
-                    "text/html", "UTF-8", null
-                )
-                return
-            }
-        }
-        getCurrentWebView()?.loadUrl(url)
-    }
-
-    fun applyUserAgent(webView: WebView) {
-        webView.settings.userAgentString =
-            if (isDesktopMode) desktopUserAgent else null
-    }
-
-    // ── UI Helpers ─────────────────────────────────────────────────────────
-
-    private fun updateUrlBar(url: String) {
-        if (urlBar.isFocused) return
-        urlBar.setText(if (url == "about:blank" || url.isEmpty()) "" else url)
-    }
-
-    private fun updateNavButtons() {
-        val wv = getCurrentWebView()
-        btnBack.alpha    = if (wv?.canGoBack()    == true) 1.0f else 0.35f
-        btnForward.alpha = if (wv?.canGoForward() == true) 1.0f else 0.35f
-    }
-
-    private fun getCurrentTab()     = tabs.find { it.id == currentTabId }
-    private fun getCurrentWebView() = getCurrentTab()?.webView
-
-    private fun showKeyboard() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(urlBar, InputMethodManager.SHOW_IMPLICIT)
+    private fun updateUrlBar(pageUrl: String) {
+        if (urlFocused) return
+        url = if (pageUrl == "about:blank" || pageUrl.isEmpty()) "" else pageUrl
     }
 
     private fun hideKeyboard() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(urlBar.windowToken, 0)
-        urlBar.clearFocus()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+        currentFocus?.windowToken?.let { imm.hideSoftInputFromWindow(it, 0) }
     }
 
-    // ── Tabs Bottom Sheet ──────────────────────────────────────────────────
-    private fun showTabsSheet() {
-        TabsBottomSheet(
-            tabs        = tabs.toList(),
-            activeId    = currentTabId,
-            onSelect    = { tab -> switchToTab(tab.id) },
-            onClose     = { tab -> closeTab(tab.id) },
-            onNewTab    = { createNewTab() },
-            onNewTabFromHistory = { /* ت-٣: سيُفتح HistoryActivity */ }
-        ).show(supportFragmentManager, TabsBottomSheet.TAG)
-    }
-
-    // ── More Bottom Sheet ──────────────────────────────────────────────────
-    private fun showMoreSheet() {
-        MoreBottomSheet(
-            isDesktopMode            = isDesktopMode,
-            onDesktopModeToggled     = { enabled ->
-                isDesktopMode = enabled
-                tabs.forEach { applyUserAgent(it.webView) }
-            },
-            onOpenParentalSettings   = {
-                if (PinManager.hasPin(this)) {
-                    PinEntrySheet(
-                        mode = PinEntrySheet.MODE_VERIFY,
-                        onPinVerified = {
-                            ParentalSettingsSheet().show(supportFragmentManager, "parental")
-                        }
-                    ).show(supportFragmentManager, "pin")
-                } else {
-                    ParentalSettingsSheet().show(supportFragmentManager, "parental")
-                }
-            },
-            onOpenGeneralSettings    = {
-                GeneralSettingsSheet().show(supportFragmentManager, "general")
-            }
-        ).show(supportFragmentManager, MoreBottomSheet.TAG)
-    }
-
+    fun getCurrentTab() = tabs.find { it.id == currentTabId }
+    fun getCurrentWebView() = getCurrentTab()?.webView
 }
