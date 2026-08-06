@@ -124,7 +124,7 @@ fun SheetHost(
                 ModalBottomSheet(
                     onDismissRequest = dismiss,
                     sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-                    modifier = Modifier.fillMaxHeight(0.9f),
+                    modifier = Modifier.fillMaxHeight(0.75f),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
                     containerColor = MaterialTheme.colorScheme.surface,
                     contentWindowInsets = { WindowInsets.navigationBars } // insets fix
