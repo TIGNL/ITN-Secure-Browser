@@ -2,6 +2,7 @@ package com.itn.securebrowser
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import com.itn.securebrowser.ui.sheets.BrowserSheetContent
@@ -14,6 +15,7 @@ class ManageSpaceActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
 
         setContent {
             ITNSecureBrowserTheme {

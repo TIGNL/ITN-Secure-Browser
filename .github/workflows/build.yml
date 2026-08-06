@@ -24,7 +24,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v3
         continue-on-error: true
         with:
-          gradle-version: '8.4'
+          gradle-version: '8.9'
           cache-read-only: false
 
       - name: Decode Keystore
