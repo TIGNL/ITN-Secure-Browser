@@ -369,15 +369,12 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                 onClick = { push(Sheet.AddSchedule { s -> schedules.add(s) }) }
             )
         )
-        add(SheetItem.Divider)
-        add(
-            SheetItem.Row(
-                icon = null,
-                title = stringResource(R.string.btn_save),
-                titleColor = MaterialTheme.colorScheme.primary,
-                onClick = { trySave() }
-            )
-        )
+        add(SheetItem.BottomBar.Confirm(
+            cancelLabel = stringResource(R.string.btn_cancel),
+            okLabel = stringResource(R.string.btn_save),
+            onCancel = dismiss,
+            onOk = { trySave() }
+        ))
     }
 
     SheetScaffold(
@@ -405,11 +402,8 @@ fun AddDomainSheet(sheet: Sheet.AddDomain, dismiss: () -> Unit) {
                 placeholder = "e.g. instagram.com",
                 keyboardType = KeyboardType.Uri
             ),
-            SheetItem.Divider,
-            SheetItem.Row(
-                icon = Icons.Filled.Add,
-                title = stringResource(R.string.btn_add),
-                titleColor = MaterialTheme.colorScheme.primary,
+            SheetItem.BottomBar.Action(
+                label = stringResource(R.string.btn_add),
                 onClick = {
                     val raw = input.trim()
                         .removePrefix("https://").removePrefix("http://")
@@ -539,29 +533,26 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
                 }
             )
         )
-        add(SheetItem.Divider)
-        add(
-            SheetItem.Row(
-                icon = null,
-                title = stringResource(R.string.btn_ok),
-                titleColor = MaterialTheme.colorScheme.primary,
-                onClick = {
-                    val selectedDays = ALL_DAYS.split(",").filter { it in days }
-                    if (selectedDays.isEmpty()) {
-                        toast(context, context.getString(R.string.err_select_day))
-                    } else {
-                        sheet.onAdd(
-                            BlockSchedule(
-                                days = selectedDays,
-                                from = fmt(fromHour, fromMin),
-                                to = fmt(toHour, toMin)
-                            )
+        add(SheetItem.BottomBar.Confirm(
+            cancelLabel = stringResource(R.string.btn_cancel),
+            okLabel = stringResource(R.string.btn_ok),
+            onCancel = dismiss,
+            onOk = {
+                val selectedDays = ALL_DAYS.split(",").filter { it in days }
+                if (selectedDays.isEmpty()) {
+                    toast(context, context.getString(R.string.err_select_day))
+                } else {
+                    sheet.onAdd(
+                        BlockSchedule(
+                            days = selectedDays,
+                            from = fmt(fromHour, fromMin),
+                            to = fmt(toHour, toMin)
                         )
-                        dismiss()
-                    }
+                    )
+                    dismiss()
                 }
-            )
-        )
+            }
+        ))
     }
 
     SheetScaffold(
@@ -582,12 +573,11 @@ fun DeleteGroupSheet(sheet: Sheet.DeleteGroup, dismiss: () -> Unit) {
                 title = stringResource(R.string.delete_group_message, sheet.groupName),
                 titleColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
-            SheetItem.Divider,
-            SheetItem.Row(
-                icon = Icons.Filled.Delete,
-                title = stringResource(R.string.btn_delete),
-                titleColor = MaterialTheme.colorScheme.error,
-                onClick = { sheet.onConfirm(); dismiss() }
+            SheetItem.BottomBar.Confirm(
+                cancelLabel = stringResource(R.string.btn_cancel),
+                okLabel = stringResource(R.string.btn_delete),
+                onCancel = dismiss,
+                onOk = { sheet.onConfirm(); dismiss() }
             )
         )
     )

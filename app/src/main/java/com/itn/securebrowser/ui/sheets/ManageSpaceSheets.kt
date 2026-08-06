@@ -117,12 +117,11 @@ fun ConfirmClearAllSheet(sheet: Sheet.ConfirmClearAll, dismiss: () -> Unit) {
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)
                 )
             },
-            SheetItem.Divider,
-            SheetItem.Row(
-                icon = Icons.Filled.DeleteSweep,
-                title = stringResource(R.string.btn_clear_all_confirm),
-                titleColor = MaterialTheme.colorScheme.error,
-                onClick = { sheet.onConfirm(); dismiss() }
+            SheetItem.BottomBar.Confirm(
+                cancelLabel = stringResource(R.string.btn_cancel),
+                okLabel = stringResource(R.string.btn_clear_all_confirm),
+                onCancel = dismiss,
+                onOk = { sheet.onConfirm(); dismiss() }
             )
         )
     )
