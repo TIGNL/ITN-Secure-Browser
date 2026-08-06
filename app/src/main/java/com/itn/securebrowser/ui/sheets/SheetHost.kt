@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -124,12 +122,16 @@ fun SheetHost(
                 ModalBottomSheet(
                     onDismissRequest = dismiss,
                     sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-                    modifier = Modifier.fillMaxHeight(0.75f),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    contentWindowInsets = { WindowInsets.navigationBars } // insets fix
+                    containerColor = MaterialTheme.colorScheme.surface
                 ) {
-                    content(sheet, isTop, dismiss)
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(0.75f)
+                    ) {
+                        content(sheet, isTop, dismiss)
+                    }
                 }
             }
         }
