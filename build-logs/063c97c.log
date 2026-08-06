@@ -1,0 +1,52 @@
+
+Welcome to Gradle 8.9!
+
+Here are the highlights of this release:
+ - Enhanced Error and Warning Messages
+ - IDE Integration Improvements
+ - Daemon JVM Information
+
+For more details see https://docs.gradle.org/8.9/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :app:buildKotlinToolingMetadata
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:generateReleaseResValues
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:mergeReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :app:parseReleaseLocalResources
+
+> Task :app:processReleaseMainManifest FAILED
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/AndroidManifest.xml Error:
+	uses-sdk:minSdkVersion 21 cannot be smaller than version 23 declared in library [androidx.compose.animation:animation-core-android:1.11.0] /home/runner/.gradle/caches/8.9/transforms/1a4a6f539f2cb9eb9372538b2d1bb8b6/transformed/jetified-animation-core/AndroidManifest.xml as the library might be using APIs not available in 21
+	Suggestion: use a compatible library with a minSdk of at most 21,
+		or increase this project's minSdk version to at least 23,
+		or use tools:overrideLibrary="androidx.compose.animation.core" to force usage (may lead to runtime failures)
+
+See https://developer.android.com/r/studio-ui/build/manifest-merger for more information about the manifest merger.
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:processReleaseMainManifest'.
+> Manifest merger failed : uses-sdk:minSdkVersion 21 cannot be smaller than version 23 declared in library [androidx.compose.animation:animation-core-android:1.11.0] /home/runner/.gradle/caches/8.9/transforms/1a4a6f539f2cb9eb9372538b2d1bb8b6/transformed/jetified-animation-core/AndroidManifest.xml as the library might be using APIs not available in 21
+  	Suggestion: use a compatible library with a minSdk of at most 21,
+  		or increase this project's minSdk version to at least 23,
+  		or use tools:overrideLibrary="androidx.compose.animation.core" to force usage (may lead to runtime failures)
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 14s
+11 actionable tasks: 11 executed
