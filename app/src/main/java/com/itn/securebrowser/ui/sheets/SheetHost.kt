@@ -127,7 +127,7 @@ fun SheetHost(
                     modifier = Modifier.fillMaxHeight(0.9f),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
                     containerColor = MaterialTheme.colorScheme.surface,
-                    contentWindowInsets = { WindowInsets.navigationBars }
+                    contentWindowInsets = { WindowInsets.navigationBars } // insets fix
                 ) {
                     content(sheet, isTop, dismiss)
                 }
