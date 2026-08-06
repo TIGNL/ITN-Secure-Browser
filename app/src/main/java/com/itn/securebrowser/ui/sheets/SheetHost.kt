@@ -130,7 +130,7 @@ fun SheetHost(
                     modifier = Modifier.fillMaxHeight(0.9f),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
                     containerColor = MaterialTheme.colorScheme.surface,
-                    contentWindowInsets = { WindowInsets(0) }
+                    contentWindowInsets = { WindowInsets.navigationBars.add(WindowInsets.ime) }
                 ) {
                     content(sheet, isTop, dismiss)
                 }
@@ -150,8 +150,6 @@ fun SheetScaffold(
         Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .windowInsetsPadding(WindowInsets.navigationBars)
-            .windowInsetsPadding(WindowInsets.ime)
     ) {
         Row(
             Modifier
