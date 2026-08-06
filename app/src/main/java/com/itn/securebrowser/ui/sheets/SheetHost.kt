@@ -23,6 +23,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -70,7 +71,39 @@ sealed interface SheetItem {
     data class InfoBlock(
         val content: @Composable () -> Unit
     ) : SheetItem
+
+    /**
+     * شريط ثابت في أسفل الشيت بارتفاع 64dp — ثلاثة أوضاع:
+     * - Confirm : Cancel يسار + OK يمين
+     * - Action  : زر واحد يملأ العرض
+     * - NavBar  : More ثابت يمين + ثلاثة عناصر مخصصة
+     */
+    sealed interface BottomBar : SheetItem {
+
+        data class Confirm(
+            val cancelLabel: String = "إلغاء",
+            val okLabel: String = "تأكيد",
+            val onCancel: () -> Unit,
+            val onOk: () -> Unit
+        ) : BottomBar
+
+        data class Action(
+            val label: String,
+            val onClick: () -> Unit
+        ) : BottomBar
+
+        data class NavBar(
+            val items: List<NavBarItem>,          // 3 عناصر مخصصة
+            val onMore: () -> Unit
+        ) : BottomBar
+    }
 }
+
+data class NavBarItem(
+    val icon: ImageVector,
+    val label: String,
+    val onClick: () -> Unit
+)
 
 /**
  * Renders every sheet currently on the stack as a Material 3 [ModalBottomSheet].
@@ -94,6 +127,88 @@ fun SheetHost(
                     containerColor = MaterialTheme.colorScheme.surface
                 ) {
                     content(sheet, isTop, dismiss)
+                }
+            }
+        }
+
+        // ── BottomBar الثابت في الأسفل ──────────────────────────────────────
+        items.filterIsInstance<SheetItem.BottomBar>().firstOrNull()?.let { bar ->
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            when (bar) {
+                is SheetItem.BottomBar.Confirm -> {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(64.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(onClick = bar.onCancel),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(bar.cancelLabel, style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(onClick = bar.onOk),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(bar.okLabel, style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.primary)
+                        }
+                    }
+                }
+                is SheetItem.BottomBar.Action -> {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(64.dp)
+                            .clickable(onClick = bar.onClick),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(bar.label, style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.primary)
+                    }
+                }
+                is SheetItem.BottomBar.NavBar -> {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(64.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        bar.items.forEach { item ->
+                            Box(
+                                Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight()
+                                    .clickable(onClick = item.onClick),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(item.icon, contentDescription = item.label,
+                                    tint = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.size(32.dp))
+                            }
+                        }
+                        // More — ثابت على اليمين
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(onClick = bar.onMore),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(Icons.Filled.MoreVert, contentDescription = "More",
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.size(32.dp))
+                        }
+                    }
                 }
             }
         }
@@ -133,7 +248,7 @@ fun SheetScaffold(
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
         ) {
-            items.forEach { item ->
+            items.filterNot { it is SheetItem.BottomBar }.forEach { item ->
                 when (item) {
                     is SheetItem.Row -> {
                         val modifier = Modifier
