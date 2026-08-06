@@ -144,7 +144,6 @@ fun PinEntrySheet(
 
     fun showError(msg: String) {
         errorText = msg
-        showSuccessSpacer = false
     }
 
     fun shakeAndClear() {
