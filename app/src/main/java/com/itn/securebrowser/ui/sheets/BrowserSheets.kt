@@ -1,6 +1,7 @@
 package com.itn.securebrowser.ui.sheets
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -71,18 +72,20 @@ fun TabsSheet(sheet: Sheet.Tabs, activity: MainActivity, dismiss: () -> Unit) {
             }
         }
         add(SheetItem.InfoBlock {
-            TextButton(
-                onClick = {
-                    activity.createNewTab()
-                    dismiss()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+            Box(
+                modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Filled.Add, contentDescription = null)
-                Text(stringResource(R.string.cd_new_tab))
+                TextButton(
+                    onClick = {
+                        activity.createNewTab()
+                        dismiss()
+                    },
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = null)
+                    Text(stringResource(R.string.cd_new_tab))
+                }
             }
         })
     }

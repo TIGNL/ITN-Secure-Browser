@@ -174,7 +174,7 @@ fun SheetScaffold(
                                     modifier = Modifier.height(32.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    item.trailing()
+                                    item.trailing?.invoke()
                                 }
                             }
                         }

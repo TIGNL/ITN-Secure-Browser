@@ -3,6 +3,7 @@ package com.itn.securebrowser.ui.sheets
 import android.app.TimePickerDialog
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -161,15 +162,17 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
             }
         }
         add(SheetItem.InfoBlock {
-            TextButton(
-                onClick = { push(Sheet.GroupEdit(null)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+            Box(
+                modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(Icons.Filled.Add, contentDescription = null)
-                Text(stringResource(R.string.btn_add_group))
+                TextButton(
+                    onClick = { push(Sheet.GroupEdit(null)) },
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = null)
+                    Text(stringResource(R.string.btn_add_group))
+                }
             }
         })
     }
