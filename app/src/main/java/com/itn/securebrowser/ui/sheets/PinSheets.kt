@@ -5,13 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -133,7 +136,6 @@ fun PinEntrySheet(
     }
     var subtitleText by remember { mutableStateOf(sheet.subtitle) }
     var errorText by remember { mutableStateOf("") }
-    var showSuccessSpacer by remember { mutableStateOf(true) }
     var pinSucceeded by remember { mutableStateOf(false) }
 
     androidx.compose.runtime.DisposableEffect(Unit) {
@@ -186,21 +188,6 @@ fun PinEntrySheet(
         }
     }
 
-    fun pressDigit(digit: Char) {
-        if (entered.length >= 6) return
-        entered += digit
-        errorText = ""
-        showSuccessSpacer = true
-        if (entered.length == 6) handleComplete(entered)
-    }
-
-    fun pressBackspace() {
-        if (entered.isEmpty()) return
-        entered = entered.dropLast(1)
-        errorText = ""
-        showSuccessSpacer = true
-    }
-
     val pinFocusRequester = remember { FocusRequester() }
 
     val items = buildList {
@@ -220,17 +207,16 @@ fun PinEntrySheet(
                         textAlign = TextAlign.Center
                     )
                 }
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    repeat(6) { index ->
-                        Box(
-                            Modifier
-                                .size(16.dp)
-                                .clip(CircleShape)
-                                .background(
-                                    if (index < entered.length) MaterialTheme.colorScheme.primary
-                                    else MaterialTheme.colorScheme.outlineVariant
-                                )
-                        )
+                if (entered.isNotEmpty()) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        repeat(entered.length) {
+                            Box(
+                                Modifier
+                                    .size(12.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.primary)
+                            )
+                        }
                     }
                 }
                 if (errorText.isNotEmpty()) {
@@ -250,19 +236,26 @@ fun PinEntrySheet(
                 label = "",
                 value = entered,
                 onValueChange = { new ->
-                    if (new.length <= 6 && new.all { it.isDigit() }) {
-                        entered = new
-                        errorText = ""
-                        showSuccessSpacer = true
-                        if (new.length == 6) handleComplete(new)
-                    }
+                    entered = new
+                    errorText = ""
                 },
-                placeholder = "● ● ● ● ● ●",
-                keyboardType = KeyboardType.NumberPassword,
+                placeholder = "Enter PIN",
+                keyboardType = KeyboardType.Password,
                 isPassword = true,
                 focusRequester = pinFocusRequester
             )
         )
+        if (entered.isNotEmpty()) {
+            add(SheetItem.Divider)
+            add(
+                SheetItem.Row(
+                    icon = null,
+                    title = stringResource(R.string.btn_ok),
+                    titleColor = MaterialTheme.colorScheme.primary,
+                    onClick = { handleComplete(entered) }
+                )
+            )
+        }
     }
 
     SheetScaffold(title = titleText, onClose = dismiss, items = items)
