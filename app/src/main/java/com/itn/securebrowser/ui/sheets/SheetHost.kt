@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -128,7 +129,8 @@ fun SheetHost(
                     sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
                     modifier = Modifier.fillMaxHeight(0.9f),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentWindowInsets = { WindowInsets(0) }
                 ) {
                     content(sheet, isTop, dismiss)
                 }
