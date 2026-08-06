@@ -1,6 +1,5 @@
 package com.itn.securebrowser.ui.sheets
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -58,49 +57,78 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
         )
     }
 
-    SheetScaffold(title = "PIN", onClose = dismiss) {
-        SheetRow(
-            icon = null,
-            title = "PIN",
-            onClick = { if (hasPin) pushVerifyThenClear() else push(setPinEntry(context) { hasPin = PinManager.hasPin(context) }) },
-            trailing = {
-                Switch(
-                    checked = hasPin,
-                    onCheckedChange = { enabled ->
-                        if (enabled) push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
-                        else pushVerifyThenClear()
-                    }
-                )
-            }
-        )
-        SheetDivider()
-
-        if (hasPin) {
-            SheetRow(icon = null, title = stringResource(R.string.btn_change_pin), onClick = {
-                push(
-                    Sheet.PinEntry(
-                        mode = MODE_VERIFY,
-                        subtitle = context.getString(R.string.pin_verify_first),
-                        onVerified = {
-                            push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
+    val items = buildList {
+        add(
+            SheetItem.Row(
+                icon = null,
+                title = "PIN",
+                onClick = {
+                    if (hasPin) pushVerifyThenClear()
+                    else push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
+                },
+                trailing = {
+                    Switch(
+                        checked = hasPin,
+                        onCheckedChange = { enabled ->
+                            if (enabled) push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
+                            else pushVerifyThenClear()
                         }
                     )
+                }
+            )
+        )
+        add(SheetItem.Divider)
+        if (hasPin) {
+            add(
+                SheetItem.Row(
+                    icon = null,
+                    title = stringResource(R.string.btn_change_pin),
+                    onClick = {
+                        push(
+                            Sheet.PinEntry(
+                                mode = MODE_VERIFY,
+                                subtitle = context.getString(R.string.pin_verify_first),
+                                onVerified = {
+                                    push(
+                                        setPinEntry(context) { hasPin = PinManager.hasPin(context) }
+                                    )
+                                }
+                            )
+                        )
+                    }
                 )
-            })
-            SheetDivider()
-            SheetRow(icon = null, title = stringResource(R.string.btn_clear_pin), onClick = { pushVerifyThenClear() })
+            )
+            add(SheetItem.Divider)
+            add(
+                SheetItem.Row(
+                    icon = null,
+                    title = stringResource(R.string.btn_clear_pin),
+                    onClick = { pushVerifyThenClear() }
+                )
+            )
         }
     }
+
+    SheetScaffold(
+        title = "PIN",
+        onClose = dismiss,
+        items = items
+    )
 }
 
-private fun setPinEntry(context: android.content.Context, onVerified: () -> Unit) = Sheet.PinEntry(
-    mode = MODE_SET,
-    subtitle = context.getString(R.string.pin_subtitle_new),
-    onVerified = onVerified
-)
+private fun setPinEntry(context: android.content.Context, onVerified: () -> Unit) =
+    Sheet.PinEntry(
+        mode = MODE_SET,
+        subtitle = context.getString(R.string.pin_subtitle_new),
+        onVerified = onVerified
+    )
 
 @Composable
-fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () -> Unit = sheet.onDismissed) {
+fun PinEntrySheet(
+    sheet: Sheet.PinEntry,
+    dismiss: () -> Unit,
+    onDismissed: () -> Unit = sheet.onDismissed
+) {
     val context = LocalContext.current
     var entered by remember { mutableStateOf("") }
     var firstPin by remember { mutableStateOf("") }
@@ -117,7 +145,6 @@ fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () ->
     var showSuccessSpacer by remember { mutableStateOf(true) }
     var pinSucceeded by remember { mutableStateOf(false) }
 
-    // Call onDismissed when disposed without success (user swiped away / pressed back)
     androidx.compose.runtime.DisposableEffect(Unit) {
         onDispose { if (!pinSucceeded) onDismissed() }
     }
@@ -143,6 +170,7 @@ fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () ->
                     shakeAndClear()
                 }
             }
+
             MODE_SET -> {
                 if (firstPin.isEmpty()) {
                     firstPin = pin
@@ -182,97 +210,125 @@ fun PinEntrySheet(sheet: Sheet.PinEntry, dismiss: () -> Unit, onDismissed: () ->
         showSuccessSpacer = true
     }
 
-    SheetScaffold(title = titleText, onClose = dismiss) {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            // Subtitle
-            if (subtitleText.isNotEmpty()) {
-                Text(
-                    text = subtitleText,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 36.dp)
-                )
-            }
-
-            // PIN dots
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                repeat(6) { index ->
-                    Box(
-                        Modifier
-                            .size(16.dp)
-                            .clip(CircleShape)
-                            .background(
-                                if (index < entered.length)
-                                    MaterialTheme.colorScheme.primary
-                                else
-                                    MaterialTheme.colorScheme.outlineVariant
-                            )
-                    )
-                }
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            // Error or spacer
-            if (errorText.isNotEmpty()) {
-                Text(
-                    text = errorText,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(bottom = 32.dp),
-                    textAlign = TextAlign.Center
-                )
-            } else {
-                Spacer(Modifier.height(32.dp))
-            }
-
-            // Numpad
-            val keys = listOf(
-                listOf("1", "2", "3"),
-                listOf("4", "5", "6"),
-                listOf("7", "8", "9"),
-                listOf("cancel", "0", "back")
-            )
-
-            keys.forEach { row ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(vertical = 6.dp)
+    SheetScaffold(
+        title = titleText,
+        onClose = dismiss,
+        items = listOf(
+            SheetItem.InfoBlock {
+                Column(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    row.forEach { key ->
-                        when (key) {
-                            "cancel" -> {
-                                IconButton(onClick = { dismiss() }, modifier = Modifier.size(80.dp)) {
-                                    Text("✕", fontSize = 22.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                }
-                            }
-                            "back" -> {
-                                IconButton(onClick = { pressBackspace() }, modifier = Modifier.size(80.dp)) {
-                                    Icon(Icons.Filled.Backspace, contentDescription = "Backspace", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(28.dp))
-                                }
-                            }
-                            else -> {
-                                Box(
-                                    Modifier
-                                        .size(80.dp)
-                                        .clip(RoundedCornerShape(8.dp))
-                                        .clickable { pressDigit(key[0]) }
-                                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(key, fontSize = 26.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                    if (subtitleText.isNotEmpty()) {
+                        Text(
+                            text = subtitleText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(bottom = 36.dp)
+                        )
+                    }
+
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        repeat(6) { index ->
+                            Box(
+                                Modifier
+                                    .size(16.dp)
+                                    .clip(CircleShape)
+                                    .background(
+                                        if (index < entered.length)
+                                            MaterialTheme.colorScheme.primary
+                                        else
+                                            MaterialTheme.colorScheme.outlineVariant
+                                    )
+                            )
+                        }
+                    }
+
+                    Spacer(Modifier.height(12.dp))
+
+                    if (errorText.isNotEmpty()) {
+                        Text(
+                            text = errorText,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(bottom = 32.dp),
+                            textAlign = TextAlign.Center
+                        )
+                    } else {
+                        Spacer(Modifier.height(32.dp))
+                    }
+
+                    val keys = listOf(
+                        listOf("1", "2", "3"),
+                        listOf("4", "5", "6"),
+                        listOf("7", "8", "9"),
+                        listOf("cancel", "0", "back")
+                    )
+
+                    keys.forEach { row ->
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            modifier = Modifier.padding(vertical = 6.dp)
+                        ) {
+                            row.forEach { key ->
+                                when (key) {
+                                    "cancel" -> {
+                                        IconButton(
+                                            onClick = { dismiss() },
+                                            modifier = Modifier.size(80.dp)
+                                        ) {
+                                            Text(
+                                                "✕",
+                                                fontSize = 22.sp,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                            )
+                                        }
+                                    }
+
+                                    "back" -> {
+                                        IconButton(
+                                            onClick = { pressBackspace() },
+                                            modifier = Modifier.size(80.dp)
+                                        ) {
+                                            Icon(
+                                                Icons.Filled.Backspace,
+                                                contentDescription = "Backspace",
+                                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                                modifier = Modifier.size(28.dp)
+                                            )
+                                        }
+                                    }
+
+                                    else -> {
+                                        Box(
+                                            Modifier
+                                                .size(80.dp)
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .clickable { pressDigit(key[0]) }
+                                                .background(
+                                                    MaterialTheme.colorScheme.surfaceVariant.copy(
+                                                        alpha = 0.5f
+                                                    )
+                                                ),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(
+                                                key,
+                                                fontSize = 26.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                color = MaterialTheme.colorScheme.onSurface
+                                            )
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        }
-    }
+        )
+    )
 }

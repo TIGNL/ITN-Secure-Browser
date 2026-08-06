@@ -3,7 +3,6 @@ package com.itn.securebrowser.ui.sheets
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,6 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.BottomSheetDefaults
@@ -27,8 +30,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,11 +38,34 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
+sealed interface SheetItem {
+    data class Row(
+        val icon: ImageVector?,
+        val title: String,
+        val subtitle: String? = null,
+        val titleColor: Color = Color.Unspecified,
+        val trailing: @Composable (() -> Unit)? = null,
+        val onClick: (() -> Unit)? = null
+    ) : SheetItem
+
+    data class TextField(
+        val label: String,
+        val value: String,
+        val onValueChange: (String) -> Unit,
+        val placeholder: String = "",
+        val enabled: Boolean = true,
+        val keyboardType: KeyboardType = KeyboardType.Text
+    ) : SheetItem
+
+    data object Divider : SheetItem
+
+    data class InfoBlock(
+        val content: @Composable () -> Unit
+    ) : SheetItem
+}
+
 /**
  * Renders every sheet currently on the stack as a Material 3 [ModalBottomSheet].
- * Sheets are ordered bottom→top so the top-most sheet covers the previous one,
- * and the previous sheet remains composed underneath (matching the original
- * "sheet stays open behind" behaviour).
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,12 +92,12 @@ fun SheetHost(
     }
 }
 
-/** Standard sheet layout: title header + close button, divider, then content. */
+/** Standard sheet layout: title header + close button, divider, then structured items. */
 @Composable
 fun SheetScaffold(
     title: String,
     onClose: () -> Unit,
-    content: @Composable ColumnScope.() -> Unit
+    items: List<SheetItem>
 ) {
     Column(
         Modifier
@@ -96,129 +120,125 @@ fun SheetScaffold(
             }
         }
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-        content()
-    }
-}
-
-/** Tappable settings-style row with optional leading icon and trailing content.
- *  Height is always exactly 64dp. Any trailing content is capped at 32dp height. */
-@Composable
-fun SheetRow(
-    icon: ImageVector?,
-    title: String,
-    subtitle: String? = null,
-    titleColor: Color = Color.Unspecified,
-    trailing: @Composable () -> Unit = {},
-    onClick: (() -> Unit)? = null
-) {
-    val modifier = Modifier
-        .fillMaxWidth()
-        .height(64.dp)
-        .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-        .padding(horizontal = 20.dp)
-
-    Row(
-        modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (icon != null) {
-            Box(
-                modifier = Modifier.size(24.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            Spacer(Modifier.width(16.dp))
-        }
-        Column(Modifier.weight(1f)) {
-            Text(title, style = MaterialTheme.typography.bodyLarge, color = titleColor)
-            if (subtitle != null) {
-                Text(
-                    subtitle,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-        Box(
-            modifier = Modifier.height(32.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            trailing()
-        }
-    }
-}
-
-/** Inline text-input row. Height is always exactly 64dp. Input is capped at 32dp height. */
-@Composable
-fun TextFieldRow(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    placeholder: String = "",
-    enabled: Boolean = true,
-    keyboardType: KeyboardType = KeyboardType.Text
-) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .height(64.dp)
-            .padding(horizontal = 20.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f)
-        )
-        Spacer(Modifier.width(12.dp))
-        Box(
-            modifier = Modifier
+        Column(
+            Modifier
                 .weight(1f)
-                .height(32.dp),
-            contentAlignment = Alignment.CenterStart
+                .verticalScroll(rememberScrollState())
         ) {
-            BasicTextField(
-                value = value,
-                onValueChange = onValueChange,
-                enabled = enabled,
-                singleLine = true,
-                textStyle = MaterialTheme.typography.bodyLarge.copy(
-                    color = if (enabled) MaterialTheme.colorScheme.onSurface
-                    else MaterialTheme.colorScheme.onSurfaceVariant
-                ),
-                keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
-                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                modifier = Modifier.fillMaxWidth(),
-                decorationBox = { innerTextField ->
-                    if (value.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+            items.forEach { item ->
+                when (item) {
+                    is SheetItem.Row -> {
+                        val modifier = Modifier
+                            .fillMaxWidth()
+                            .height(64.dp)
+                            .then(
+                                if (item.onClick != null) Modifier.clickable(onClick = item.onClick)
+                                else Modifier
+                            )
+                            .padding(horizontal = 20.dp)
+
+                        Row(
+                            modifier,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            if (item.icon != null) {
+                                Box(
+                                    modifier = Modifier.size(24.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = item.icon,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                }
+                                Spacer(Modifier.width(16.dp))
+                            }
+                            Column(Modifier.weight(1f)) {
+                                Text(
+                                    item.title,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = item.titleColor
+                                )
+                                if (item.subtitle != null) {
+                                    Text(
+                                        item.subtitle,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
+                            if (item.trailing != null) {
+                                Box(
+                                    modifier = Modifier.height(32.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    item.trailing()
+                                }
+                            }
+                        }
+                    }
+
+                    is SheetItem.TextField -> {
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(64.dp)
+                                .padding(horizontal = 20.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = item.label,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
+                            Spacer(Modifier.width(12.dp))
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(32.dp),
+                                contentAlignment = Alignment.CenterStart
+                            ) {
+                                BasicTextField(
+                                    value = item.value,
+                                    onValueChange = item.onValueChange,
+                                    enabled = item.enabled,
+                                    singleLine = true,
+                                    textStyle = MaterialTheme.typography.bodyLarge.copy(
+                                        color = if (item.enabled) MaterialTheme.colorScheme.onSurface
+                                        else MaterialTheme.colorScheme.onSurfaceVariant
+                                    ),
+                                    keyboardOptions = KeyboardOptions(keyboardType = item.keyboardType),
+                                    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                                    modifier = Modifier.fillMaxWidth(),
+                                    decorationBox = { innerTextField ->
+                                        if (item.value.isEmpty()) {
+                                            Text(
+                                                text = item.placeholder,
+                                                style = MaterialTheme.typography.bodyLarge,
+                                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                            )
+                                        }
+                                        innerTextField()
+                                    }
+                                )
+                            }
+                        }
+                    }
+
+                    is SheetItem.Divider -> {
+                        HorizontalDivider(
+                            color = MaterialTheme.colorScheme.outlineVariant,
+                            modifier = Modifier.padding(start = 20.dp)
                         )
                     }
-                    innerTextField()
+
+                    is SheetItem.InfoBlock -> {
+                        item.content()
+                    }
                 }
-            )
+            }
         }
     }
-}
-
-@Composable
-fun SheetDivider() {
-    HorizontalDivider(
-        color = MaterialTheme.colorScheme.outlineVariant,
-        modifier = Modifier.padding(start = 20.dp)
-    )
-}
-
-@Composable
-fun SheetVerticalSpacer() {
-    Spacer(Modifier.height(16.dp))
 }
