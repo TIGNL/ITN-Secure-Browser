@@ -130,88 +130,6 @@ fun SheetHost(
                 }
             }
         }
-
-        // ── BottomBar الثابت في الأسفل ──────────────────────────────────────
-        items.filterIsInstance<SheetItem.BottomBar>().firstOrNull()?.let { bar ->
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-            when (bar) {
-                is SheetItem.BottomBar.Confirm -> {
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(64.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .clickable(onClick = bar.onCancel),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(bar.cancelLabel, style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                        Box(
-                            Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .clickable(onClick = bar.onOk),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(bar.okLabel, style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.primary)
-                        }
-                    }
-                }
-                is SheetItem.BottomBar.Action -> {
-                    Box(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(64.dp)
-                            .clickable(onClick = bar.onClick),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(bar.label, style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.primary)
-                    }
-                }
-                is SheetItem.BottomBar.NavBar -> {
-                    Row(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(64.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        bar.items.forEach { item ->
-                            Box(
-                                Modifier
-                                    .weight(1f)
-                                    .fillMaxHeight()
-                                    .clickable(onClick = item.onClick),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(item.icon, contentDescription = item.label,
-                                    tint = MaterialTheme.colorScheme.onSurface,
-                                    modifier = Modifier.size(32.dp))
-                            }
-                        }
-                        // More — ثابت على اليمين
-                        Box(
-                            Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .clickable(onClick = bar.onMore),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(Icons.Filled.MoreVert, contentDescription = "More",
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                modifier = Modifier.size(32.dp))
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -374,6 +292,87 @@ fun SheetScaffold(
 
                     is SheetItem.InfoBlock -> {
                         item.content()
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+        items.filterIsInstance<SheetItem.BottomBar>().firstOrNull()?.let { bar ->
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            when (bar) {
+                is SheetItem.BottomBar.Confirm -> {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(64.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(onClick = bar.onCancel),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(bar.cancelLabel, style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(onClick = bar.onOk),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(bar.okLabel, style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.primary)
+                        }
+                    }
+                }
+                is SheetItem.BottomBar.Action -> {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(64.dp)
+                            .clickable(onClick = bar.onClick),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(bar.label, style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.primary)
+                    }
+                }
+                is SheetItem.BottomBar.NavBar -> {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(64.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        bar.items.forEach { item ->
+                            Box(
+                                Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight()
+                                    .clickable(onClick = item.onClick),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(item.icon, contentDescription = item.label,
+                                    tint = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.size(32.dp))
+                            }
+                        }
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(onClick = bar.onMore),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(Icons.Filled.MoreVert, contentDescription = "More",
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.size(32.dp))
+                        }
                     }
                 }
             }
