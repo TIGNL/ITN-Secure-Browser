@@ -14,7 +14,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -125,7 +126,8 @@ fun SheetHost(
                     sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
                     modifier = Modifier.fillMaxHeight(0.9f),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentWindowInsets = { WindowInsets.navigationBars }
                 ) {
                     content(sheet, isTop, dismiss)
                 }
@@ -301,7 +303,6 @@ fun SheetScaffold(
         }
         items.filterIsInstance<SheetItem.BottomBar>().firstOrNull()?.let { bar ->
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-            Box(Modifier.navigationBarsPadding()) {
             when (bar) {
                 is SheetItem.BottomBar.Confirm -> {
                     Row(
