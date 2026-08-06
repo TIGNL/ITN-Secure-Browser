@@ -161,20 +161,14 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
                 add(SheetItem.Divider)
             }
         }
-        add(SheetItem.InfoBlock {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                TextButton(
-                    onClick = { push(Sheet.GroupEdit(null)) },
-                    modifier = Modifier.padding(vertical = 8.dp)
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = null)
-                    Text(stringResource(R.string.btn_add_group))
-                }
-            }
-        })
+        add(SheetItem.Divider)
+        add(
+            SheetItem.Row(
+                icon = Icons.Filled.Add,
+                title = stringResource(R.string.btn_add_group),
+                onClick = { push(Sheet.GroupEdit(null)) }
+            )
+        )
     }
 
     SheetScaffold(

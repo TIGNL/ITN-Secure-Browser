@@ -2,6 +2,11 @@ package com.itn.securebrowser.ui.sheets
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,6 +50,7 @@ sealed interface SheetItem {
         val subtitle: String? = null,
         val titleColor: Color = Color.Unspecified,
         val trailing: @Composable (() -> Unit)? = null,
+        val trailingClick: (() -> Unit)? = null,
         val onClick: (() -> Unit)? = null
     ) : SheetItem
 
@@ -54,7 +60,9 @@ sealed interface SheetItem {
         val onValueChange: (String) -> Unit,
         val placeholder: String = "",
         val enabled: Boolean = true,
-        val keyboardType: KeyboardType = KeyboardType.Text
+        val keyboardType: KeyboardType = KeyboardType.Text,
+        val isPassword: Boolean = false,
+        val focusRequester: FocusRequester? = null
     ) : SheetItem
 
     data object Divider : SheetItem
@@ -171,16 +179,25 @@ fun SheetScaffold(
                             }
                             if (item.trailing != null) {
                                 Box(
-                                    modifier = Modifier.height(32.dp),
+                                    modifier = Modifier
+                                        .height(32.dp)
+                                        .then(
+                                            if (item.trailingClick != null)
+                                                Modifier.clickable(onClick = item.trailingClick!!)
+                                            else Modifier
+                                        ),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    item.trailing?.invoke()
+                                    item.trailing.invoke()
                                 }
                             }
                         }
                     }
 
                     is SheetItem.TextField -> {
+                        if (item.focusRequester != null) {
+                            LaunchedEffect(Unit) { item.focusRequester.requestFocus() }
+                        }
                         Row(
                             Modifier
                                 .fillMaxWidth()
@@ -188,12 +205,14 @@ fun SheetScaffold(
                                 .padding(horizontal = 20.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = item.label,
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Spacer(Modifier.width(12.dp))
+                            if (item.label.isNotEmpty()) {
+                                Text(
+                                    text = item.label,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Spacer(Modifier.width(12.dp))
+                            }
                             Box(
                                 modifier = Modifier
                                     .weight(1f)
@@ -210,8 +229,12 @@ fun SheetScaffold(
                                         else MaterialTheme.colorScheme.onSurfaceVariant
                                     ),
                                     keyboardOptions = KeyboardOptions(keyboardType = item.keyboardType),
+                                    visualTransformation = if (item.isPassword) PasswordVisualTransformation() else VisualTransformation.None,
                                     cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                                    modifier = Modifier.fillMaxWidth(),
+                                    modifier = Modifier.fillMaxWidth().then(
+                                        if (item.focusRequester != null) Modifier.focusRequester(item.focusRequester)
+                                        else Modifier
+                                    ),
                                     decorationBox = { innerTextField ->
                                         if (item.value.isEmpty()) {
                                             Text(
