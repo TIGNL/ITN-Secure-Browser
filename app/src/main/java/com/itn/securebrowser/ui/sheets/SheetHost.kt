@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -300,6 +301,7 @@ fun SheetScaffold(
         }
         items.filterIsInstance<SheetItem.BottomBar>().firstOrNull()?.let { bar ->
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            Box(Modifier.navigationBarsPadding()) {
             when (bar) {
                 is SheetItem.BottomBar.Confirm -> {
                     Row(
