@@ -1,11 +1,14 @@
 package com.itn.securebrowser.ui.sheets
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -14,6 +17,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,13 +59,13 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
                 title = "PIN",
                 onClick = {
                     if (hasPin) pushVerifyThenClear()
-                    else push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
+                    else push(Sheet.LockMethod { type -> pushEntryForType(type, push) { hasPin = PinManager.hasPin(context) } })
                 },
                 trailing = {
                     Switch(
                         checked = hasPin,
                         onCheckedChange = { enabled ->
-                            if (enabled) push(setPinEntry(context) { hasPin = PinManager.hasPin(context) })
+                            if (enabled) push(Sheet.LockMethod { type -> pushEntryForType(type, push) { hasPin = PinManager.hasPin(context) } })
                             else pushVerifyThenClear()
                         }
                     )
@@ -80,16 +84,13 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
                                 mode = MODE_VERIFY,
                                 subtitle = context.getString(R.string.pin_verify_first),
                                 onVerified = {
-                                    push(
-                                        setPinEntry(context) { hasPin = PinManager.hasPin(context) }
-                                    )
+                                    push(Sheet.LockMethod { type -> pushEntryForType(type, push) { hasPin = PinManager.hasPin(context) } })
                                 }
                             )
                         )
                     }
                 )
             )
-
         }
     }
 
@@ -100,12 +101,92 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
     )
 }
 
-private fun setPinEntry(context: android.content.Context, onVerified: () -> Unit) =
-    Sheet.PinEntry(
-        mode = MODE_SET,
-        subtitle = context.getString(R.string.pin_subtitle_new),
-        onVerified = onVerified
+private fun pushEntryForType(
+    type: LockType,
+    push: (Sheet) -> Unit,
+    onVerified: () -> Unit
+) {
+    when (type) {
+        LockType.PASSWORD -> push(
+            Sheet.PinEntry(
+                mode = MODE_SET,
+                subtitle = "Choose a password",
+                pinLength = 0,
+                onVerified = onVerified
+            )
+        )
+        LockType.PIN_4 -> push(
+            Sheet.PinEntry(
+                mode = MODE_SET,
+                subtitle = "Choose a 4-digit PIN",
+                pinLength = 4,
+                onVerified = onVerified
+            )
+        )
+        LockType.PIN_6 -> push(
+            Sheet.PinEntry(
+                mode = MODE_SET,
+                subtitle = "Choose a 6-digit PIN",
+                pinLength = 6,
+                onVerified = onVerified
+            )
+        )
+        LockType.PATTERN -> push(
+            Sheet.PatternEntry(
+                mode = MODE_SET,
+                subtitle = "Draw a pattern",
+                onVerified = onVerified
+            )
+        )
+    }
+}
+
+@Composable
+fun LockMethodSheet(sheet: Sheet.LockMethod, dismiss: () -> Unit) {
+    val items = buildList {
+        add(
+            SheetItem.Row(
+                icon = null,
+                title = "Password",
+                subtitle = "Text password",
+                onClick = { sheet.onSelected(LockType.PASSWORD); dismiss() }
+            )
+        )
+        add(SheetItem.Divider)
+        add(
+            SheetItem.Row(
+                icon = null,
+                title = "4-Digit PIN",
+                subtitle = "Numeric, 4 digits",
+                onClick = { sheet.onSelected(LockType.PIN_4); dismiss() }
+            )
+        )
+        add(SheetItem.Divider)
+        add(
+            SheetItem.Row(
+                icon = null,
+                title = "6-Digit PIN",
+                subtitle = "Numeric, 6 digits",
+                onClick = { sheet.onSelected(LockType.PIN_6); dismiss() }
+            )
+        )
+        add(SheetItem.Divider)
+        add(
+            SheetItem.Row(
+                icon = null,
+                title = "Pattern",
+                subtitle = "3x3 dot pattern",
+                onClick = { sheet.onSelected(LockType.PATTERN); dismiss() }
+            )
+        )
+    }
+
+    SheetScaffold(
+        title = "Lock Method",
+        onClose = dismiss,
+        items = items
     )
+}
 
 @Composable
 fun PinEntrySheet(
@@ -124,20 +205,10 @@ fun PinEntrySheet(
             }
         )
     }
-    var subtitleText by remember { mutableStateOf(sheet.subtitle) }
-    var errorText by remember { mutableStateOf("") }
     var pinSucceeded by remember { mutableStateOf(false) }
 
     androidx.compose.runtime.DisposableEffect(Unit) {
         onDispose { if (!pinSucceeded) onDismissed() }
-    }
-
-    fun showError(msg: String) {
-        errorText = msg
-    }
-
-    fun shakeAndClear() {
-        entered = ""
     }
 
     fun handleComplete(pin: String) {
@@ -148,8 +219,8 @@ fun PinEntrySheet(
                     sheet.onVerified()
                     dismiss()
                 } else {
-                    showError(context.getString(R.string.pin_error_wrong))
-                    shakeAndClear()
+                    titleText = context.getString(R.string.pin_error_wrong)
+                    entered = ""
                 }
             }
 
@@ -158,7 +229,6 @@ fun PinEntrySheet(
                     firstPin = pin
                     entered = ""
                     titleText = context.getString(R.string.pin_title_confirm)
-                    subtitleText = ""
                 } else {
                     if (pin == firstPin) {
                         pinSucceeded = true
@@ -167,10 +237,8 @@ fun PinEntrySheet(
                         dismiss()
                     } else {
                         firstPin = ""
-                        showError(context.getString(R.string.pin_error_mismatch))
-                        titleText = context.getString(R.string.pin_title_new)
-                        subtitleText = ""
-                        shakeAndClear()
+                        titleText = context.getString(R.string.pin_error_mismatch)
+                        entered = ""
                     }
                 }
             }
@@ -179,57 +247,18 @@ fun PinEntrySheet(
 
     val pinFocusRequester = remember { FocusRequester() }
 
+    val isPassword = sheet.pinLength == 0
+    val placeholder = if (isPassword) "Enter password" else "Enter PIN"
+    val keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Number
+
     val items = buildList {
-        add(SheetItem.InfoBlock {
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                if (subtitleText.isNotEmpty()) {
-                    Text(
-                        text = subtitleText,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(bottom = 24.dp),
-                        textAlign = TextAlign.Center
-                    )
-                }
-                if (entered.isNotEmpty()) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        repeat(entered.length) {
-                            Box(
-                                Modifier
-                                    .size(12.dp)
-                                    .clip(CircleShape)
-                                    .background(MaterialTheme.colorScheme.primary)
-                            )
-                        }
-                    }
-                }
-                if (errorText.isNotEmpty()) {
-                    Text(
-                        text = errorText,
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.padding(top = 12.dp),
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-        })
-        add(SheetItem.Divider)
         add(
             SheetItem.TextField(
                 label = "",
                 value = entered,
-                onValueChange = { new ->
-                    entered = new
-                    errorText = ""
-                },
-                placeholder = "Enter PIN",
-                keyboardType = KeyboardType.Password,
+                onValueChange = { entered = it },
+                placeholder = placeholder,
+                keyboardType = keyboardType,
                 isPassword = true,
                 focusRequester = pinFocusRequester
             )
@@ -237,6 +266,139 @@ fun PinEntrySheet(
         add(SheetItem.BottomBar.Action(
             label = stringResource(R.string.btn_ok),
             onClick = { handleComplete(entered) }
+        ))
+    }
+
+    SheetScaffold(title = titleText, onClose = dismiss, items = items)
+}
+
+@Composable
+fun PatternEntrySheet(
+    sheet: Sheet.PatternEntry,
+    dismiss: () -> Unit,
+    onDismissed: () -> Unit = sheet.onDismissed
+) {
+    val context = LocalContext.current
+    val dots = remember { mutableStateListOf<Int>() }
+    var titleText by remember {
+        mutableStateOf(
+            when (sheet.mode) {
+                MODE_SET -> "Draw a pattern"
+                else -> "Enter your pattern"
+            }
+        )
+    }
+    var firstPattern by remember { mutableStateOf<List<Int>>(emptyList()) }
+    var pinSucceeded by remember { mutableStateOf(false) }
+
+    androidx.compose.runtime.DisposableEffect(Unit) {
+        onDispose { if (!pinSucceeded) onDismissed() }
+    }
+
+    fun handleConfirm() {
+        when (sheet.mode) {
+            MODE_VERIFY -> {
+                pinSucceeded = true
+                sheet.onVerified()
+                dismiss()
+            }
+            MODE_SET -> {
+                if (firstPattern.isEmpty()) {
+                    firstPattern = dots.toList()
+                    dots.clear()
+                    titleText = "Redraw pattern to confirm"
+                } else {
+                    if (dots.toList() == firstPattern) {
+                        pinSucceeded = true
+                        PinManager.savePin(context, dots.joinToString(","))
+                        sheet.onVerified()
+                        dismiss()
+                    } else {
+                        firstPattern = emptyList()
+                        dots.clear()
+                        titleText = context.getString(R.string.pin_error_mismatch)
+                    }
+                }
+            }
+        }
+    }
+
+    val items = buildList {
+        add(SheetItem.InfoBlock {
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (sheet.subtitle.isNotEmpty() && firstPattern.isEmpty()) {
+                    Text(
+                        text = sheet.subtitle,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(bottom = 24.dp),
+                        textAlign = TextAlign.Center
+                    )
+                }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(0.dp)
+                ) {
+                    for (row in 0..2) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(64.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            for (col in 0..2) {
+                                val index = row * 3 + col
+                                val isSelected = index in dots
+                                val order = if (isSelected) dots.indexOf(index) + 1 else 0
+                                Box(
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(CircleShape)
+                                        .background(
+                                            if (isSelected) MaterialTheme.colorScheme.primary
+                                            else MaterialTheme.colorScheme.surfaceVariant
+                                        )
+                                        .then(
+                                            if (!isSelected) Modifier.border(
+                                                2.dp,
+                                                MaterialTheme.colorScheme.outline,
+                                                CircleShape
+                                            ) else Modifier
+                                        )
+                                        .clickable {
+                                            if (isSelected) {
+                                                val idx = dots.indexOf(index)
+                                                dots.removeRange(idx, dots.size)
+                                            } else {
+                                                dots.add(index)
+                                            }
+                                        },
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    if (isSelected) {
+                                        Text(
+                                            text = order.toString(),
+                                            style = MaterialTheme.typography.titleMedium,
+                                            color = MaterialTheme.colorScheme.onPrimary
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        add(SheetItem.Divider)
+        add(SheetItem.BottomBar.Action(
+            label = stringResource(R.string.btn_ok),
+            onClick = { if (dots.isNotEmpty()) handleConfirm() }
         ))
     }
 

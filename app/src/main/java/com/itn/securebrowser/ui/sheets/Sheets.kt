@@ -8,6 +8,8 @@ import com.itn.securebrowser.BrowserTab
 const val MODE_VERIFY = "verify"
 const val MODE_SET = "set"
 
+enum class LockType { PASSWORD, PIN_4, PIN_6, PATTERN }
+
 /**
  * Every modal sheet shown in the app is represented by one of these entries.
  * Sheets are pushed on a stack; a new sheet covers the one below and the
@@ -24,7 +26,15 @@ sealed interface Sheet {
     data class AddSchedule(val onAdd: (BlockSchedule) -> Unit) : Sheet
     data class DeleteGroup(val groupName: String, val onConfirm: () -> Unit) : Sheet
     data object Pin : Sheet
+    data class LockMethod(val onSelected: (LockType) -> Unit) : Sheet
     data class PinEntry(
+        val mode: String,
+        val subtitle: String,
+        val pinLength: Int = 0,
+        val onVerified: () -> Unit,
+        val onDismissed: () -> Unit = {}
+    ) : Sheet
+    data class PatternEntry(
         val mode: String,
         val subtitle: String,
         val onVerified: () -> Unit,

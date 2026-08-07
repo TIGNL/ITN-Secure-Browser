@@ -29,7 +29,9 @@ fun BrowserSheetContent(
         is Sheet.AddSchedule-> AddScheduleSheet(sheet, dismiss)
         is Sheet.DeleteGroup-> DeleteGroupSheet(sheet, dismiss)
         is Sheet.Pin        -> PinSheet(dismiss, push)
+        is Sheet.LockMethod -> LockMethodSheet(sheet, dismiss)
         is Sheet.PinEntry   -> PinEntrySheet(sheet, dismiss)
+        is Sheet.PatternEntry -> PatternEntrySheet(sheet, dismiss)
         is Sheet.ManageSpace-> ManageSpaceSheet(dismiss, push)
         is Sheet.ConfirmClearAll -> ConfirmClearAllSheet(sheet, dismiss)
     }
