@@ -2,16 +2,7 @@ package com.itn.securebrowser.ui.sheets
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.awaitEachGesture
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
-import androidx.compose.foundation.gestures.verticalDrag
 import androidx.compose.foundation.layout.Box
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +17,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
@@ -127,16 +122,27 @@ fun SheetHost(
                     onDismissRequest = dismissAll,
                     sheetState = rememberModalBottomSheetState(
                         skipPartiallyExpanded = true,
-                        confirmValueChange = { it != androidx.compose.material3.SheetValue.Hidden }
+                        confirmValueChange = { it != androidx.compose.material3.SheetValue.PartiallyExpanded }
                     ),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
                     containerColor = MaterialTheme.colorScheme.surface
                 ) {
                     BackHandler { dismiss() }
+                    val consumeScroll = object : NestedScrollConnection {
+                        override fun onPostScroll(
+                            consumed: Offset,
+                            available: Offset,
+                            source: NestedScrollSource
+                        ): Offset {
+                            if (available.y < 0f) return available
+                            return Offset.Zero
+                        }
+                    }
                     Column(
                         Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.75f)
+                            .nestedScroll(consumeScroll)
                     ) {
                         content(sheet, isTop, dismiss)
                     }
