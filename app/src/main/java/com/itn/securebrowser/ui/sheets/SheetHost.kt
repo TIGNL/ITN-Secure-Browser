@@ -22,7 +22,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -115,7 +115,7 @@ fun SheetHost(
     Box(Modifier.fillMaxSize()) {
         stack.forEachIndexed { index, sheet ->
             val isTop = index == stack.lastIndex
-            val dismiss: () -> Unit = { stack.remove(sheet) }
+            val dismiss: () -> Unit = { stack.clear() }
             key(sheet) {
                 ModalBottomSheet(
                     onDismissRequest = dismiss,
@@ -153,17 +153,17 @@ fun SheetScaffold(
             Modifier
                 .fillMaxWidth()
                 .height(64.dp)
-                .padding(start = 16.dp, end = 8.dp),
+                .padding(start = 4.dp, end = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = onClose) {
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+            }
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.weight(1f)
             )
-            IconButton(onClick = onClose) {
-                Icon(Icons.Filled.Close, contentDescription = "Close")
-            }
         }
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         Column(
@@ -290,8 +290,7 @@ fun SheetScaffold(
 
                     is SheetItem.Divider -> {
                         HorizontalDivider(
-                            color = MaterialTheme.colorScheme.outlineVariant,
-                            modifier = Modifier.padding(start = 20.dp)
+                            color = MaterialTheme.colorScheme.outlineVariant
                         )
                     }
 

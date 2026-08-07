@@ -224,7 +224,9 @@ fun PinEntrySheet(
             SheetItem.TextField(
                 label = "",
                 value = entered,
-                onValueChange = { entered = it },
+                onValueChange = { new ->
+                    if (sheet.pinLength == 0 || new.length <= sheet.pinLength) entered = new
+                },
                 placeholder = placeholder,
                 keyboardType = keyboardType,
                 isPassword = true,
