@@ -161,14 +161,10 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
                 add(SheetItem.Divider)
             }
         }
-        add(SheetItem.Divider)
-        add(
-            SheetItem.Row(
-                icon = Icons.Filled.Add,
-                title = stringResource(R.string.btn_add_group),
-                onClick = { push(Sheet.GroupEdit(null)) }
-            )
-        )
+        add(SheetItem.BottomBar.Action(
+            label = stringResource(R.string.btn_add_group),
+            onClick = { push(Sheet.GroupEdit(null)) }
+        ))
     }
 
     SheetScaffold(
@@ -370,8 +366,6 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
             )
         )
         add(SheetItem.BottomBar.Confirm(
-            cancelLabel = stringResource(R.string.btn_cancel),
-            okLabel = stringResource(R.string.btn_save),
             onCancel = dismiss,
             onOk = { trySave() }
         ))
@@ -534,8 +528,6 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
             )
         )
         add(SheetItem.BottomBar.Confirm(
-            cancelLabel = stringResource(R.string.btn_cancel),
-            okLabel = stringResource(R.string.btn_ok),
             onCancel = dismiss,
             onOk = {
                 val selectedDays = ALL_DAYS.split(",").filter { it in days }
@@ -574,8 +566,6 @@ fun DeleteGroupSheet(sheet: Sheet.DeleteGroup, dismiss: () -> Unit) {
                 titleColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
             SheetItem.BottomBar.Confirm(
-                cancelLabel = stringResource(R.string.btn_cancel),
-                okLabel = stringResource(R.string.btn_delete),
                 onCancel = dismiss,
                 onOk = { sheet.onConfirm(); dismiss() }
             )

@@ -118,8 +118,6 @@ fun ConfirmClearAllSheet(sheet: Sheet.ConfirmClearAll, dismiss: () -> Unit) {
                 )
             },
             SheetItem.BottomBar.Confirm(
-                cancelLabel = stringResource(R.string.btn_cancel),
-                okLabel = stringResource(R.string.btn_clear_all_confirm),
                 onCancel = dismiss,
                 onOk = { sheet.onConfirm(); dismiss() }
             )

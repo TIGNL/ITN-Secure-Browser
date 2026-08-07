@@ -66,14 +66,10 @@ fun TabsSheet(sheet: Sheet.Tabs, activity: MainActivity, dismiss: () -> Unit) {
                 )
             }
         }
-        add(SheetItem.Divider)
-        add(
-            SheetItem.Row(
-                icon = Icons.Filled.Add,
-                title = stringResource(R.string.cd_new_tab),
-                onClick = { activity.createNewTab(); dismiss() }
-            )
-        )
+        add(SheetItem.BottomBar.Action(
+            label = stringResource(R.string.cd_new_tab),
+            onClick = { activity.createNewTab(); dismiss() }
+        ))
     }
 
     SheetScaffold(

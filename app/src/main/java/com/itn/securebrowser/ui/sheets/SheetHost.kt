@@ -81,8 +81,6 @@ sealed interface SheetItem {
     sealed interface BottomBar : SheetItem {
 
         data class Confirm(
-            val cancelLabel: String = "إلغاء",
-            val okLabel: String = "تأكيد",
             val onCancel: () -> Unit,
             val onOk: () -> Unit
         ) : BottomBar
@@ -320,7 +318,7 @@ fun SheetScaffold(
                                 .clickable(onClick = bar.onCancel),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(bar.cancelLabel, style = MaterialTheme.typography.bodyLarge,
+                            Text("Cancel", style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         Box(
@@ -330,7 +328,7 @@ fun SheetScaffold(
                                 .clickable(onClick = bar.onOk),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(bar.okLabel, style = MaterialTheme.typography.bodyLarge,
+                            Text("OK", style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.primary)
                         }
                     }
