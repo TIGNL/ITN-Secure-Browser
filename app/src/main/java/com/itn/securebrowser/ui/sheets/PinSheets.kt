@@ -89,14 +89,7 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
                     }
                 )
             )
-            add(SheetItem.Divider)
-            add(
-                SheetItem.Row(
-                    icon = null,
-                    title = stringResource(R.string.btn_clear_pin),
-                    onClick = { pushVerifyThenClear() }
-                )
-            )
+
         }
     }
 
