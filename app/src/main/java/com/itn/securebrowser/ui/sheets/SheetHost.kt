@@ -2,6 +2,10 @@ package com.itn.securebrowser.ui.sheets
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
+import androidx.compose.foundation.gestures.verticalDrag
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.focus.FocusRequester
@@ -123,7 +127,7 @@ fun SheetHost(
                     onDismissRequest = dismissAll,
                     sheetState = rememberModalBottomSheetState(
                         skipPartiallyExpanded = true,
-                        confirmValueChange = { it != androidx.compose.material3.SheetValue.PartiallyExpanded }
+                        confirmValueChange = { it != androidx.compose.material3.SheetValue.Hidden }
                     ),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
                     containerColor = MaterialTheme.colorScheme.surface
