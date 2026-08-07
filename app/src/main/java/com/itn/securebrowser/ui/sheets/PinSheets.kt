@@ -1,30 +1,33 @@
 package com.itn.securebrowser.ui.sheets
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -280,6 +283,7 @@ fun PatternEntrySheet(
 ) {
     val context = LocalContext.current
     val dots = remember { mutableStateListOf<Int>() }
+    var fingerPos by remember { mutableStateOf<Offset?>(null) }
     var titleText by remember {
         mutableStateOf(
             when (sheet.mode) {
@@ -290,8 +294,9 @@ fun PatternEntrySheet(
     }
     var firstPattern by remember { mutableStateOf<List<Int>>(emptyList()) }
     var pinSucceeded by remember { mutableStateOf(false) }
+    var patternComplete by remember { mutableStateOf(false) }
 
-    androidx.compose.runtime.DisposableEffect(Unit) {
+    DisposableEffect(Unit) {
         onDispose { if (!pinSucceeded) onDismissed() }
     }
 
@@ -306,6 +311,7 @@ fun PatternEntrySheet(
                 if (firstPattern.isEmpty()) {
                     firstPattern = dots.toList()
                     dots.clear()
+                    patternComplete = false
                     titleText = "Redraw pattern to confirm"
                 } else {
                     if (dots.toList() == firstPattern) {
@@ -316,12 +322,17 @@ fun PatternEntrySheet(
                     } else {
                         firstPattern = emptyList()
                         dots.clear()
+                        patternComplete = false
                         titleText = context.getString(R.string.pin_error_mismatch)
                     }
                 }
             }
         }
     }
+
+    val dotPositions = remember { mutableStateMapOf<Int, Offset>() }
+    val dotRadius = 24.dp
+    val cellSize = 64.dp
 
     val items = buildList {
         add(SheetItem.InfoBlock {
@@ -336,69 +347,107 @@ fun PatternEntrySheet(
                         text = sheet.subtitle,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(bottom = 24.dp),
+                        modifier = Modifier.padding(bottom = 16.dp),
                         textAlign = TextAlign.Center
                     )
                 }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(0.dp)
-                ) {
-                    for (row in 0..2) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(64.dp),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            for (col in 0..2) {
-                                val index = row * 3 + col
-                                val isSelected = index in dots
-                                val order = if (isSelected) dots.indexOf(index) + 1 else 0
-                                Box(
-                                    modifier = Modifier
-                                        .size(48.dp)
-                                        .clip(CircleShape)
-                                        .background(
-                                            if (isSelected) MaterialTheme.colorScheme.primary
-                                            else MaterialTheme.colorScheme.surfaceVariant
-                                        )
-                                        .then(
-                                            if (!isSelected) Modifier.border(
-                                                2.dp,
-                                                MaterialTheme.colorScheme.outline,
-                                                CircleShape
-                                            ) else Modifier
-                                        )
-                                        .clickable {
-                                            if (isSelected) {
-                                                val idx = dots.indexOf(index)
-                                                dots.removeRange(idx, dots.size)
-                                            } else {
-                                                dots.add(index)
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(cellSize * 3)
+                        .pointerInput(dots.toList(), patternComplete) {
+                            detectDragGestures(
+                                onDragStart = { offset ->
+                                    if (!patternComplete) {
+                                        dots.clear()
+                                        patternComplete = false
+                                        fingerPos = offset
+                                        for ((idx, pos) in dotPositions) {
+                                            if ((pos - offset).getDistance() < dotRadius.toPx() * 1.5f) {
+                                                if (idx !in dots) dots.add(idx)
+                                                break
                                             }
-                                        },
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    if (isSelected) {
-                                        Text(
-                                            text = order.toString(),
-                                            style = MaterialTheme.typography.titleMedium,
-                                            color = MaterialTheme.colorScheme.onPrimary
-                                        )
+                                        }
                                     }
+                                },
+                                onDrag = { change, _ ->
+                                    if (!patternComplete) {
+                                        change.consume()
+                                        fingerPos = change.position
+                                        for ((idx, pos) in dotPositions) {
+                                            if ((pos - change.position).getDistance() < dotRadius.toPx() * 1.5f) {
+                                                if (idx !in dots) dots.add(idx)
+                                                break
+                                            }
+                                        }
+                                    }
+                                },
+                                onDragEnd = {
+                                    if (!patternComplete && dots.isNotEmpty()) {
+                                        patternComplete = true
+                                        fingerPos = null
+                                    }
+                                },
+                                onDragCancel = {
+                                    fingerPos = null
                                 }
+                            )
+                        }
+                ) {
+                    Canvas(modifier = Modifier.fillMaxSize()) {
+                        val w = size.width
+                        val h = size.height
+                        val cols = 4
+                        val rows = 4
+                        for (row in 0..2) {
+                            for (col in 0..2) {
+                                val idx = row * 3 + col
+                                val cx = w * (col + 1) / cols
+                                val cy = h * (row + 1) / rows
+                                dotPositions[idx] = Offset(cx, cy)
+                            }
+                        }
+
+                        val lineColor = Color(0xFF6750A4)
+                        for (i in 0 until dots.size - 1) {
+                            val from = dotPositions[dots[i]] ?: continue
+                            val to = dotPositions[dots[i + 1]] ?: continue
+                            drawLine(lineColor, from, to, strokeWidth = 4.dp.toPx())
+                        }
+                        if (fingerPos != null && dots.isNotEmpty()) {
+                            val last = dotPositions[dots.last()] ?: return@Canvas
+                            drawLine(lineColor, last, fingerPos!!, strokeWidth = 4.dp.toPx())
+                        }
+
+                        for ((idx, center) in dotPositions) {
+                            val isSelected = idx in dots
+                            drawCircle(
+                                color = if (isSelected) lineColor else Color(0xFF49454F),
+                                radius = dotRadius.toPx(),
+                                center = center
+                            )
+                            if (!isSelected) {
+                                drawCircle(
+                                    color = Color(0xFF938F99),
+                                    radius = dotRadius.toPx(),
+                                    center = center,
+                                    style = Stroke(2.dp.toPx())
+                                )
                             }
                         }
                     }
+                }
+
+                if (patternComplete) {
+                    Spacer(Modifier.height(16.dp))
                 }
             }
         })
         add(SheetItem.Divider)
         add(SheetItem.BottomBar.Action(
             label = stringResource(R.string.btn_ok),
-            onClick = { if (dots.isNotEmpty()) handleConfirm() }
+            onClick = { if (dots.isNotEmpty() && patternComplete) handleConfirm() }
         ))
     }
 
