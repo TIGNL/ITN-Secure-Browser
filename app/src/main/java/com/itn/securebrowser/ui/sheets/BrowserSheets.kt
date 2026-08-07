@@ -46,7 +46,7 @@ fun TabsSheet(sheet: Sheet.Tabs, activity: MainActivity, dismiss: () -> Unit) {
                 }
             })
         } else {
-            sheet.tabs.forEach { tab ->
+            sheet.tabs.forEachIndexed { index, tab ->
                 val active = tab.id == sheet.activeId
                 add(
                     SheetItem.Row(
@@ -64,6 +64,9 @@ fun TabsSheet(sheet: Sheet.Tabs, activity: MainActivity, dismiss: () -> Unit) {
                         onClick = { activity.switchToTab(tab.id); dismiss() }
                     )
                 )
+                if (index < sheet.tabs.lastIndex) {
+                    add(SheetItem.Divider)
+                }
             }
         }
         add(SheetItem.BottomBar.Action(
