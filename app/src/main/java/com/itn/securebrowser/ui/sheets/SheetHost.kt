@@ -148,6 +148,7 @@ fun SheetScaffold(
             .fillMaxHeight()
             .fillMaxWidth()
     ) {
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         Row(
             Modifier
                 .fillMaxWidth()
