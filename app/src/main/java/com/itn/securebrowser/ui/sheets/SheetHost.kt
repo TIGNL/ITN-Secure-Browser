@@ -42,6 +42,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.unit.dp
 
 sealed interface SheetItem {
@@ -120,14 +121,32 @@ fun SheetHost(
                 ModalBottomSheet(
                     onDismissRequest = dismiss,
                     sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-                    dragHandle = { BottomSheetDefaults.DragHandle() },
-                    containerColor = MaterialTheme.colorScheme.surface
+                    dragHandle = null,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    modifier = Modifier.fillMaxHeight(0.75f)
                 ) {
-                    Column(
+                    // Handle مخصص — جزء من الـ 75%
+                    Box(
                         Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(0.75f)
+                            .height(64.dp),
+                        contentAlignment = Alignment.Center
                     ) {
+                        Box(
+                            Modifier
+                                .width(40.dp)
+                                .height(4.dp)
+                        ) {
+                            androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
+                                drawRoundRect(
+                                    color = androidx.compose.ui.graphics.Color.Gray.copy(alpha = 0.4f),
+                                    cornerRadius = androidx.compose.ui.geometry.CornerRadius(2.dp.toPx())
+                                )
+                            }
+                        }
+                    }
+                    // المحتوى يملأ الباقي
+                    Column(Modifier.fillMaxWidth().weight(1f)) {
                         content(sheet, isTop, dismiss)
                     }
                 }
@@ -151,7 +170,8 @@ fun SheetScaffold(
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 8.dp, top = 4.dp, bottom = 4.dp),
+                .height(64.dp)
+                .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
