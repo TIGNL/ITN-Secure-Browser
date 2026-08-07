@@ -1,5 +1,6 @@
 package com.itn.securebrowser.ui.sheets
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.LaunchedEffect
@@ -115,14 +116,19 @@ fun SheetHost(
     Box(Modifier.fillMaxSize()) {
         stack.forEachIndexed { index, sheet ->
             val isTop = index == stack.lastIndex
-            val dismiss: () -> Unit = { stack.clear() }
+            val dismiss: () -> Unit = { stack.removeAt(stack.lastIndex) }
+            val dismissAll: () -> Unit = { stack.clear() }
             key(sheet) {
                 ModalBottomSheet(
-                    onDismissRequest = dismiss,
-                    sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+                    onDismissRequest = dismissAll,
+                    sheetState = rememberModalBottomSheetState(
+                        skipPartiallyExpanded = true,
+                        confirmValueChange = { it != androidx.compose.material3.SheetValue.PartiallyExpanded }
+                    ),
                     dragHandle = { BottomSheetDefaults.DragHandle() },
                     containerColor = MaterialTheme.colorScheme.surface
                 ) {
+                    BackHandler { dismiss() }
                     Column(
                         Modifier
                             .fillMaxWidth()
