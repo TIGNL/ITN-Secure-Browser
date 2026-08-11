@@ -16,8 +16,7 @@ import com.itn.securebrowser.util.BlockDataStore;
 
 public class GroupEditActivity extends BaseActivity {
 
-    private static final int REQ_DELETE = 1;
-    private static final int REQ_SCHEDULE = 2;
+    private static final int REQ_SCHEDULE = 1;
 
     private BlockDataStore dataStore;
     private String existingName;
@@ -26,8 +25,6 @@ public class GroupEditActivity extends BaseActivity {
     private EditText inputName, inputLimit, inputDomain;
     private TextView domainError, noSchedules;
     private ListView domainList, scheduleList;
-    private TextView btnSave, btnDelete;
-    private View dividerDelete;
     private TextView btnAddSchedule, btnAddDomain;
 
     private List<String> domains = new ArrayList<>();
@@ -51,9 +48,6 @@ public class GroupEditActivity extends BaseActivity {
         domainList = findViewById(R.id.domainList);
         scheduleList = findViewById(R.id.scheduleList);
         noSchedules = findViewById(R.id.noSchedules);
-        btnSave = findViewById(R.id.btnSave);
-        btnDelete = findViewById(R.id.btnDelete);
-        dividerDelete = findViewById(R.id.dividerDelete);
         btnAddDomain = findViewById(R.id.btnAddDomain);
         btnAddSchedule = findViewById(R.id.btnAddSchedule);
 
@@ -68,8 +62,6 @@ public class GroupEditActivity extends BaseActivity {
                         inputLimit.setText(String.valueOf(first));
                     }
                     schedules.addAll(g.schedules);
-                    btnDelete.setVisibility(View.VISIBLE);
-                    dividerDelete.setVisibility(View.VISIBLE);
                     break;
                 }
             }
@@ -84,21 +76,14 @@ public class GroupEditActivity extends BaseActivity {
             startActivityForResult(i, REQ_SCHEDULE);
         });
 
-        btnSave.setOnClickListener(v -> saveGroup());
-        btnDelete.setOnClickListener(v -> {
-            Intent i = new Intent(this, ConfirmActivity.class);
-            i.putExtra("message", getString(R.string.delete_group_confirm, existingName));
-            startActivityForResult(i, REQ_DELETE);
-        });
+        findViewById(R.id.btnCancel).setOnClickListener(v -> finish());
+        findViewById(R.id.btnSave).setOnClickListener(v -> saveGroup());
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQ_DELETE && resultCode == Activity.RESULT_OK) {
-            dataStore.deleteGroup(existingName);
-            finish();
-        } else if (requestCode == REQ_SCHEDULE && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == REQ_SCHEDULE && resultCode == Activity.RESULT_OK && data != null) {
             ArrayList<String> days = data.getStringArrayListExtra("days");
             String from = data.getStringExtra("from");
             String to = data.getStringExtra("to");
