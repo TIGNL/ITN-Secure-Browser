@@ -2,6 +2,7 @@ package com.itn.securebrowser.ui.sheets
 
 import android.app.TimePickerDialog
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,16 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -56,13 +50,13 @@ fun ParentalSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
         onClose = dismiss,
         items = listOf(
             SheetItem.Row(
-                icon = Icons.Filled.Lock,
+                icon = R.drawable.ic_pin,
                 title = stringResource(R.string.tab_pin),
                 onClick = { push(Sheet.Pin) }
             ),
             SheetItem.Divider,
             SheetItem.Row(
-                icon = Icons.Filled.Schedule,
+                icon = R.drawable.ic_clock,
                 title = stringResource(R.string.tab_groups),
                 onClick = { push(Sheet.Groups) }
             )
@@ -84,8 +78,8 @@ fun GeneralSheet(dismiss: () -> Unit) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Icon(
-                        Icons.Filled.Public,
+                    Image(
+                        painter = painterResource(R.drawable.ic_sites),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(56.dp)
@@ -122,8 +116,8 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Icon(
-                        Icons.Filled.Public,
+                    Image(
+                        painter = painterResource(R.drawable.ic_sites),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(56.dp)
@@ -149,8 +143,8 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
                         subtitle = domainsPreview(group.domains),
                         onClick = { push(Sheet.GroupEdit(group.name)) },
                         trailing = {
-                            Icon(
-                                Icons.Filled.Delete,
+                            Image(
+                                painter = painterResource(R.drawable.ic_delete),
                                 contentDescription = stringResource(R.string.cd_delete_group),
                                 tint = MaterialTheme.colorScheme.error,
                                 modifier = Modifier.size(24.dp)
@@ -271,7 +265,7 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = Icons.Filled.Public,
+                icon = R.drawable.ic_sites,
                 title = stringResource(R.string.domains_label)
             )
         )
@@ -293,8 +287,8 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                         icon = null,
                         title = domain,
                         trailing = {
-                            Icon(
-                                Icons.Filled.Close,
+                            Image(
+                                painter = painterResource(R.drawable.ic_close),
                                 contentDescription = stringResource(R.string.cd_delete_domain),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(18.dp)
@@ -309,7 +303,7 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = Icons.Filled.Add,
+                icon = R.drawable.ic_add,
                 title = stringResource(R.string.btn_add_domain),
                 onClick = {
                     push(
@@ -321,7 +315,7 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = Icons.Filled.Schedule,
+                icon = R.drawable.ic_clock,
                 title = stringResource(R.string.schedules_label)
             )
         )
@@ -344,8 +338,8 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                         title = schedule.days.joinToString(", ") { dayNames[it] ?: it },
                         subtitle = "${schedule.from} — ${schedule.to}",
                         trailing = {
-                            Icon(
-                                Icons.Filled.Close,
+                            Image(
+                                painter = painterResource(R.drawable.ic_close),
                                 contentDescription = stringResource(R.string.cd_delete_schedule),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(18.dp)
@@ -360,7 +354,7 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = Icons.Filled.Add,
+                icon = R.drawable.ic_add,
                 title = stringResource(R.string.btn_add_schedule),
                 onClick = { push(Sheet.AddSchedule { s -> schedules.add(s) }) }
             )
@@ -454,7 +448,7 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
     val items = buildList {
         add(
             SheetItem.Row(
-                icon = Icons.Filled.Schedule,
+                icon = R.drawable.ic_clock,
                 title = stringResource(R.string.schedule_days_label)
             )
         )
@@ -477,7 +471,7 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = Icons.Filled.Schedule,
+                icon = R.drawable.ic_clock,
                 title = stringResource(R.string.schedule_time_label)
             )
         )

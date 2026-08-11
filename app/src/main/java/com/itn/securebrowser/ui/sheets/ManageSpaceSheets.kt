@@ -3,11 +3,6 @@ package com.itn.securebrowser.ui.sheets
 import android.webkit.CookieManager
 import android.webkit.WebStorage
 import android.widget.Toast
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Block
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DeleteSweep
-import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -77,25 +72,25 @@ fun ManageSpaceSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
         onClose = dismiss,
         items = listOf(
             SheetItem.Row(
-                icon = Icons.Filled.Close,
+                icon = R.drawable.ic_close,
                 title = stringResource(R.string.clear_browsing),
                 onClick = { clearBrowsing() }
             ),
             SheetItem.Divider,
             SheetItem.Row(
-                icon = Icons.Filled.Timer,
+                icon = R.drawable.ic_timer,
                 title = stringResource(R.string.clear_tracking),
                 onClick = { clearTracking() }
             ),
             SheetItem.Divider,
             SheetItem.Row(
-                icon = Icons.Filled.Block,
+                icon = R.drawable.ic_block,
                 title = stringResource(R.string.clear_blocking),
                 onClick = { clearBlocking() }
             ),
             SheetItem.Divider,
             SheetItem.Row(
-                icon = Icons.Filled.DeleteSweep,
+                icon = R.drawable.ic_delete_sweep,
                 title = stringResource(R.string.clear_all),
                 onClick = { push(Sheet.ConfirmClearAll(onConfirm = ::clearAll)) }
             )

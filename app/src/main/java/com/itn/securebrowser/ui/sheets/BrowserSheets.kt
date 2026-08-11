@@ -1,16 +1,11 @@
 package com.itn.securebrowser.ui.sheets
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Monitor
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -18,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.itn.securebrowser.MainActivity
@@ -55,9 +51,10 @@ fun TabsSheet(sheet: Sheet.Tabs, activity: MainActivity, dismiss: () -> Unit) {
                         titleColor = if (active) MaterialTheme.colorScheme.onSurface
                         else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
                         trailing = {
-                            Icon(
-                                Icons.Filled.Close,
-                                contentDescription = stringResource(R.string.cd_close_tab)
+                            Image(
+                                painter = painterResource(R.drawable.ic_close),
+                                contentDescription = stringResource(R.string.cd_close_tab),
+                                modifier = Modifier.size(24.dp)
                             )
                         },
                         trailingClick = { activity.closeTab(tab.id); dismiss() },
@@ -89,7 +86,7 @@ fun MoreSheet(activity: MainActivity, dismiss: () -> Unit, push: (Sheet) -> Unit
         onClose = dismiss,
         items = listOf(
             SheetItem.Row(
-                icon = Icons.Filled.Monitor,
+                icon = R.drawable.ic_desktop,
                 title = stringResource(R.string.desktop_mode),
                 trailing = {
                     Switch(
@@ -107,13 +104,13 @@ fun MoreSheet(activity: MainActivity, dismiss: () -> Unit, push: (Sheet) -> Unit
             ),
             SheetItem.Divider,
             SheetItem.Row(
-                icon = Icons.Filled.Security,
+                icon = R.drawable.ic_security,
                 title = stringResource(R.string.parental_settings),
                 onClick = { push(Sheet.Parental) }
             ),
             SheetItem.Divider,
             SheetItem.Row(
-                icon = Icons.Filled.Settings,
+                icon = R.drawable.ic_settings,
                 title = stringResource(R.string.general_settings),
                 onClick = { push(Sheet.General) }
             )

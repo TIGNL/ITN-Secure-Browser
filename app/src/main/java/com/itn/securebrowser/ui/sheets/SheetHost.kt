@@ -1,10 +1,13 @@
 package com.itn.securebrowser.ui.sheets
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.foundation.layout.Column
@@ -21,9 +24,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -40,13 +40,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 sealed interface SheetItem {
     data class Row(
-        val icon: ImageVector?,
+        @DrawableRes val icon: Int = 0,
         val title: String,
         val subtitle: String? = null,
         val titleColor: Color = Color.Unspecified,
@@ -98,7 +97,7 @@ sealed interface SheetItem {
 }
 
 data class NavBarItem(
-    val icon: ImageVector,
+    @DrawableRes val icon: Int,
     val label: String,
     val onClick: () -> Unit
 )
@@ -162,7 +161,11 @@ fun SheetScaffold(
                 modifier = Modifier.weight(1f)
             )
             IconButton(onClick = onClose) {
-                Icon(Icons.Filled.Close, contentDescription = "Close")
+                Image(
+                    painter = painterResource(R.drawable.ic_close),
+                    contentDescription = "Close",
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
@@ -187,15 +190,14 @@ fun SheetScaffold(
                             modifier,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            if (item.icon != null) {
+                            if (item.icon != 0) {
                                 Box(
                                     modifier = Modifier.size(24.dp),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    Icon(
-                                        imageVector = item.icon,
+                                    Image(
+                                        painter = painterResource(item.icon),
                                         contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier.size(24.dp)
                                     )
                                 }
@@ -362,9 +364,11 @@ fun SheetScaffold(
                                     .clickable(onClick = item.onClick),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Icon(item.icon, contentDescription = item.label,
-                                    tint = MaterialTheme.colorScheme.onSurface,
-                                    modifier = Modifier.size(32.dp))
+                                Image(
+                                    painter = painterResource(item.icon),
+                                    contentDescription = item.label,
+                                    modifier = Modifier.size(32.dp)
+                                )
                             }
                         }
                         Box(
@@ -374,9 +378,11 @@ fun SheetScaffold(
                                 .clickable(onClick = bar.onMore),
                             contentAlignment = Alignment.Center
                         ) {
-                            Icon(Icons.Filled.MoreVert, contentDescription = "More",
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                modifier = Modifier.size(32.dp))
+                            Image(
+                                painter = painterResource(R.drawable.ic_more),
+                                contentDescription = "More",
+                                modifier = Modifier.size(32.dp)
+                            )
                         }
                     }
                 }

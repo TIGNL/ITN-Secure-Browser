@@ -1,1 +1,2 @@
--keep class com.focusbrowser.app.** { *; }
+-keep class com.itn.securebrowser.** { *; }
+-keepattributes *Annotation*

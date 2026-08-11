@@ -16,17 +16,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Tab
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -51,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -123,7 +116,7 @@ fun BrowserScreen(
                         },
                     placeholder = { Text(stringResource(R.string.hint_search)) },
                     leadingIcon = {
-                        Icon(Icons.Filled.Search, contentDescription = null, modifier = Modifier.size(20.dp))
+                        Image(painter = painterResource(R.drawable.ic_search), contentDescription = null, modifier = Modifier.size(20.dp))
                     },
                     singleLine = true,
                     shape = RoundedCornerShape(24.dp),
@@ -141,9 +134,10 @@ fun BrowserScreen(
                 )
 
                 IconButton(onClick = { activity.toggleRefreshStop() }) {
-                    Icon(
-                        imageVector = if (activity.isLoading) Icons.Filled.Close else Icons.Filled.Refresh,
-                        contentDescription = stringResource(R.string.cd_refresh_stop)
+                    Image(
+                        painter = painterResource(if (activity.isLoading) R.drawable.ic_close else R.drawable.ic_refresh),
+                        contentDescription = stringResource(R.string.cd_refresh_stop),
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
@@ -187,31 +181,31 @@ fun BrowserScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 NavButton(
-                    icon = Icons.AutoMirrored.Filled.ArrowBack,
+                    icon = R.drawable.ic_back,
                     contentDescription = stringResource(R.string.cd_back),
                     enabled = activity.canGoBack(),
                     onClick = { activity.goBack() }
                 )
                 NavButton(
-                    icon = Icons.AutoMirrored.Filled.ArrowForward,
+                    icon = R.drawable.ic_forward,
                     contentDescription = stringResource(R.string.cd_forward),
                     enabled = activity.canGoForward(),
                     onClick = { activity.goForward() }
                 )
                 NavButton(
-                    icon = Icons.Filled.Home,
+                    icon = R.drawable.ic_home,
                     contentDescription = stringResource(R.string.cd_home),
                     enabled = true,
                     onClick = { activity.goHome() }
                 )
                 NavButton(
-                    icon = Icons.Filled.Tab,
+                    icon = R.drawable.ic_tabs,
                     contentDescription = stringResource(R.string.cd_tabs),
                     enabled = true,
                     onClick = { activity.showTabs() }
                 )
                 NavButton(
-                    icon = Icons.Filled.Menu,
+                    icon = R.drawable.ic_menu,
                     contentDescription = stringResource(R.string.cd_more),
                     enabled = true,
                     onClick = { activity.showMore() }
@@ -223,16 +217,15 @@ fun BrowserScreen(
 
 @Composable
 private fun NavButton(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    @DrawableRes icon: Int,
     contentDescription: String,
     enabled: Boolean,
     onClick: () -> Unit
 ) {
     IconButton(onClick = onClick, enabled = enabled) {
-        Icon(
-            imageVector = icon,
+        Image(
+            painter = painterResource(icon),
             contentDescription = contentDescription,
-            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = if (enabled) 1f else 0.35f),
             modifier = Modifier.size(24.dp)
         )
     }
