@@ -1,0 +1,128 @@
+
+Welcome to Gradle 8.9!
+
+Here are the highlights of this release:
+ - Enhanced Error and Warning Messages
+ - IDE Integration Improvements
+ - Daemon JVM Information
+
+For more details see https://docs.gradle.org/8.9/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders
+> Task :app:mergeReleaseNativeLibs
+> Task :app:buildKotlinToolingMetadata
+
+> Task :app:stripReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so.
+
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:checkReleaseDuplicateClasses
+> Task :app:extractReleaseNativeSymbolTables
+> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:generateReleaseResValues
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:mergeReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :app:parseReleaseLocalResources
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:javaPreCompileRelease
+> Task :app:mergeReleaseArtProfile
+> Task :app:extractProguardFiles
+> Task :app:mergeReleaseStartupProfile
+> Task :app:mergeReleaseShaders
+> Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseAssets
+> Task :app:processReleaseManifestForPackage
+> Task :app:compressReleaseAssets
+> Task :app:extractReleaseVersionControlInfo
+> Task :app:collectReleaseDependencies
+> Task :app:sdkReleaseDependencyData
+> Task :app:validateSigningRelease
+> Task :app:writeReleaseAppMetadata
+> Task :app:writeReleaseSigningConfigVersions
+> Task :app:processReleaseResources
+> Task :app:convertLinkedResourcesToProtoRelease
+
+> Task :app:compileReleaseKotlin FAILED
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/BrowserSheets.kt:49:32 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/BrowserSheets.kt:54:29 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/BrowserSheets.kt:55:43 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/BrowserSheets.kt:56:54 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/PinSheets.kt:42:24 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/PinSheets.kt:49:21 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/PinSheets.kt:63:28 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/PinSheets.kt:126:24 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/PinSheets.kt:135:24 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/PinSheets.kt:144:24 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:81:21 None of the following candidates is applicable:
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(bitmap: ImageBitmap, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ..., filterQuality: FilterQuality = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(imageVector: ImageVector, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(painter: Painter, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:119:21 None of the following candidates is applicable:
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(bitmap: ImageBitmap, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ..., filterQuality: FilterQuality = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(imageVector: ImageVector, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(painter: Painter, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:141:32 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:146:29 None of the following candidates is applicable:
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(bitmap: ImageBitmap, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ..., filterQuality: FilterQuality = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(imageVector: ImageVector, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(painter: Painter, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:147:43 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:148:54 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:149:54 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:277:28 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:287:32 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:290:29 None of the following candidates is applicable:
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(bitmap: ImageBitmap, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ..., filterQuality: FilterQuality = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(imageVector: ImageVector, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(painter: Painter, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:291:43 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:292:54 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:293:54 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:327:28 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:337:32 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:341:29 None of the following candidates is applicable:
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(bitmap: ImageBitmap, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ..., filterQuality: FilterQuality = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(imageVector: ImageVector, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+@Composable() @ComposableTarget(...) @FunctionKeyMeta(...) fun Image(painter: Painter, contentDescription: String?, modifier: Modifier = ..., alignment: Alignment = ..., contentScale: ContentScale = ..., alpha: Float = ..., colorFilter: ColorFilter? = ...): Unit
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:342:43 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:343:54 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:344:54 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:459:28 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:462:25 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:481:24 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:484:21 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:486:47 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:487:47 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:504:24 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:507:21 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:509:47 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:510:47 @Composable invocations can only happen from the context of a @Composable function
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SettingsSheets.kt:558:24 Null cannot be a value of a non-null type 'kotlin.Int'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SheetHost.kt:165:47 Unresolved reference 'R'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/sheets/SheetHost.kt:382:59 Unresolved reference 'R'.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileReleaseKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 31s
+34 actionable tasks: 34 executed
