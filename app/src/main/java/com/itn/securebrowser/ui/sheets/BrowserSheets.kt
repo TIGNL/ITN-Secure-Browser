@@ -46,7 +46,7 @@ fun TabsSheet(sheet: Sheet.Tabs, activity: MainActivity, dismiss: () -> Unit) {
                 val active = tab.id == sheet.activeId
                 add(
                     SheetItem.Row(
-                        icon = null,
+                        icon = 0,
                         title = tab.title.ifBlank { stringResource(R.string.new_tab) },
                         titleColor = if (active) MaterialTheme.colorScheme.onSurface
                         else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),

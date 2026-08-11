@@ -39,7 +39,7 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
     val items = buildList {
         add(
             SheetItem.Row(
-                icon = null,
+                icon = 0,
                 title = "PIN",
                 onClick = {
                     if (hasPin) pushVerifyThenClear()
@@ -60,7 +60,7 @@ fun PinSheet(dismiss: () -> Unit, push: (Sheet) -> Unit) {
         if (hasPin) {
             add(
                 SheetItem.Row(
-                    icon = null,
+                    icon = 0,
                     title = stringResource(R.string.btn_change_pin),
                     onClick = {
                         push(
@@ -123,7 +123,7 @@ fun LockMethodSheet(sheet: Sheet.LockMethod, dismiss: () -> Unit) {
     val items = buildList {
         add(
             SheetItem.Row(
-                icon = null,
+                icon = 0,
                 title = "Password",
                 subtitle = "Text password",
                 onClick = { sheet.onSelected(LockType.PASSWORD); dismiss() }
@@ -132,7 +132,7 @@ fun LockMethodSheet(sheet: Sheet.LockMethod, dismiss: () -> Unit) {
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = null,
+                icon = 0,
                 title = "4-Digit PIN",
                 subtitle = "Numeric, 4 digits",
                 onClick = { sheet.onSelected(LockType.PIN_4); dismiss() }
@@ -141,7 +141,7 @@ fun LockMethodSheet(sheet: Sheet.LockMethod, dismiss: () -> Unit) {
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = null,
+                icon = 0,
                 title = "6-Digit PIN",
                 subtitle = "Numeric, 6 digits",
                 onClick = { sheet.onSelected(LockType.PIN_6); dismiss() }

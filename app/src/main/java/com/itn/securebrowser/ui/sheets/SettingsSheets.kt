@@ -81,7 +81,6 @@ fun GeneralSheet(dismiss: () -> Unit) {
                     Image(
                         painter = painterResource(R.drawable.ic_sites),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(56.dp)
                     )
                     Spacer(Modifier.height(16.dp))
@@ -119,7 +118,6 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
                     Image(
                         painter = painterResource(R.drawable.ic_sites),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(56.dp)
                     )
                     Spacer(Modifier.height(16.dp))
@@ -138,7 +136,7 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
             groups.forEach { group ->
                 add(
                     SheetItem.Row(
-                        icon = null,
+                        icon = 0,
                         title = group.name,
                         subtitle = domainsPreview(group.domains),
                         onClick = { push(Sheet.GroupEdit(group.name)) },
@@ -146,7 +144,6 @@ fun GroupsSheet(dismiss: () -> Unit, push: (Sheet) -> Unit, isTop: Boolean) {
                             Image(
                                 painter = painterResource(R.drawable.ic_delete),
                                 contentDescription = stringResource(R.string.cd_delete_group),
-                                tint = MaterialTheme.colorScheme.error,
                                 modifier = Modifier.size(24.dp)
                             )
                         }
@@ -274,7 +271,7 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
             add(SheetItem.Divider)
             add(
                 SheetItem.Row(
-                    icon = null,
+                    icon = 0,
                     title = stringResource(R.string.domains_empty_hint),
                     titleColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -284,13 +281,12 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                 add(SheetItem.Divider)
                 add(
                     SheetItem.Row(
-                        icon = null,
+                        icon = 0,
                         title = domain,
                         trailing = {
                             Image(
                                 painter = painterResource(R.drawable.ic_close),
                                 contentDescription = stringResource(R.string.cd_delete_domain),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(18.dp)
                             )
                         },
@@ -324,7 +320,7 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
             add(SheetItem.Divider)
             add(
                 SheetItem.Row(
-                    icon = null,
+                    icon = 0,
                     title = stringResource(R.string.schedules_empty_hint),
                     titleColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -334,14 +330,13 @@ fun GroupEditSheet(sheet: Sheet.GroupEdit, dismiss: () -> Unit, push: (Sheet) ->
                 add(SheetItem.Divider)
                 add(
                     SheetItem.Row(
-                        icon = null,
+                        icon = 0,
                         title = schedule.days.joinToString(", ") { dayNames[it] ?: it },
                         subtitle = "${schedule.from} — ${schedule.to}",
                         trailing = {
                             Image(
                                 painter = painterResource(R.drawable.ic_close),
                                 contentDescription = stringResource(R.string.cd_delete_schedule),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(18.dp)
                             )
                         },
@@ -456,7 +451,7 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
             add(SheetItem.Divider)
             add(
                 SheetItem.Row(
-                    icon = null,
+                    icon = 0,
                     title = label,
                     trailing = {
                         Checkbox(
@@ -478,7 +473,7 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = null,
+                icon = 0,
                 title = stringResource(R.string.schedule_from),
                 trailing = {
                     Text(
@@ -501,7 +496,7 @@ fun AddScheduleSheet(sheet: Sheet.AddSchedule, dismiss: () -> Unit) {
         add(SheetItem.Divider)
         add(
             SheetItem.Row(
-                icon = null,
+                icon = 0,
                 title = stringResource(R.string.schedule_to),
                 trailing = {
                     Text(
@@ -555,7 +550,7 @@ fun DeleteGroupSheet(sheet: Sheet.DeleteGroup, dismiss: () -> Unit) {
         onClose = dismiss,
         items = listOf(
             SheetItem.Row(
-                icon = null,
+                icon = 0,
                 title = stringResource(R.string.delete_group_message, sheet.groupName),
                 titleColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
