@@ -1,0 +1,375 @@
+
+Welcome to Gradle 8.9!
+
+Here are the highlights of this release:
+ - Enhanced Error and Warning Messages
+ - IDE Integration Improvements
+ - Daemon JVM Information
+
+For more details see https://docs.gradle.org/8.9/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preReleaseBuild UP-TO-DATE
+> Task :app:mergeReleaseJniLibFolders
+> Task :app:mergeReleaseNativeLibs NO-SOURCE
+> Task :app:stripReleaseDebugSymbols NO-SOURCE
+> Task :app:extractReleaseNativeSymbolTables NO-SOURCE
+> Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:checkReleaseDuplicateClasses
+> Task :app:javaPreCompileRelease
+> Task :app:generateReleaseResValues
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:mergeReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksRelease
+> Task :app:parseReleaseLocalResources
+> Task :app:processReleaseMainManifest
+> Task :app:processReleaseManifest
+> Task :app:mergeReleaseArtProfile
+> Task :app:processReleaseManifestForPackage
+> Task :app:extractProguardFiles
+> Task :app:processReleaseJavaRes NO-SOURCE
+> Task :app:mergeReleaseStartupProfile
+> Task :app:mergeReleaseShaders
+> Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:generateReleaseAssets UP-TO-DATE
+> Task :app:mergeReleaseAssets
+> Task :app:compressReleaseAssets
+> Task :app:mergeReleaseJavaResource
+> Task :app:extractReleaseVersionControlInfo
+> Task :app:collectReleaseDependencies
+> Task :app:processReleaseResources
+> Task :app:sdkReleaseDependencyData
+
+> Task :app:compileReleaseJavaWithJavac
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:37: error: cannot find symbol
+        setContentView(R.layout.activity_group_edit);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:43: error: cannot find symbol
+        inputName = findViewById(R.id.inputName);
+                                  ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:44: error: cannot find symbol
+        inputLimit = findViewById(R.id.inputLimit);
+                                   ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:45: error: cannot find symbol
+        inputDomain = findViewById(R.id.inputDomain);
+                                    ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:46: error: cannot find symbol
+        domainError = findViewById(R.id.domainError);
+                                    ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:47: error: cannot find symbol
+        titleText = findViewById(R.id.titleText);
+                                  ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:48: error: cannot find symbol
+        domainList = findViewById(R.id.domainList);
+                                   ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:49: error: cannot find symbol
+        scheduleList = findViewById(R.id.scheduleList);
+                                     ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:50: error: cannot find symbol
+        noSchedules = findViewById(R.id.noSchedules);
+                                    ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:51: error: cannot find symbol
+        btnSave = findViewById(R.id.btnSave);
+                                ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:52: error: cannot find symbol
+        btnDelete = findViewById(R.id.btnDelete);
+                                  ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:53: error: cannot find symbol
+        btnAddDomain = findViewById(R.id.btnAddDomain);
+                                     ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupEditActivity.java:54: error: cannot find symbol
+        btnAddSchedule = findViewById(R.id.btnAddSchedule);
+                                       ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:65: error: cannot find symbol
+        setContentView(R.layout.activity_main);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:67: error: cannot find symbol
+        webViewContainer = findViewById(R.id.webViewContainer);
+                                         ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:68: error: cannot find symbol
+        urlBar = findViewById(R.id.urlBar);
+                               ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:69: error: cannot find symbol
+        btnRefreshStop = findViewById(R.id.btnRefreshStop);
+                                       ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:70: error: cannot find symbol
+        progressBar = findViewById(R.id.progressBar);
+                                    ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:71: error: cannot find symbol
+        btnBack = findViewById(R.id.btnBack);
+                                ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:72: error: cannot find symbol
+        btnForward = findViewById(R.id.btnForward);
+                                   ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:73: error: cannot find symbol
+        btnHome = findViewById(R.id.btnHome);
+                                ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:74: error: cannot find symbol
+        btnTabs = findViewById(R.id.btnTabs);
+                                ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:75: error: cannot find symbol
+        btnMore = findViewById(R.id.btnMore);
+                                ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java:87: error: cannot find symbol
+            if (PinManager.hasPin(this)) {
+                ^
+  symbol:   variable PinManager
+  location: class MainActivity
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/TabListActivity.java:21: error: cannot find symbol
+        setContentView(R.layout.activity_tab_list);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/TabListActivity.java:23: error: cannot find symbol
+        tabList = findViewById(R.id.tabList);
+                                ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:26: error: cannot find symbol
+        setContentView(R.layout.activity_schedule_edit);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:28: error: cannot find symbol
+        timeFrom = findViewById(R.id.timeFrom);
+                                 ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:29: error: cannot find symbol
+        timeTo = findViewById(R.id.timeTo);
+                               ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:30: error: cannot find symbol
+        dayError = findViewById(R.id.dayError);
+                                 ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:31: error: cannot find symbol
+        Button btnSave = findViewById(R.id.btnSaveSchedule);
+                                       ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:33: error: cannot find symbol
+        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+                         ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:33: error: cannot find symbol
+        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+                                      ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:33: error: cannot find symbol
+        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+                                                   ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:33: error: cannot find symbol
+        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+                                                                ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:33: error: cannot find symbol
+        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+                                                                             ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:33: error: cannot find symbol
+        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+                                                                                          ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:33: error: cannot find symbol
+        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+                                                                                                       ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ScheduleEditActivity.java:61: error: incompatible types: int cannot be converted to String
+                if (selectedDays[i]) days.add(dayIds[i]);
+                                                    ^
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupListActivity.java:25: error: cannot find symbol
+        setContentView(R.layout.activity_group_list);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupListActivity.java:28: error: cannot find symbol
+        groupList = findViewById(R.id.groupList);
+                                  ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupListActivity.java:29: error: cannot find symbol
+        emptyText = findViewById(R.id.emptyText);
+                                  ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/GroupListActivity.java:30: error: cannot find symbol
+        ImageButton btnAdd = findViewById(R.id.btnAddGroup);
+                                           ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinEntryActivity.java:23: error: cannot find symbol
+        setContentView(R.layout.activity_pin_entry);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinEntryActivity.java:31: error: cannot find symbol
+        TextView titleView = findViewById(R.id.pinTitle);
+                                           ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinEntryActivity.java:32: error: cannot find symbol
+        TextView subtitleView = findViewById(R.id.pinSubtitle);
+                                              ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinEntryActivity.java:33: error: cannot find symbol
+        TextView errorView = findViewById(R.id.pinError);
+                                           ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinEntryActivity.java:34: error: cannot find symbol
+        EditText input = findViewById(R.id.pinInput);
+                                       ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinEntryActivity.java:35: error: cannot find symbol
+        Button btnOk = findViewById(R.id.btnOk);
+                                     ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinEntryActivity.java:54: error: cannot find symbol
+            input.setMaxLength(pinLength);
+                 ^
+  symbol:   method setMaxLength(int)
+  location: variable input of type EditText
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinSetupActivity.java:11: error: cannot find symbol
+        setContentView(R.layout.activity_pin_setup);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinSetupActivity.java:13: error: cannot find symbol
+        findViewById(R.id.optionPassword).setOnClickListener(v -> launchSet("password", 0));
+                      ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinSetupActivity.java:14: error: cannot find symbol
+        findViewById(R.id.optionPin4).setOnClickListener(v -> launchSet("pin4", 4));
+                      ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/PinSetupActivity.java:15: error: cannot find symbol
+        findViewById(R.id.optionPin6).setOnClickListener(v -> launchSet("pin6", 6));
+                      ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ManageSpaceActivity.java:32: error: cannot find symbol
+        setContentView(R.layout.activity_manage_space);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ManageSpaceActivity.java:34: error: cannot find symbol
+        TextView btnBrowsing = findViewById(R.id.btnClearBrowsing);
+                                             ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ManageSpaceActivity.java:35: error: cannot find symbol
+        TextView btnTracking = findViewById(R.id.btnClearTracking);
+                                             ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ManageSpaceActivity.java:36: error: cannot find symbol
+        TextView btnBlocking = findViewById(R.id.btnClearBlocking);
+                                             ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ManageSpaceActivity.java:37: error: cannot find symbol
+        TextView btnAll = findViewById(R.id.btnClearAll);
+                                        ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/SettingsActivity.java:15: error: cannot find symbol
+        setContentView(R.layout.activity_settings);
+                        ^
+  symbol:   variable layout
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/SettingsActivity.java:17: error: cannot find symbol
+        TextView rowPin = findViewById(R.id.rowPinLock);
+                                        ^
+  symbol:   variable id
+  location: class R
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/SettingsActivity.java:18: error: cannot find symbol
+        TextView rowGroups = findViewById(R.id.rowGroups);
+                                           ^
+  symbol:   variable id
+  location: class R
+Note: /home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/MainActivity.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+62 errors
+
+> Task :app:compileReleaseJavaWithJavac FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileReleaseJavaWithJavac'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+BUILD FAILED in 40s
+27 actionable tasks: 27 executed
