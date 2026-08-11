@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import com.itn.securebrowser.util.BlockDataStore;
 import com.itn.securebrowser.util.BlockEngine;
 import com.itn.securebrowser.util.BrowserTab;
+import com.itn.securebrowser.util.PinManager;
 import com.itn.securebrowser.util.TimeTracker;
 import java.util.ArrayList;
 import java.util.List;
