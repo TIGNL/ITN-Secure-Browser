@@ -28,20 +28,20 @@ public class PinEntryActivity extends BaseActivity {
         pinLength = getIntent().getIntExtra("pinLength", 0);
         lockType = getIntent().getStringExtra("lockType");
 
-        TextView titleView = findViewById(R.id.pinTitle);
+        TextView pageTitle = findViewById(R.id.pageTitle);
         TextView subtitleView = findViewById(R.id.pinSubtitle);
         TextView errorView = findViewById(R.id.pinError);
         EditText input = findViewById(R.id.pinInput);
         TextView btnOk = findViewById(R.id.btnOk);
 
         if ("verify".equals(mode)) {
-            titleView.setText(R.string.pin_title_enter);
+            pageTitle.setText(R.string.pin_title_enter);
             subtitleView.setText(subtitle != null ? subtitle : getString(R.string.pin_subtitle_verify));
         } else if ("set".equals(mode)) {
-            titleView.setText(R.string.pin_title_new);
+            pageTitle.setText(R.string.pin_title_new);
             if (subtitle != null) subtitleView.setText(subtitle);
         } else if ("confirm".equals(mode)) {
-            titleView.setText(R.string.pin_title_confirm);
+            pageTitle.setText(R.string.pin_title_confirm);
         }
 
         if (subtitleView.getText().toString().isEmpty()) {

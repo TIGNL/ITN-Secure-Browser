@@ -7,7 +7,8 @@
     <string name="parental_controls">Parental Controls</string>
     <string name="desktop_mode">Desktop Mode</string>
     <string name="pin_lock">PIN Lock</string>
-    <string name="groups_title">Website Groups</string>
+    <string name="groups_title">Limit websites time</string>
+    <string name="limit_websites_time">Limit websites time</string>
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_add">Add</string>

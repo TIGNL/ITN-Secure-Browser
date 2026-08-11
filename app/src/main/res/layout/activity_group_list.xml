@@ -15,7 +15,8 @@
     <TextView
         android:id="@+id/emptyText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:text="@string/no_groups"
         android:textColor="@color/text_hint"
@@ -25,8 +26,29 @@
     <ListView
         android:id="@+id/groupList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@drawable/divider_horizontal"
         android:dividerHeight="@dimen/divider"
         android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
+
+    <TextView
+        android:id="@+id/btnAddGroup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_height"
+        android:gravity="center"
+        android:text="@string/btn_add"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        android:background="?android:attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
 </LinearLayout>

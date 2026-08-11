@@ -25,11 +25,17 @@ public class GroupListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
 
-        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.groups_title);
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.limit_websites_time);
 
         dataStore = new BlockDataStore(this);
         groupList = findViewById(R.id.groupList);
         emptyText = findViewById(R.id.emptyText);
+
+        findViewById(R.id.btnAddGroup).setOnClickListener(v -> {
+            Intent i = new Intent(this, GroupEditActivity.class);
+            i.putExtra("isNew", true);
+            startActivity(i);
+        });
 
         groupList.setOnItemClickListener((parent, view, position, id) -> {
             Intent i = new Intent(this, GroupEditActivity.class);
@@ -42,7 +48,6 @@ public class GroupListActivity extends BaseActivity {
             BlockDataStore.BlockGroup group = groups.get(position);
             Intent i = new Intent(this, ConfirmActivity.class);
             i.putExtra("message", getString(R.string.delete_group_confirm, group.name));
-            i.putExtra("confirmText", getString(R.string.btn_delete));
             startActivityForResult(i, REQ_DELETE);
             return true;
         });

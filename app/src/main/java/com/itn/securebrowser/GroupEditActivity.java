@@ -26,7 +26,9 @@ public class GroupEditActivity extends BaseActivity {
     private EditText inputName, inputLimit, inputDomain;
     private TextView domainError, noSchedules;
     private ListView domainList, scheduleList;
-    private TextView btnSave, btnDelete, btnAddSchedule, btnAddDomain;
+    private TextView btnSave, btnDelete;
+    private View dividerDelete;
+    private TextView btnAddSchedule, btnAddDomain;
 
     private List<String> domains = new ArrayList<>();
     private List<BlockDataStore.BlockSchedule> schedules = new ArrayList<>();
@@ -51,6 +53,7 @@ public class GroupEditActivity extends BaseActivity {
         noSchedules = findViewById(R.id.noSchedules);
         btnSave = findViewById(R.id.btnSave);
         btnDelete = findViewById(R.id.btnDelete);
+        dividerDelete = findViewById(R.id.dividerDelete);
         btnAddDomain = findViewById(R.id.btnAddDomain);
         btnAddSchedule = findViewById(R.id.btnAddSchedule);
 
@@ -66,6 +69,7 @@ public class GroupEditActivity extends BaseActivity {
                     }
                     schedules.addAll(g.schedules);
                     btnDelete.setVisibility(View.VISIBLE);
+                    dividerDelete.setVisibility(View.VISIBLE);
                     break;
                 }
             }
@@ -84,7 +88,6 @@ public class GroupEditActivity extends BaseActivity {
         btnDelete.setOnClickListener(v -> {
             Intent i = new Intent(this, ConfirmActivity.class);
             i.putExtra("message", getString(R.string.delete_group_confirm, existingName));
-            i.putExtra("confirmText", getString(R.string.btn_delete));
             startActivityForResult(i, REQ_DELETE);
         });
     }

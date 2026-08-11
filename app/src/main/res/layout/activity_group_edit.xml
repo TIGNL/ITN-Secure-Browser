@@ -1,234 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:background="@color/bg">
 
-    <LinearLayout
+    <include layout="@layout/item_page_title" />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
 
-        <include layout="@layout/item_page_title" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:text="@string/group_name_hint"
-            android:textColor="@color/text_hint"
-            android:textSize="13sp" />
-
-        <EditText
-            android:id="@+id/inputName"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:background="@android:color/transparent"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_hint"
-            android:hint="@string/group_name_hint"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:text="@string/group_limit_hint"
-            android:textColor="@color/text_hint"
-            android:textSize="13sp" />
-
-        <EditText
-            android:id="@+id/inputLimit"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:background="@android:color/transparent"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_hint"
-            android:hint="@string/group_limit_hint"
-            android:inputType="number"
-            android:singleLine="true"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:text="Domains"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding">
-
-            <EditText
-                android:id="@+id/inputDomain"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/content_height"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_hint"
-                android:hint="@string/add_domain_hint"
-                android:inputType="textUri"
-                android:singleLine="true"
-                android:textSize="14sp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/btnAddDomain"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/content_height"
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/padding"
+                android:text="@string/group_name_hint"
+                android:textColor="@color/text_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/inputName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/padding"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:hint="@string/group_name_hint"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@drawable/divider_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/padding"
+                android:text="@string/group_limit_hint"
+                android:textColor="@color/text_hint"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/inputLimit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/padding"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
+                android:hint="@string/group_limit_hint"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@drawable/divider_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/padding"
+                android:text="Domains"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@drawable/divider_horizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/padding">
+
+                <EditText
+                    android:id="@+id/inputDomain"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/content_height"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_hint"
+                    android:hint="@string/add_domain_hint"
+                    android:inputType="textUri"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/btnAddDomain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/content_height"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/padding"
+                    android:text="@string/btn_add"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:background="?android:attr/selectableItemBackground" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@drawable/divider_horizontal" />
+
+            <TextView
+                android:id="@+id/domainError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/padding"
+                android:textColor="@color/status_off"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/domainList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_horizontal"
+                android:dividerHeight="@dimen/divider" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@drawable/divider_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/padding"
+                android:text="Block Schedules"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@drawable/divider_horizontal" />
+
+            <TextView
+                android:id="@+id/noSchedules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/padding"
+                android:text="@string/no_schedules"
+                android:textColor="@color/text_hint"
+                android:textSize="14sp" />
+
+            <ListView
+                android:id="@+id/scheduleList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/divider_horizontal"
+                android:dividerHeight="@dimen/divider" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider"
+                android:background="@drawable/divider_horizontal" />
+
+            <TextView
+                android:id="@+id/btnAddSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
                 android:paddingHorizontal="@dimen/padding"
                 android:text="@string/btn_add"
                 android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:background="?android:attr/selectableItemBackground" />
+                android:textSize="15sp" />
         </LinearLayout>
+    </ScrollView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
 
-        <TextView
-            android:id="@+id/domainError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/padding"
-            android:textColor="@color/status_off"
-            android:textSize="13sp"
-            android:visibility="gone" />
-
-        <ListView
-            android:id="@+id/domainList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@drawable/divider_horizontal"
-            android:dividerHeight="@dimen/divider" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:text="Block Schedules"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
-
-        <TextView
-            android:id="@+id/noSchedules"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/padding"
-            android:text="@string/no_schedules"
-            android:textColor="@color/text_hint"
-            android:textSize="14sp" />
-
-        <ListView
-            android:id="@+id/scheduleList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@drawable/divider_horizontal"
-            android:dividerHeight="@dimen/divider" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
-
-        <TextView
-            android:id="@+id/btnAddSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:text="@string/btn_add"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
-
-        <TextView
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
-            android:text="@string/btn_save"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_height"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/btnDelete"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/padding"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/btn_delete"
             android:textColor="@color/status_off"
             android:textSize="15sp"
+            android:background="?android:attr/selectableItemBackground"
             android:visibility="gone" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider"
-            android:background="@drawable/divider_horizontal" />
+            android:id="@+id/dividerDelete"
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/btn_save"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
-</ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
+</LinearLayout>
