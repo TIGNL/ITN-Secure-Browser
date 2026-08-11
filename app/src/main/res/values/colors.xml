@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_page">#0F0F1A</color>
-    <color name="bg_toolbar">#16213E</color>
-    <color name="bg_card">#1C1C30</color>
-    <color name="bg_field">#252545</color>
-    <color name="divider">#2A2A4A</color>
-    <color name="accent">#E94560</color>
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#888888</color>
-    <color name="item_bg">#1A1A30</color>
-    <color name="item_bg_pressed">#222240</color>
-    <color name="status_on">#00AA00</color>
-    <color name="status_off">#CC0000</color>
+    <color name="bg">@android:color/black</color>
+    <color name="surface">#FF1E1E1E</color>
+    <color name="text_primary">@android:color/white</color>
+    <color name="text_hint">#FF666666</color>
+    <color name="divider">#80808080</color>
+    <color name="status_on">#FF00AA00</color>
+    <color name="status_off">#FFCC0000</color>
+    <color name="ic_launcher_background">#F5F5F5</color>
 </resources>

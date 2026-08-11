@@ -17,8 +17,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.itn.securebrowser.util.BlockDataStore;
 import com.itn.securebrowser.util.BlockEngine;
 import com.itn.securebrowser.util.BrowserTab;
@@ -35,9 +35,9 @@ public class MainActivity extends BaseActivity {
 
     private FrameLayout webViewContainer;
     private EditText urlBar;
-    private ImageButton btnRefreshStop;
+    private TextView btnRefreshStop;
     private ProgressBar progressBar;
-    private ImageButton btnBack, btnForward, btnHome, btnTabs, btnMore;
+    private TextView btnBack, btnForward, btnHome, btnTabs, btnMore;
 
     private TimeTracker timeTracker;
     private BlockDataStore blockDataStore;
@@ -155,8 +155,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    // --- Tab Management ---
-
     public void createNewTab(String url) {
         WebView webView = buildWebView();
         int id = nextTabId++;
@@ -201,8 +199,6 @@ public class MainActivity extends BaseActivity {
             switchToTab(tabs.get(newIndex).id);
         }
     }
-
-    // --- Navigation ---
 
     public void navigateTo(String input) {
         if (input == null || input.trim().isEmpty()) return;
@@ -257,8 +253,6 @@ public class MainActivity extends BaseActivity {
             tab.webView.getSettings().setUserAgentString(enabled ? desktopUserAgent : null);
         }
     }
-
-    // --- WebView ---
 
     private WebView buildWebView() {
         WebView wv = new WebView(this);
@@ -345,8 +339,6 @@ public class MainActivity extends BaseActivity {
         return wv;
     }
 
-    // --- Helpers ---
-
     private void updateUrlBar(String pageUrl) {
         if (urlBar.hasFocus()) return;
         if (pageUrl == null || "about:blank".equals(pageUrl) || pageUrl.isEmpty()) {
@@ -362,7 +354,7 @@ public class MainActivity extends BaseActivity {
         btnForward.setEnabled(wv != null && wv.canGoForward());
         btnBack.setAlpha(wv != null && wv.canGoBack() ? 1.0f : 0.3f);
         btnForward.setAlpha(wv != null && wv.canGoForward() ? 1.0f : 0.3f);
-        btnRefreshStop.setImageResource(isLoading ? R.drawable.ic_stop : R.drawable.ic_refresh);
+        btnRefreshStop.setText(isLoading ? "Stop" : "Refresh");
     }
 
     private void hideKeyboard() {

@@ -3,49 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_page">
+    android:background="@color/bg">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/urlBar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:background="@color/bg_toolbar">
-
-        <EditText
-            android:id="@+id/urlBar"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_weight="1"
-            android:background="@color/bg_field"
-            android:hint="@string/hint_search"
-            android:textColorHint="@color/text_secondary"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp"
-            android:singleLine="true"
-            android:imeOptions="actionGo"
-            android:inputType="textUri"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp" />
-
-        <ImageButton
-            android:id="@+id/btnRefreshStop"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_refresh"
-            android:src="@drawable/ic_refresh"
-            android:tint="@color/text_primary" />
-    </LinearLayout>
+        android:layout_height="@dimen/row_height"
+        android:background="@android:color/transparent"
+        android:hint="@string/hint_search"
+        android:textColorHint="@color/text_hint"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:imeOptions="actionGo"
+        android:inputType="textUri"
+        android:paddingHorizontal="@dimen/padding" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="@dimen/divider"
         android:max="100"
         android:visibility="gone" />
 
@@ -55,61 +33,106 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/row_height"
         android:orientation="horizontal"
-        android:background="@color/bg_toolbar"
         android:gravity="center">
 
-        <ImageButton
+        <TextView
             android:id="@+id/btnBack"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_back"
-            android:src="@drawable/ic_back"
-            android:tint="@color/text_primary" />
+            android:gravity="center"
+            android:text="Back"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
 
-        <ImageButton
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <TextView
             android:id="@+id/btnForward"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_forward"
-            android:src="@drawable/ic_forward"
-            android:tint="@color/text_primary" />
+            android:gravity="center"
+            android:text="Forward"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
 
-        <ImageButton
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <TextView
             android:id="@+id/btnHome"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_home"
-            android:src="@drawable/ic_home"
-            android:tint="@color/text_primary" />
+            android:gravity="center"
+            android:text="Home"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
 
-        <ImageButton
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <TextView
+            android:id="@+id/btnRefreshStop"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Refresh"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <TextView
             android:id="@+id/btnTabs"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_tabs"
-            android:src="@drawable/ic_tabs"
-            android:tint="@color/text_primary" />
+            android:gravity="center"
+            android:text="Tabs"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
 
-        <ImageButton
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <TextView
             android:id="@+id/btnMore"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/cd_more"
-            android:src="@drawable/ic_more"
-            android:tint="@color/text_primary" />
+            android:gravity="center"
+            android:text="More"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
 </LinearLayout>

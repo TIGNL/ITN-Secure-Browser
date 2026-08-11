@@ -3,17 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_page"
+    android:background="@color/bg"
     android:gravity="center"
-    android:padding="32dp">
+    android:padding="@dimen/padding">
 
     <TextView
         android:id="@+id/pinTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pin_title_enter"
         android:textColor="@color/text_primary"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp" />
 
@@ -21,8 +20,8 @@
         android:id="@+id/pinSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
-        android:textSize="14sp"
+        android:textColor="@color/text_hint"
+        android:textSize="15sp"
         android:layout_marginBottom="24dp"
         android:visibility="gone" />
 
@@ -38,10 +37,10 @@
     <EditText
         android:id="@+id/pinInput"
         android:layout_width="200dp"
-        android:layout_height="48dp"
-        android:background="@color/bg_field"
+        android:layout_height="@dimen/row_height"
+        android:background="@android:color/transparent"
         android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary"
+        android:textColorHint="@color/text_hint"
         android:hint="PIN"
         android:inputType="numberPassword"
         android:maxLength="6"
@@ -50,11 +49,13 @@
         android:gravity="center"
         android:layout_marginBottom="24dp" />
 
-    <Button
+    <TextView
         android:id="@+id/btnOk"
         android:layout_width="200dp"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/row_height"
+        android:gravity="center"
         android:text="@string/btn_ok"
         android:textColor="@color/text_primary"
-        android:background="@color/accent" />
+        android:textSize="15sp"
+        android:background="?android:attr/selectableItemBackground" />
 </LinearLayout>

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,10 +24,9 @@ public class GroupEditActivity extends BaseActivity {
     private boolean isNew;
 
     private EditText inputName, inputLimit, inputDomain;
-    private TextView domainError, titleText, noSchedules;
+    private TextView domainError, noSchedules;
     private ListView domainList, scheduleList;
-    private Button btnSave, btnDelete, btnAddSchedule;
-    private TextView btnAddDomain;
+    private TextView btnSave, btnDelete, btnAddSchedule, btnAddDomain;
 
     private List<String> domains = new ArrayList<>();
     private List<BlockDataStore.BlockSchedule> schedules = new ArrayList<>();
@@ -42,11 +40,12 @@ public class GroupEditActivity extends BaseActivity {
         existingName = getIntent().getStringExtra("groupName");
         isNew = getIntent().getBooleanExtra("isNew", false);
 
+        ((TextView) findViewById(R.id.pageTitle)).setText(isNew ? R.string.btn_add : R.string.btn_save);
+
         inputName = findViewById(R.id.inputName);
         inputLimit = findViewById(R.id.inputLimit);
         inputDomain = findViewById(R.id.inputDomain);
         domainError = findViewById(R.id.domainError);
-        titleText = findViewById(R.id.titleText);
         domainList = findViewById(R.id.domainList);
         scheduleList = findViewById(R.id.scheduleList);
         noSchedules = findViewById(R.id.noSchedules);
@@ -54,8 +53,6 @@ public class GroupEditActivity extends BaseActivity {
         btnDelete = findViewById(R.id.btnDelete);
         btnAddDomain = findViewById(R.id.btnAddDomain);
         btnAddSchedule = findViewById(R.id.btnAddSchedule);
-
-        titleText.setText(isNew ? R.string.btn_add : R.string.btn_save);
 
         if (!isNew && existingName != null) {
             for (BlockDataStore.BlockGroup g : dataStore.getGroups()) {

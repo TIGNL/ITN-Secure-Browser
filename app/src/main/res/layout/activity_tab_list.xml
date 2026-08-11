@@ -3,28 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_page">
+    android:background="@color/bg">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:text="@string/tabs_title"
-        android:textColor="@color/text_primary"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/bg_toolbar" />
+    <include layout="@layout/item_page_title" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider" />
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
 
     <ListView
         android:id="@+id/tabList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/divider"
-        android:dividerHeight="1dp" />
+        android:divider="@drawable/divider_horizontal"
+        android:dividerHeight="@dimen/divider" />
 </LinearLayout>

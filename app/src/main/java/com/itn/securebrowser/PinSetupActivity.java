@@ -2,6 +2,7 @@ package com.itn.securebrowser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class PinSetupActivity extends BaseActivity {
 
@@ -9,6 +10,8 @@ public class PinSetupActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_setup);
+
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.pin_lock_method_title);
 
         findViewById(R.id.optionPassword).setOnClickListener(v -> launchSet("password", 0));
         findViewById(R.id.optionPin4).setOnClickListener(v -> launchSet("pin4", 4));

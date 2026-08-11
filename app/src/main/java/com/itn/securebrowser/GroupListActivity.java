@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -26,16 +25,11 @@ public class GroupListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_list);
 
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.groups_title);
+
         dataStore = new BlockDataStore(this);
         groupList = findViewById(R.id.groupList);
         emptyText = findViewById(R.id.emptyText);
-        ImageButton btnAdd = findViewById(R.id.btnAddGroup);
-
-        btnAdd.setOnClickListener(v -> {
-            Intent i = new Intent(this, GroupEditActivity.class);
-            i.putExtra("isNew", true);
-            startActivity(i);
-        });
 
         groupList.setOnItemClickListener((parent, view, position, id) -> {
             Intent i = new Intent(this, GroupEditActivity.class);

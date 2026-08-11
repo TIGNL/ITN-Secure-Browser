@@ -3,7 +3,6 @@ package com.itn.securebrowser;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ public class PinEntryActivity extends BaseActivity {
         TextView subtitleView = findViewById(R.id.pinSubtitle);
         TextView errorView = findViewById(R.id.pinError);
         EditText input = findViewById(R.id.pinInput);
-        Button btnOk = findViewById(R.id.btnOk);
+        TextView btnOk = findViewById(R.id.btnOk);
 
         if ("verify".equals(mode)) {
             titleView.setText(R.string.pin_title_enter);

@@ -33,6 +33,8 @@ public class ManageSpaceActivity extends BaseActivity {
     private void setupUI() {
         setContentView(R.layout.activity_manage_space);
 
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.manage_space_title);
+
         TextView btnBrowsing = findViewById(R.id.btnClearBrowsing);
         TextView btnTracking = findViewById(R.id.btnClearTracking);
         TextView btnBlocking = findViewById(R.id.btnClearBlocking);

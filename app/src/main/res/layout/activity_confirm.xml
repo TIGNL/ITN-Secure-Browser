@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_page"
+    android:background="@color/bg"
     android:gravity="center"
-    android:padding="32dp">
+    android:padding="@dimen/padding">
 
     <TextView
         android:id="@+id/confirmTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/text_primary"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
 
@@ -20,25 +20,29 @@
         android:id="@+id/confirmMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
+        android:textColor="@color/text_hint"
         android:textSize="15sp"
         android:gravity="center"
         android:layout_marginBottom="32dp" />
 
-    <Button
+    <TextView
         android:id="@+id/btnConfirm"
         android:layout_width="200dp"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/row_height"
+        android:gravity="center"
         android:text="@string/btn_confirm"
         android:textColor="@color/text_primary"
-        android:background="@color/accent"
-        android:layout_marginBottom="12dp" />
+        android:textSize="15sp"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="8dp" />
 
-    <Button
+    <TextView
         android:id="@+id/btnCancel"
         android:layout_width="200dp"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/row_height"
+        android:gravity="center"
         android:text="@string/btn_cancel"
         android:textColor="@color/text_primary"
-        android:background="@color/bg_field" />
+        android:textSize="15sp"
+        android:background="?android:attr/selectableItemBackground" />
 </LinearLayout>

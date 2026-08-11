@@ -12,6 +12,8 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.settings_title);
+
         TextView rowPin = findViewById(R.id.rowPinLock);
         TextView rowGroups = findViewById(R.id.rowGroups);
 

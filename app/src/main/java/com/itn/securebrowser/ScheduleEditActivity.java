@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -27,10 +26,12 @@ public class ScheduleEditActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_edit);
 
+        ((TextView) findViewById(R.id.pageTitle)).setText("Add Block Schedule");
+
         timeFrom = findViewById(R.id.timeFrom);
         timeTo = findViewById(R.id.timeTo);
         dayError = findViewById(R.id.dayError);
-        Button btnSave = findViewById(R.id.btnSaveSchedule);
+        TextView btnSave = findViewById(R.id.btnSaveSchedule);
 
         int[] dayViewIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
         for (int i = 0; i < 7; i++) {
@@ -38,8 +39,7 @@ public class ScheduleEditActivity extends BaseActivity {
             TextView dayView = findViewById(dayViewIds[i]);
             dayView.setOnClickListener(v -> {
                 selectedDays[idx] = !selectedDays[idx];
-                dayView.setBackgroundColor(selectedDays[idx] ? 0xFFE94560 : 0xFF252545);
-                dayView.setTextColor(selectedDays[idx] ? 0xFFFFFFFF : 0xFF888888);
+                dayView.setTextColor(selectedDays[idx] ? 0xFF00AA00 : 0xFF666666);
             });
         }
 

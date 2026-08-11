@@ -2,7 +2,6 @@ package com.itn.securebrowser;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class ConfirmActivity extends BaseActivity {
@@ -19,8 +18,8 @@ public class ConfirmActivity extends BaseActivity {
 
         TextView titleView = findViewById(R.id.confirmTitle);
         TextView messageView = findViewById(R.id.confirmMessage);
-        Button btnConfirm = findViewById(R.id.btnConfirm);
-        Button btnCancel = findViewById(R.id.btnCancel);
+        TextView btnConfirm = findViewById(R.id.btnConfirm);
+        TextView btnCancel = findViewById(R.id.btnCancel);
 
         if (title != null) titleView.setText(title);
         if (message != null) messageView.setText(message);

@@ -3,9 +3,9 @@ package com.itn.securebrowser;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.itn.securebrowser.util.BrowserTab;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ public class TabListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_list);
+
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.tabs_title);
 
         tabList = findViewById(R.id.tabList);
         loadTabs();

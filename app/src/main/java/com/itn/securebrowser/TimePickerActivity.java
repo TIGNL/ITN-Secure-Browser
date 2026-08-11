@@ -2,7 +2,7 @@ package com.itn.securebrowser;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 public class TimePickerActivity extends BaseActivity {
@@ -12,6 +12,8 @@ public class TimePickerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_picker);
 
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.select_time);
+
         TimePicker picker = findViewById(R.id.timePicker);
         picker.setIs24HourView(true);
 
@@ -20,7 +22,7 @@ public class TimePickerActivity extends BaseActivity {
         picker.setHour(hour);
         picker.setMinute(minute);
 
-        Button btnOk = findViewById(R.id.btnOk);
+        TextView btnOk = findViewById(R.id.btnOk);
         btnOk.setOnClickListener(v -> {
             Intent result = new Intent();
             result.putExtra("hour", picker.getHour());

@@ -3,118 +3,127 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg_page"
-    android:padding="24dp">
+    android:background="@color/bg">
+
+    <include layout="@layout/item_page_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Block Schedule"
-        android:textColor="@color/text_primary"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_height"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/padding"
         android:text="@string/schedule_days_label"
-        android:textColor="@color/text_secondary"
-        android:textSize="14sp"
-        android:layout_marginBottom="8dp" />
+        android:textColor="@color/text_hint"
+        android:textSize="13sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/row_height"
         android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/padding">
 
-        <TextView android:id="@+id/daySat" style="@style/DayChip" android:text="@string/day_saturday" />
-        <TextView android:id="@+id/daySun" style="@style/DayChip" android:text="@string/day_sunday" />
-        <TextView android:id="@+id/dayMon" style="@style/DayChip" android:text="@string/day_monday" />
-        <TextView android:id="@+id/dayTue" style="@style/DayChip" android:text="@string/day_tuesday" />
-        <TextView android:id="@+id/dayWed" style="@style/DayChip" android:text="@string/day_wednesday" />
-        <TextView android:id="@+id/dayThu" style="@style/DayChip" android:text="@string/day_thursday" />
-        <TextView android:id="@+id/dayFri" style="@style/DayChip" android:text="@string/day_friday" />
+        <TextView android:id="@+id/daySat" android:layout_width="0dp" android:layout_height="@dimen/content_height" android:layout_weight="1" android:gravity="center" android:text="@string/day_saturday" android:textColor="@color/text_hint" android:textSize="12sp" android:background="@android:color/transparent" android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/daySun" android:layout_width="0dp" android:layout_height="@dimen/content_height" android:layout_weight="1" android:gravity="center" android:text="@string/day_sunday" android:textColor="@color/text_hint" android:textSize="12sp" android:background="@android:color/transparent" android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/dayMon" android:layout_width="0dp" android:layout_height="@dimen/content_height" android:layout_weight="1" android:gravity="center" android:text="@string/day_monday" android:textColor="@color/text_hint" android:textSize="12sp" android:background="@android:color/transparent" android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/dayTue" android:layout_width="0dp" android:layout_height="@dimen/content_height" android:layout_weight="1" android:gravity="center" android:text="@string/day_tuesday" android:textColor="@color/text_hint" android:textSize="12sp" android:background="@android:color/transparent" android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/dayWed" android:layout_width="0dp" android:layout_height="@dimen/content_height" android:layout_weight="1" android:gravity="center" android:text="@string/day_wednesday" android:textColor="@color/text_hint" android:textSize="12sp" android:background="@android:color/transparent" android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/dayThu" android:layout_width="0dp" android:layout_height="@dimen/content_height" android:layout_weight="1" android:gravity="center" android:text="@string/day_thursday" android:textColor="@color/text_hint" android:textSize="12sp" android:background="@android:color/transparent" android:clickable="true" android:focusable="true" />
+        <TextView android:id="@+id/dayFri" android:layout_width="0dp" android:layout_height="@dimen/content_height" android:layout_weight="1" android:gravity="center" android:text="@string/day_friday" android:textColor="@color/text_hint" android:textSize="12sp" android:background="@android:color/transparent" android:clickable="true" android:focusable="true" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/dayError"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/padding"
         android:textColor="@color/status_off"
         android:textSize="13sp"
-        android:layout_marginBottom="16dp"
         android:visibility="gone" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_height"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/padding"
         android:text="@string/schedule_time_label"
-        android:textColor="@color/text_secondary"
-        android:textSize="14sp"
-        android:layout_marginBottom="8dp" />
+        android:textColor="@color/text_hint"
+        android:textSize="13sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/row_height"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="32dp">
+        android:paddingHorizontal="@dimen/padding">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/schedule_from"
             android:textColor="@color/text_primary"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/timeFrom"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/content_height"
             android:gravity="center"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingHorizontal="@dimen/padding"
             android:text="08:00"
-            android:textColor="@color/accent"
-            android:textSize="20sp"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
             android:background="?android:attr/selectableItemBackground" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" — "
-            android:textColor="@color/text_secondary"
-            android:textSize="20sp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            android:textColor="@color/text_hint"
+            android:textSize="15sp"
+            android:paddingHorizontal="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/schedule_to"
             android:textColor="@color/text_primary"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/timeTo"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/content_height"
             android:gravity="center"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingHorizontal="@dimen/padding"
             android:text="22:00"
-            android:textColor="@color/accent"
-            android:textSize="20sp"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
             android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
 
-    <Button
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider"
+        android:background="@drawable/divider_horizontal" />
+
+    <TextView
         android:id="@+id/btnSaveSchedule"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/row_height"
+        android:gravity="center"
         android:text="@string/btn_save"
         android:textColor="@color/text_primary"
-        android:background="@color/accent" />
+        android:textSize="15sp"
+        android:background="?android:attr/selectableItemBackground" />
 </LinearLayout>

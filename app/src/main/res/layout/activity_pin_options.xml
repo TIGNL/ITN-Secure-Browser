@@ -1,53 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_page">
+    android:background="@color/bg"
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:text="@string/pin_lock"
-        android:textColor="@color/text_primary"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/bg_toolbar" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider" />
+        <include layout="@layout/item_page_title" />
 
-    <TextView
-        android:id="@+id/optionChangePin"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:text="@string/btn_change"
-        android:textColor="@color/text_primary"
-        android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@drawable/divider_horizontal" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider"
-        android:layout_marginStart="24dp" />
+        <TextView
+            android:id="@+id/optionChangePin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/padding"
+            android:text="@string/btn_change"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/optionDisablePin"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:text="@string/btn_disable"
-        android:textColor="@color/status_off"
-        android:textSize="16sp" />
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@drawable/divider_horizontal" />
+
+        <TextView
+            android:id="@+id/optionDisablePin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/row_height"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/padding"
+            android:text="@string/btn_disable"
+            android:textColor="@color/status_off"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider"
+            android:background="@drawable/divider_horizontal" />
+    </LinearLayout>
+</ScrollView>

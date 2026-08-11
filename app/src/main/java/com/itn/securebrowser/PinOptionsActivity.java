@@ -2,7 +2,6 @@ package com.itn.securebrowser;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.itn.securebrowser.util.PinManager;
@@ -13,6 +12,8 @@ public class PinOptionsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_options);
+
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.pin_lock);
 
         TextView btnChange = findViewById(R.id.optionChangePin);
         TextView btnDisable = findViewById(R.id.optionDisablePin);
