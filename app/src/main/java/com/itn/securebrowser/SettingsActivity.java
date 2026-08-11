@@ -1,10 +1,8 @@
 package com.itn.securebrowser;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.itn.securebrowser.util.PinManager;
 
 public class SettingsActivity extends BaseActivity {
@@ -19,24 +17,7 @@ public class SettingsActivity extends BaseActivity {
 
         rowPin.setOnClickListener(v -> {
             if (PinManager.hasPin(this)) {
-                new AlertDialog.Builder(this)
-                    .setTitle("PIN Lock")
-                    .setItems(new CharSequence[]{"Change PIN", "Disable PIN"}, (d, which) -> {
-                        if (which == 0) {
-                            Intent i = new Intent(this, PinEntryActivity.class);
-                            i.putExtra("mode", "verify");
-                            i.putExtra("subtitle", "Verify first");
-                            i.putExtra("changeAction", "setup");
-                            startActivity(i);
-                        } else {
-                            Intent i = new Intent(this, PinEntryActivity.class);
-                            i.putExtra("mode", "verify");
-                            i.putExtra("subtitle", "Verify first");
-                            i.putExtra("changeAction", "disable");
-                            startActivity(i);
-                        }
-                    })
-                    .show();
+                startActivity(new Intent(this, PinOptionsActivity.class));
             } else {
                 startActivity(new Intent(this, PinSetupActivity.class));
             }

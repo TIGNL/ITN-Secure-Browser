@@ -1,6 +1,5 @@
 package com.itn.securebrowser;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;

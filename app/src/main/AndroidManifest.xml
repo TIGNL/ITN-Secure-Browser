@@ -49,6 +49,9 @@
         <activity android:name=".GroupEditActivity" android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ScheduleEditActivity" />
         <activity android:name=".TabListActivity" />
+        <activity android:name=".ConfirmActivity" />
+        <activity android:name=".TimePickerActivity" />
+        <activity android:name=".PinOptionsActivity" />
         <activity
             android:name=".ManageSpaceActivity"
             android:exported="true"

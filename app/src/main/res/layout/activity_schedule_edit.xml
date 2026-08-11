@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_page"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Block Schedule"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_days_label"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp">
+
+        <TextView android:id="@+id/daySat" style="@style/DayChip" android:text="@string/day_saturday" />
+        <TextView android:id="@+id/daySun" style="@style/DayChip" android:text="@string/day_sunday" />
+        <TextView android:id="@+id/dayMon" style="@style/DayChip" android:text="@string/day_monday" />
+        <TextView android:id="@+id/dayTue" style="@style/DayChip" android:text="@string/day_tuesday" />
+        <TextView android:id="@+id/dayWed" style="@style/DayChip" android:text="@string/day_wednesday" />
+        <TextView android:id="@+id/dayThu" style="@style/DayChip" android:text="@string/day_thursday" />
+        <TextView android:id="@+id/dayFri" style="@style/DayChip" android:text="@string/day_friday" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dayError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/status_off"
+        android:textSize="13sp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_time_label"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_from"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/timeFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="08:00"
+            android:textColor="@color/accent"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" — "
+            android:textColor="@color/text_secondary"
+            android:textSize="20sp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_to"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/timeTo"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="22:00"
+            android:textColor="@color/accent"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSaveSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/btn_save"
+        android:textColor="@color/text_primary"
+        android:background="@color/accent" />
+</LinearLayout>

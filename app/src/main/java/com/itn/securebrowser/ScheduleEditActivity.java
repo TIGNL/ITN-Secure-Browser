@@ -1,6 +1,6 @@
 package com.itn.securebrowser;
 
-import android.app.TimePickerDialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,17 +8,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ScheduleEditActivity extends BaseActivity {
 
+    private static final int REQ_FROM = 1;
+    private static final int REQ_TO = 2;
+
     private final boolean[] selectedDays = new boolean[7];
     private TextView timeFrom, timeTo, dayError;
     private int fromHour = 8, fromMin = 0, toHour = 22, toMin = 0;
-    private String[] dayIds = {"SATURDAY","SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"};
+    private final String[] dayIds = {"SATURDAY","SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +32,10 @@ public class ScheduleEditActivity extends BaseActivity {
         dayError = findViewById(R.id.dayError);
         Button btnSave = findViewById(R.id.btnSaveSchedule);
 
-        int[] dayIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
+        int[] dayViewIds = {R.id.daySat, R.id.daySun, R.id.dayMon, R.id.dayTue, R.id.dayWed, R.id.dayThu, R.id.dayFri};
         for (int i = 0; i < 7; i++) {
             final int idx = i;
-            TextView dayView = findViewById(dayIds[i]);
+            TextView dayView = findViewById(dayViewIds[i]);
             dayView.setOnClickListener(v -> {
                 selectedDays[idx] = !selectedDays[idx];
                 dayView.setBackgroundColor(selectedDays[idx] ? 0xFFE94560 : 0xFF252545);
@@ -42,17 +44,17 @@ public class ScheduleEditActivity extends BaseActivity {
         }
 
         timeFrom.setOnClickListener(v -> {
-            new TimePickerDialog(this, (view, h, m) -> {
-                fromHour = h; fromMin = m;
-                timeFrom.setText(String.format(Locale.US, "%02d:%02d", h, m));
-            }, fromHour, fromMin, true).show();
+            Intent i = new Intent(this, TimePickerActivity.class);
+            i.putExtra("hour", fromHour);
+            i.putExtra("minute", fromMin);
+            startActivityForResult(i, REQ_FROM);
         });
 
         timeTo.setOnClickListener(v -> {
-            new TimePickerDialog(this, (view, h, m) -> {
-                toHour = h; toMin = m;
-                timeTo.setText(String.format(Locale.US, "%02d:%02d", h, m));
-            }, toHour, toMin, true).show();
+            Intent i = new Intent(this, TimePickerActivity.class);
+            i.putExtra("hour", toHour);
+            i.putExtra("minute", toMin);
+            startActivityForResult(i, REQ_TO);
         });
 
         btnSave.setOnClickListener(v -> {
@@ -73,5 +75,22 @@ public class ScheduleEditActivity extends BaseActivity {
             setResult(RESULT_OK, result);
             finish();
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK || data == null) return;
+        int hour = data.getIntExtra("hour", 0);
+        int minute = data.getIntExtra("minute", 0);
+        if (requestCode == REQ_FROM) {
+            fromHour = hour;
+            fromMin = minute;
+            timeFrom.setText(String.format(Locale.US, "%02d:%02d", hour, minute));
+        } else if (requestCode == REQ_TO) {
+            toHour = hour;
+            toMin = minute;
+            timeTo.setText(String.format(Locale.US, "%02d:%02d", hour, minute));
+        }
     }
 }

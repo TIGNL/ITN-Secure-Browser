@@ -21,6 +21,8 @@
     <string name="btn_add">Add</string>
     <string name="btn_save">Save</string>
     <string name="btn_delete">Delete</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="select_time">Select time</string>
     <string name="btn_enable">Enable</string>
     <string name="btn_disable">Disable</string>
     <string name="btn_change">Change</string>

@@ -1,19 +1,20 @@
 package com.itn.securebrowser;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.itn.securebrowser.util.BrowserTab;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TabListActivity extends BaseActivity {
 
+    private static final int REQ_CLOSE = 1;
     private ListView tabList;
+    private int closeTabId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class TabListActivity extends BaseActivity {
 
         for (BrowserTab tab : tabSnapshot) {
             String title = tab.title != null && !tab.title.isEmpty() ? tab.title : "New Tab";
-            if (tab.id == MainActivity.currentTabId) title = "▶ " + title;
+            if (tab.id == MainActivity.currentTabId) title = "\u25B6 " + title;
             titles.add(title);
         }
 
@@ -45,28 +46,30 @@ public class TabListActivity extends BaseActivity {
 
         tabList.setOnItemLongClickListener((parent, view, position, id) -> {
             if (position < tabSnapshot.size() && tabSnapshot.size() > 1) {
-                int tabId = tabSnapshot.get(position).id;
-                new AlertDialog.Builder(this)
-                    .setTitle("Close tab")
-                    .setMessage("Close \"" + tabSnapshot.get(position).title + "\"?")
-                    .setPositiveButton("Close", (d, w) -> {
-                        // Find and close in MainActivity
-                        for (int i = 0; i < MainActivity.tabs.size(); i++) {
-                            if (MainActivity.tabs.get(i).id == tabId) {
-                                MainActivity.tabs.get(i).webView.destroy();
-                                MainActivity.tabs.remove(i);
-                                break;
-                            }
-                        }
-                        if (MainActivity.tabs.isEmpty()) {
-                            // Will create new tab when returning to MainActivity
-                        }
-                        loadTabs();
-                    })
-                    .setNegativeButton("Cancel", null)
-                    .show();
+                closeTabId = tabSnapshot.get(position).id;
+                Intent i = new Intent(this, ConfirmActivity.class);
+                i.putExtra("title", "Close tab");
+                i.putExtra("message", "Close \"" + tabSnapshot.get(position).title + "\"?");
+                i.putExtra("confirmText", "Close");
+                startActivityForResult(i, REQ_CLOSE);
             }
             return true;
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_CLOSE && resultCode == Activity.RESULT_OK && closeTabId >= 0) {
+            for (int i = 0; i < MainActivity.tabs.size(); i++) {
+                if (MainActivity.tabs.get(i).id == closeTabId) {
+                    MainActivity.tabs.get(i).webView.destroy();
+                    MainActivity.tabs.remove(i);
+                    break;
+                }
+            }
+            closeTabId = -1;
+            loadTabs();
+        }
     }
 }

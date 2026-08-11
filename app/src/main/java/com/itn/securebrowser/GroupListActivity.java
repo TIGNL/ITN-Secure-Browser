@@ -1,6 +1,6 @@
 package com.itn.securebrowser;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +14,12 @@ import com.itn.securebrowser.util.BlockDataStore;
 
 public class GroupListActivity extends BaseActivity {
 
+    private static final int REQ_DELETE = 1;
     private BlockDataStore dataStore;
     private ListView groupList;
     private TextView emptyText;
     private List<BlockDataStore.BlockGroup> groups;
+    private int deletePosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +44,25 @@ public class GroupListActivity extends BaseActivity {
         });
 
         groupList.setOnItemLongClickListener((parent, view, position, id) -> {
+            deletePosition = position;
             BlockDataStore.BlockGroup group = groups.get(position);
-            new AlertDialog.Builder(this)
-                .setTitle("Delete group")
-                .setMessage(getString(R.string.delete_group_confirm, group.name))
-                .setPositiveButton(R.string.btn_delete, (d, w) -> {
-                    dataStore.deleteGroup(group.name);
-                    loadGroups();
-                })
-                .setNegativeButton(R.string.btn_cancel, null)
-                .show();
+            Intent i = new Intent(this, ConfirmActivity.class);
+            i.putExtra("title", "Delete group");
+            i.putExtra("message", getString(R.string.delete_group_confirm, group.name));
+            i.putExtra("confirmText", getString(R.string.btn_delete));
+            startActivityForResult(i, REQ_DELETE);
             return true;
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_DELETE && resultCode == Activity.RESULT_OK && deletePosition >= 0) {
+            dataStore.deleteGroup(groups.get(deletePosition).name);
+            deletePosition = -1;
+            loadGroups();
+        }
     }
 
     @Override

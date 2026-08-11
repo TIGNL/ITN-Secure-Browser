@@ -1,7 +1,6 @@
 package com.itn.securebrowser;
 
-import android.app.AlertDialog;
-import android.app.TimePickerDialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +16,9 @@ import java.util.List;
 import com.itn.securebrowser.util.BlockDataStore;
 
 public class GroupEditActivity extends BaseActivity {
+
+    private static final int REQ_DELETE = 1;
+    private static final int REQ_SCHEDULE = 2;
 
     private BlockDataStore dataStore;
     private String existingName;
@@ -78,27 +80,26 @@ public class GroupEditActivity extends BaseActivity {
         btnAddDomain.setOnClickListener(v -> addDomain());
         btnAddSchedule.setOnClickListener(v -> {
             Intent i = new Intent(this, ScheduleEditActivity.class);
-            startActivityForResult(i, 100);
+            startActivityForResult(i, REQ_SCHEDULE);
         });
 
         btnSave.setOnClickListener(v -> saveGroup());
         btnDelete.setOnClickListener(v -> {
-            new AlertDialog.Builder(this)
-                .setTitle("Delete group")
-                .setMessage(getString(R.string.delete_group_confirm, existingName))
-                .setPositiveButton(R.string.btn_delete, (d, w) -> {
-                    dataStore.deleteGroup(existingName);
-                    finish();
-                })
-                .setNegativeButton(R.string.btn_cancel, null)
-                .show();
+            Intent i = new Intent(this, ConfirmActivity.class);
+            i.putExtra("title", "Delete group");
+            i.putExtra("message", getString(R.string.delete_group_confirm, existingName));
+            i.putExtra("confirmText", getString(R.string.btn_delete));
+            startActivityForResult(i, REQ_DELETE);
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == REQ_DELETE && resultCode == Activity.RESULT_OK) {
+            dataStore.deleteGroup(existingName);
+            finish();
+        } else if (requestCode == REQ_SCHEDULE && resultCode == Activity.RESULT_OK && data != null) {
             ArrayList<String> days = data.getStringArrayListExtra("days");
             String from = data.getStringExtra("from");
             String to = data.getStringExtra("to");

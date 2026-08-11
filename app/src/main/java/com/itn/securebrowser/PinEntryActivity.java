@@ -2,6 +2,7 @@ package com.itn.securebrowser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ public class PinEntryActivity extends BaseActivity {
         }
 
         if (pinLength > 0) {
-            input.setMaxLength(pinLength);
+            input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(pinLength)});
             input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
         } else {
             input.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
