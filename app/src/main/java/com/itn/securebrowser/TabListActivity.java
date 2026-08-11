@@ -50,7 +50,6 @@ public class TabListActivity extends BaseActivity {
             if (position < tabSnapshot.size() && tabSnapshot.size() > 1) {
                 closeTabId = tabSnapshot.get(position).id;
                 Intent i = new Intent(this, ConfirmActivity.class);
-                i.putExtra("title", "Close tab");
                 i.putExtra("message", "Close \"" + tabSnapshot.get(position).title + "\"?");
                 i.putExtra("confirmText", "Close");
                 startActivityForResult(i, REQ_CLOSE);

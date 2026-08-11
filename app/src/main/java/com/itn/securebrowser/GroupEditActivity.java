@@ -83,7 +83,6 @@ public class GroupEditActivity extends BaseActivity {
         btnSave.setOnClickListener(v -> saveGroup());
         btnDelete.setOnClickListener(v -> {
             Intent i = new Intent(this, ConfirmActivity.class);
-            i.putExtra("title", "Delete group");
             i.putExtra("message", getString(R.string.delete_group_confirm, existingName));
             i.putExtra("confirmText", getString(R.string.btn_delete));
             startActivityForResult(i, REQ_DELETE);

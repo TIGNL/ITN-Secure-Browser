@@ -41,7 +41,6 @@ public class GroupListActivity extends BaseActivity {
             deletePosition = position;
             BlockDataStore.BlockGroup group = groups.get(position);
             Intent i = new Intent(this, ConfirmActivity.class);
-            i.putExtra("title", "Delete group");
             i.putExtra("message", getString(R.string.delete_group_confirm, group.name));
             i.putExtra("confirmText", getString(R.string.btn_delete));
             startActivityForResult(i, REQ_DELETE);

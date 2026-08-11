@@ -59,7 +59,6 @@ public class ManageSpaceActivity extends BaseActivity {
 
         btnAll.setOnClickListener(v -> {
             Intent i = new Intent(this, ConfirmActivity.class);
-            i.putExtra("title", getString(R.string.clear_all));
             i.putExtra("message", getString(R.string.clear_all_confirm));
             i.putExtra("confirmText", getString(R.string.btn_delete));
             startActivityForResult(i, REQ_CLEAR_ALL);

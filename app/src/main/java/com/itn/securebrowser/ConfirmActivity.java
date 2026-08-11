@@ -11,22 +11,19 @@ public class ConfirmActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
 
-        String title = getIntent().getStringExtra("title");
+        ((TextView) findViewById(R.id.pageTitle)).setText(R.string.btn_confirm);
+
         String message = getIntent().getStringExtra("message");
         String confirmText = getIntent().getStringExtra("confirmText");
-        String cancelText = getIntent().getStringExtra("cancelText");
 
-        TextView titleView = findViewById(R.id.confirmTitle);
         TextView messageView = findViewById(R.id.confirmMessage);
-        TextView btnConfirm = findViewById(R.id.btnConfirm);
+        TextView btnOk = findViewById(R.id.btnOk);
         TextView btnCancel = findViewById(R.id.btnCancel);
 
-        if (title != null) titleView.setText(title);
         if (message != null) messageView.setText(message);
-        if (confirmText != null) btnConfirm.setText(confirmText);
-        if (cancelText != null) btnCancel.setText(cancelText);
+        if (confirmText != null) btnOk.setText(confirmText);
 
-        btnConfirm.setOnClickListener(v -> {
+        btnOk.setOnClickListener(v -> {
             setResult(RESULT_OK, new Intent());
             finish();
         });
