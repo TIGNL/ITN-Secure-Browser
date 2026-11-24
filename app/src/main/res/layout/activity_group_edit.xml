@@ -23,20 +23,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/padding"
-                android:text="@string/group_name_hint"
-                android:textColor="@color/text_hint"
-                android:textSize="13sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider"
-                android:background="@drawable/divider_horizontal" />
-
             <EditText
                 android:id="@+id/inputName"
                 android:layout_width="match_parent"
@@ -50,20 +36,6 @@
                 android:inputType="text"
                 android:singleLine="true"
                 android:textSize="15sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider"
-                android:background="@drawable/divider_horizontal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/padding"
-                android:text="@string/group_limit_hint"
-                android:textColor="@color/text_hint"
-                android:textSize="13sp" />
 
             <View
                 android:layout_width="match_parent"

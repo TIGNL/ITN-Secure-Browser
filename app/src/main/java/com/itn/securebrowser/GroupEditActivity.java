@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,6 +123,7 @@ public class GroupEditActivity extends BaseActivity {
 
     private void refreshDomainList() {
         domainList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, domains));
+        setListViewHeight(domainList);
         domainList.setOnItemLongClickListener((parent, view, position, id) -> {
             domains.remove(position);
             refreshDomainList();
@@ -134,12 +137,31 @@ public class GroupEditActivity extends BaseActivity {
             items.add(String.join(", ", s.days) + "  " + s.from + " - " + s.to);
         }
         scheduleList.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items));
+        setListViewHeight(scheduleList);
         noSchedules.setVisibility(schedules.isEmpty() ? View.VISIBLE : View.GONE);
         scheduleList.setOnItemLongClickListener((parent, view, position, id) -> {
             schedules.remove(position);
             refreshScheduleList();
             return true;
         });
+    }
+
+    private void setListViewHeight(ListView listView) {
+        ListAdapter adapter = listView.getAdapter();
+        if (adapter == null) return;
+        int totalHeight = 0;
+        int width = listView.getWidth();
+        if (width <= 0) width = listView.getMeasuredWidth();
+        if (width <= 0) return;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View item = adapter.getView(i, null, listView);
+            item.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            totalHeight += item.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + listView.getDividerHeight() * Math.max(0, adapter.getCount() - 1);
+        listView.setLayoutParams(params);
     }
 
     private void saveGroup() {
