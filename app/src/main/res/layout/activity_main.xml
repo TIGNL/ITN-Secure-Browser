@@ -5,19 +5,62 @@
     android:orientation="vertical"
     android:background="@color/bg">
 
-    <EditText
-        android:id="@+id/urlBar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/row_height"
-        android:background="@android:color/transparent"
-        android:hint="@string/hint_search"
-        android:textColorHint="@color/text_hint"
-        android:textColor="@color/text_primary"
-        android:textSize="15sp"
-        android:singleLine="true"
-        android:imeOptions="actionGo"
-        android:inputType="textUri"
-        android:paddingHorizontal="@dimen/padding" />
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/btnHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:gravity="center"
+            android:padding="@dimen/element_padding"
+            android:text="Home"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <EditText
+            android:id="@+id/urlBar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_search"
+            android:textColorHint="@color/text_hint"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:imeOptions="actionGo"
+            android:inputType="textUri"
+            android:padding="@dimen/element_padding" />
+
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <TextView
+            android:id="@+id/btnRefreshStop"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:gravity="center"
+            android:padding="@dimen/element_padding"
+            android:text="Refresh"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -42,63 +85,17 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/row_height"
         android:orientation="horizontal"
+        android:weightSum="100"
         android:gravity="center">
 
         <TextView
             android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="33"
             android:gravity="center"
+            android:padding="@dimen/element_padding"
             android:text="Back"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp"
-            android:background="?android:attr/selectableItemBackground" />
-
-        <View
-            android:layout_width="@dimen/divider"
-            android:layout_height="match_parent"
-            android:background="@drawable/divider_vertical" />
-
-        <TextView
-            android:id="@+id/btnForward"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Forward"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp"
-            android:background="?android:attr/selectableItemBackground" />
-
-        <View
-            android:layout_width="@dimen/divider"
-            android:layout_height="match_parent"
-            android:background="@drawable/divider_vertical" />
-
-        <TextView
-            android:id="@+id/btnHome"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Home"
-            android:textColor="@color/text_primary"
-            android:textSize="14sp"
-            android:background="?android:attr/selectableItemBackground" />
-
-        <View
-            android:layout_width="@dimen/divider"
-            android:layout_height="match_parent"
-            android:background="@drawable/divider_vertical" />
-
-        <TextView
-            android:id="@+id/btnRefreshStop"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Refresh"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:background="?android:attr/selectableItemBackground" />
@@ -112,8 +109,9 @@
             android:id="@+id/btnTabs"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="34"
             android:gravity="center"
+            android:padding="@dimen/element_padding"
             android:text="Tabs"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
@@ -125,12 +123,13 @@
             android:background="@drawable/divider_vertical" />
 
         <TextView
-            android:id="@+id/btnMore"
+            android:id="@+id/btnForward"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="33"
             android:gravity="center"
-            android:text="More"
+            android:padding="@dimen/element_padding"
+            android:text="Forward"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:background="?android:attr/selectableItemBackground" />
