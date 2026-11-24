@@ -21,7 +21,7 @@
             android:padding="@dimen/element_padding"
             android:text="Home"
             android:textColor="@color/text_primary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:background="?android:attr/selectableItemBackground" />
 
         <View
@@ -38,7 +38,7 @@
             android:hint="@string/hint_search"
             android:textColorHint="@color/text_hint"
             android:textColor="@color/text_primary"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:singleLine="true"
             android:imeOptions="actionGo"
             android:inputType="textUri"
@@ -58,7 +58,7 @@
             android:padding="@dimen/element_padding"
             android:text="Refresh"
             android:textColor="@color/text_primary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
 
@@ -97,7 +97,7 @@
             android:padding="@dimen/element_padding"
             android:text="Back"
             android:textColor="@color/text_primary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:background="?android:attr/selectableItemBackground" />
 
         <View
@@ -114,7 +114,7 @@
             android:padding="@dimen/element_padding"
             android:text="Forward"
             android:textColor="@color/text_primary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:background="?android:attr/selectableItemBackground" />
 
         <View
@@ -131,7 +131,7 @@
             android:padding="@dimen/element_padding"
             android:text="Tabs"
             android:textColor="@color/text_primary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:background="?android:attr/selectableItemBackground" />
 
         <View
@@ -148,7 +148,7 @@
             android:padding="@dimen/element_padding"
             android:text="More"
             android:textColor="@color/text_primary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
 
