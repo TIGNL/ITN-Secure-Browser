@@ -70,9 +70,4 @@
         android:text="@string/clear_all"
         android:textColor="@color/status_off"
         android:textSize="15sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@drawable/divider_horizontal" />
 </LinearLayout>

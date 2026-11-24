@@ -248,9 +248,4 @@
             android:textSize="15sp"
             android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider"
-        android:background="@drawable/divider_horizontal" />
 </LinearLayout>
