@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.itn.securebrowser.util.BlockDataStore;
 import com.itn.securebrowser.util.BlockEngine;
 import com.itn.securebrowser.util.BrowserTab;
+import com.itn.securebrowser.util.PinManager;
 import com.itn.securebrowser.util.TimeTracker;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class MainActivity extends BaseActivity {
     private EditText urlBar;
     private TextView btnRefreshStop;
     private ProgressBar progressBar;
-    private TextView btnBack, btnForward, btnHome, btnTabs;
+    private TextView btnBack, btnForward, btnHome, btnTabs, btnMore;
 
     private TimeTracker timeTracker;
     private BlockDataStore blockDataStore;
@@ -71,6 +72,7 @@ public class MainActivity extends BaseActivity {
         btnForward = findViewById(R.id.btnForward);
         btnHome = findViewById(R.id.btnHome);
         btnTabs = findViewById(R.id.btnTabs);
+        btnMore = findViewById(R.id.btnMore);
 
         timeTracker = new TimeTracker(this);
         blockDataStore = new BlockDataStore(this);
@@ -81,6 +83,16 @@ public class MainActivity extends BaseActivity {
         btnForward.setOnClickListener(v -> goForward());
         btnHome.setOnClickListener(v -> goHome());
         btnTabs.setOnClickListener(v -> startActivity(new Intent(this, TabListActivity.class)));
+        btnMore.setOnClickListener(v -> {
+            if (PinManager.hasPin(this)) {
+                startActivity(new Intent(this, PinEntryActivity.class)
+                    .putExtra("mode", "verify")
+                    .putExtra("subtitle", "To open settings")
+                    .putExtra("next", "settings"));
+            } else {
+                startActivity(new Intent(this, SettingsActivity.class));
+            }
+        });
 
         urlBar.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_GO) {

@@ -16,7 +16,7 @@
             android:id="@+id/btnHome"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="25"
+            android:layout_weight="16"
             android:gravity="center"
             android:padding="@dimen/element_padding"
             android:text="Home"
@@ -33,7 +33,7 @@
             android:id="@+id/urlBar"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="50"
+            android:layout_weight="68"
             android:background="@android:color/transparent"
             android:hint="@string/hint_search"
             android:textColorHint="@color/text_hint"
@@ -53,7 +53,7 @@
             android:id="@+id/btnRefreshStop"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="25"
+            android:layout_weight="16"
             android:gravity="center"
             android:padding="@dimen/element_padding"
             android:text="Refresh"
@@ -92,7 +92,7 @@
             android:id="@+id/btnBack"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="33"
+            android:layout_weight="25"
             android:gravity="center"
             android:padding="@dimen/element_padding"
             android:text="Back"
@@ -106,10 +106,27 @@
             android:background="@drawable/divider_vertical" />
 
         <TextView
+            android:id="@+id/btnForward"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:gravity="center"
+            android:padding="@dimen/element_padding"
+            android:text="Forward"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <View
+            android:layout_width="@dimen/divider"
+            android:layout_height="match_parent"
+            android:background="@drawable/divider_vertical" />
+
+        <TextView
             android:id="@+id/btnTabs"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="34"
+            android:layout_weight="25"
             android:gravity="center"
             android:padding="@dimen/element_padding"
             android:text="Tabs"
@@ -123,13 +140,13 @@
             android:background="@drawable/divider_vertical" />
 
         <TextView
-            android:id="@+id/btnForward"
+            android:id="@+id/btnMore"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="33"
+            android:layout_weight="25"
             android:gravity="center"
             android:padding="@dimen/element_padding"
-            android:text="Forward"
+            android:text="More"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:background="?android:attr/selectableItemBackground" />
