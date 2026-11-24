@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/padding"
                 android:text="Domains"
                 android:textColor="@color/text_primary"
@@ -137,7 +137,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/row_height"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:paddingHorizontal="@dimen/padding"
                 android:text="Block Schedules"
                 android:textColor="@color/text_primary"
