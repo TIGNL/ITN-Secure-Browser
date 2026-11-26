@@ -196,7 +196,7 @@ object BrowserSession {
             useWideViewPort = true
             builtInZoomControls = true
             displayZoomControls = false
-            supportZoom = true
+            setSupportZoom(true)
             setSupportMultipleWindows(false)
             cacheMode = WebSettings.LOAD_DEFAULT
         }
