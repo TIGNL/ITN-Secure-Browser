@@ -1,0 +1,151 @@
+
+Welcome to Gradle 9.6.0!
+
+Here are the highlights of this release:
+ - Improved Configuration Cache hit rates
+ - Additional CLI rendering options
+ - Important project hierarchy lookup deprecations
+
+For more details see https://docs.gradle.org/9.6.0/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preFaithfulReleaseBuild UP-TO-DATE
+> Task :app:mergeFaithfulReleaseJniLibFolders
+> Task :app:mergeFaithfulReleaseNativeLibs
+> Task :app:checkFaithfulReleaseDuplicateClasses
+> Task :app:generateFaithfulReleaseBuildConfig
+
+> Task :app:stripFaithfulReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+
+> Task :app:generateFaithfulReleaseResValues
+> Task :app:generateFaithfulReleaseResources
+> Task :app:extractFaithfulReleaseNativeSymbolTables
+> Task :app:packageFaithfulReleaseResources
+> Task :app:mergeFaithfulReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:processFaithfulReleaseNavigationResources
+> Task :app:javaPreCompileFaithfulRelease
+> Task :app:parseFaithfulReleaseLocalResources
+> Task :app:mergeFaithfulReleaseArtProfile
+> Task :app:generateFaithfulReleaseRFile
+> Task :app:checkFaithfulReleaseAarMetadata FAILED
+
+> Task :app:compileFaithfulReleaseKotlin
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:21:15 Type 'MutableState<String>' has no method 'getValue(BrowserTab, KMutableProperty1<*, *>)', so it cannot serve as a delegate.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:21:15 Type 'MutableState<String>' has no method 'setValue(BrowserTab, KMutableProperty1<*, *>, ??? (Unresolved name: getValue))', so it cannot serve as a delegate for var (read-write property).
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:23:13 Type 'MutableState<String>' has no method 'getValue(BrowserTab, KMutableProperty1<*, *>)', so it cannot serve as a delegate.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:23:13 Type 'MutableState<String>' has no method 'setValue(BrowserTab, KMutableProperty1<*, *>, ??? (Unresolved name: getValue))', so it cannot serve as a delegate for var (read-write property).
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:29:22 Type 'MutableIntState' has no method 'getValue(BrowserSession, KMutableProperty1<*, *>)', so it cannot serve as a delegate.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:29:22 Type 'MutableIntState' has no method 'setValue(BrowserSession, KMutableProperty1<*, *>, ??? (Unresolved name: getValue))', so it cannot serve as a delegate for var (read-write property).
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:197:13 Function invocation 'supportZoom()' expected.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:197:13 Variable expected.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ITNBrowserApp.kt:23:2 Unresolved reference 'Composable'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ITNBrowserApp.kt:24:5 Functions which invoke @Composable functions must be marked with the @Composable annotation
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ITNBrowserApp.kt:26:5 @Composable invocations can only happen from the context of a @Composable function
+
+> Task :app:compileFaithfulReleaseKotlin FAILED
+
+[Incubating] Problems report is available at: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:checkFaithfulReleaseAarMetadata' (registered by plugin 'com.android.internal.application').
+> A failure occurred while executing com.android.build.gradle.internal.tasks.CheckAarMetadataWorkAction
+   > 4 issues were found when checking AAR metadata:
+     
+       1.  Dependency 'androidx.compose.animation:animation-android:1.13.0' requires libraries and applications that
+           depend on it to compile against version 37.1 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-37.0.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 37.1, for example 37.2.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       2.  Dependency 'androidx.compose.foundation:foundation-layout-android:1.13.0' requires libraries and applications that
+           depend on it to compile against version 37.1 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-37.0.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 37.1, for example 37.2.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       3.  Dependency 'androidx.compose.foundation:foundation-android:1.13.0' requires libraries and applications that
+           depend on it to compile against version 37.1 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-37.0.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 37.1, for example 37.2.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       4.  Dependency 'androidx.compose.ui:ui-android:1.13.0' requires libraries and applications that
+           depend on it to compile against version 37.1 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-37.0.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 37.1, for example 37.2.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:compileFaithfulReleaseKotlin' (registered by plugin 'com.android.internal.application').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: DELEGATE_SPECIAL_FUNCTION_MISSING
+       Kotlin compiler error
+         Type 'MutableState<String>' has no method 'getValue(BrowserTab, KMutableProperty1<*, *>)', so it cannot serve as a delegate.
+         Location: /home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt line 21
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.6.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m
+16 actionable tasks: 16 executed
