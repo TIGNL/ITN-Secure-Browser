@@ -1,0 +1,144 @@
+
+Welcome to Gradle 9.6.0!
+
+Here are the highlights of this release:
+ - Improved Configuration Cache hit rates
+ - Additional CLI rendering options
+ - Important project hierarchy lookup deprecations
+
+For more details see https://docs.gradle.org/9.6.0/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preFaithfulReleaseBuild UP-TO-DATE
+> Task :app:mergeFaithfulReleaseJniLibFolders
+> Task :app:mergeFaithfulReleaseNativeLibs
+> Task :app:checkFaithfulReleaseDuplicateClasses
+> Task :app:generateFaithfulReleaseBuildConfig
+> Task :app:generateFaithfulReleaseResValues
+> Task :app:generateFaithfulReleaseResources
+
+> Task :app:stripFaithfulReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+
+> Task :app:packageFaithfulReleaseResources
+> Task :app:extractFaithfulReleaseNativeSymbolTables
+> Task :app:processFaithfulReleaseNavigationResources
+> Task :app:mergeFaithfulReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:javaPreCompileFaithfulRelease
+> Task :app:mergeFaithfulReleaseArtProfile
+> Task :app:parseFaithfulReleaseLocalResources
+> Task :app:checkFaithfulReleaseAarMetadata
+> Task :app:mapFaithfulReleaseSourceSetPaths
+> Task :app:generateFaithfulReleaseRFile
+> Task :app:compileFaithfulReleaseNavigationResources
+> Task :app:createFaithfulReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksFaithfulRelease
+> Task :app:processFaithfulReleaseMainManifest
+> Task :app:processFaithfulReleaseManifest
+> Task :app:mergeFaithfulReleaseResources
+> Task :app:extractProguardFiles
+> Task :app:mergeFaithfulReleaseStartupProfile
+> Task :app:generateFaithfulReleaseAssets UP-TO-DATE
+> Task :app:mergeFaithfulReleaseAssets
+> Task :app:compressFaithfulReleaseAssets
+> Task :app:extractFaithfulReleaseVersionControlInfo
+> Task :app:collectFaithfulReleaseDependencies
+> Task :app:sdkFaithfulReleaseDependencyData
+> Task :app:processFaithfulReleaseManifestForPackage
+> Task :app:validateSigningFaithfulRelease
+> Task :app:writeFaithfulReleaseAppMetadata
+> Task :app:writeFaithfulReleaseSigningConfigVersions
+> Task :app:preFullReleaseBuild UP-TO-DATE
+> Task :app:mergeFullReleaseJniLibFolders
+> Task :app:mergeFullReleaseNativeLibs
+> Task :app:checkFullReleaseDuplicateClasses
+
+> Task :app:stripFullReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+
+> Task :app:generateFullReleaseBuildConfig
+> Task :app:extractFullReleaseNativeSymbolTables
+> Task :app:mergeFullReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:generateFullReleaseResValues
+> Task :app:generateFullReleaseResources
+> Task :app:packageFullReleaseResources
+> Task :app:processFullReleaseNavigationResources
+> Task :app:javaPreCompileFullRelease
+> Task :app:parseFullReleaseLocalResources
+> Task :app:mergeFullReleaseArtProfile
+> Task :app:checkFullReleaseAarMetadata
+> Task :app:mapFullReleaseSourceSetPaths
+> Task :app:compileFullReleaseNavigationResources
+> Task :app:generateFullReleaseRFile
+> Task :app:processFaithfulReleaseResources
+> Task :app:createFullReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksFullRelease
+> Task :app:mergeFullReleaseResources
+> Task :app:processFullReleaseMainManifest
+> Task :app:processFullReleaseManifest
+> Task :app:mergeFullReleaseStartupProfile
+> Task :app:generateFullReleaseAssets UP-TO-DATE
+> Task :app:mergeFullReleaseAssets
+> Task :app:processFullReleaseManifestForPackage
+> Task :app:compressFullReleaseAssets
+> Task :app:extractFullReleaseVersionControlInfo
+> Task :app:collectFullReleaseDependencies
+> Task :app:sdkFullReleaseDependencyData
+> Task :app:validateSigningFullRelease
+> Task :app:writeFullReleaseAppMetadata
+> Task :app:writeFullReleaseSigningConfigVersions
+> Task :app:processFullReleaseResources
+
+> Task :app:compileFullReleaseKotlin FAILED
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/ChromeComponents.kt:251:67 Unresolved reference 'weight'.
+
+> Task :app:compileFaithfulReleaseKotlin FAILED
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/ChromeComponents.kt:251:67 Unresolved reference 'weight'.
+
+[Incubating] Problems report is available at: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:compileFullReleaseKotlin' (registered by plugin 'com.android.internal.application').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: UNRESOLVED_REFERENCE
+       Kotlin compiler error
+         Unresolved reference 'weight'.
+         Location: /home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/ChromeComponents.kt line 251
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:compileFaithfulReleaseKotlin' (registered by plugin 'com.android.internal.application').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: UNRESOLVED_REFERENCE
+       Kotlin compiler error
+         Unresolved reference 'weight'.
+         Location: /home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ui/ChromeComponents.kt line 251
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.6.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 55s
+69 actionable tasks: 69 executed
