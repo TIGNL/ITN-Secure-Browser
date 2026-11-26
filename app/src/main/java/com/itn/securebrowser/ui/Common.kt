@@ -43,46 +43,7 @@ fun ScreenTopBar(
     onBack: (() -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {}
 ) {
-    when (LocalDesignVariant.current) {
-        DesignVariant.FULL -> TopAppBar(
-            title = { Text(title) },
-            navigationIcon = {
-                if (onBack != null) {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            },
-            actions = actions
-        )
-
-        DesignVariant.FAITHFUL -> Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                if (onBack != null) {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                } else {
-                    Box(modifier = Modifier.width(48.dp))
-                }
-                Text(
-                    text = title,
-                    modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.Center,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Box(modifier = Modifier.width(48.dp))
-            }
-            HorizontalDivider()
-        }
-    }
+    ChromeTopBar(title = title, onBack = onBack, actions = actions)
 }
 
 @Composable
@@ -159,64 +120,17 @@ fun SettingRow(
     onClick: () -> Unit,
     trailing: @Composable (() -> Unit)? = null
 ) {
-    when (LocalDesignVariant.current) {
-        DesignVariant.FULL -> ListItem(
-            headlineContent = { Text(title) },
-            supportingContent = subtitle?.let { { Text(it) } },
-            trailingContent = trailing,
-            modifier = Modifier.clickable(onClick = onClick)
-        )
-
-        DesignVariant.FAITHFUL -> Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .clickable(onClick = onClick),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = title,
-                    modifier = Modifier.weight(1f),
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                trailing?.invoke()
-            }
-            HorizontalDivider()
-        }
-    }
+    ChromeSettingsRow(
+        title = title,
+        subtitle = subtitle,
+        onClick = onClick,
+        trailing = trailing
+    )
 }
 
 @Composable
 fun SectionHeader(text: String) {
-    when (LocalDesignVariant.current) {
-        DesignVariant.FULL -> Text(
-            text = text,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary
-        )
-
-        DesignVariant.FAITHFUL -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = text,
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-            }
-            HorizontalDivider()
-        }
-    }
+    ChromeSectionHeader(text)
 }
 
 @Composable

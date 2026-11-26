@@ -128,8 +128,6 @@ private fun BrowserTopBar(navController: NavController, focusRequester: FocusReq
     val context = LocalContext.current
     val keyboard = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
-    var focused by remember { mutableStateOf(false) }
-
     val submit: () -> Unit = {
         BrowserSession.navigateTo(BrowserSession.urlText.value)
         focusManager.clearFocus()
@@ -137,23 +135,51 @@ private fun BrowserTopBar(navController: NavController, focusRequester: FocusReq
     }
 
     val urlField: @Composable () -> Unit = {
-        OutlinedTextField(
-            value = BrowserSession.urlText.value,
-            onValueChange = { BrowserSession.urlText.value = it },
-            modifier = Modifier
-                .focusRequester(focusRequester)
-                .onFocusChanged { state ->
-                    focused = state.isFocused
-                    BrowserSession.urlEditing = state.isFocused
-                    if (state.isFocused) BrowserSession.urlText.value = BrowserSession.currentWebView()?.url ?: ""
-                },
-            singleLine = true,
+        Surface(
             shape = CircleShape,
-            placeholder = { Text("Search or enter URL") },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-            keyboardActions = KeyboardActions(onSearch = { submit() }),
-            textStyle = androidx.compose.ui.text.TextStyle(fontSize = 16.sp)
-        )
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            modifier = Modifier.height(40.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp)
+                    .padding(horizontal = 12.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                if (BrowserSession.urlText.value.isEmpty()) {
+                    Text(
+                        text = "Search or enter URL",
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                androidx.compose.foundation.text.BasicTextField(
+                    value = BrowserSession.urlText.value,
+                    onValueChange = { BrowserSession.urlText.value = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester)
+                        .onFocusChanged { state ->
+                            BrowserSession.urlEditing = state.isFocused
+                            if (state.isFocused) {
+                                BrowserSession.urlText.value =
+                                    BrowserSession.currentWebView()?.url ?: ""
+                            }
+                        },
+                    singleLine = true,
+                    cursorBrush = androidx.compose.ui.graphics.SolidColor(
+                        MaterialTheme.colorScheme.primary
+                    ),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(onSearch = { submit() }),
+                    textStyle = androidx.compose.ui.text.TextStyle(
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                )
+            }
+        }
     }
 
     when (LocalDesignVariant.current) {
