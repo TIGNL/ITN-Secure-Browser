@@ -180,7 +180,11 @@ fun ChromeSettingsRow(
             }
         }
 
-        ColumnText(title = title, subtitle = subtitle)
+        ColumnText(
+            title = title,
+            subtitle = subtitle,
+            modifier = Modifier.weight(1f)
+        )
 
         Spacer(Modifier.width(12.dp))
 
@@ -233,7 +237,11 @@ fun ChromeAccountRow(
             )
         }
         Spacer(Modifier.width(16.dp))
-        ColumnText(title = name, subtitle = subtitle)
+        ColumnText(
+            title = name,
+            subtitle = subtitle,
+            modifier = Modifier.weight(1f)
+        )
         if (onClick != null) {
             Spacer(Modifier.width(12.dp))
             Icon(
@@ -247,8 +255,8 @@ fun ChromeAccountRow(
 }
 
 @Composable
-private fun ColumnText(title: String, subtitle: String?) {
-    androidx.compose.foundation.layout.Column(modifier = Modifier.weight(1f)) {
+private fun ColumnText(title: String, subtitle: String?, modifier: Modifier = Modifier) {
+    androidx.compose.foundation.layout.Column(modifier = modifier) {
         Text(
             text = title,
             fontSize = 16.sp,
