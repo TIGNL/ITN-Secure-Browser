@@ -1,6 +1,7 @@
 package com.itn.securebrowser
 
 import android.net.Uri
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
