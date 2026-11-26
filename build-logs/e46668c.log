@@ -1,0 +1,101 @@
+
+Welcome to Gradle 9.6.0!
+
+Here are the highlights of this release:
+ - Improved Configuration Cache hit rates
+ - Additional CLI rendering options
+ - Important project hierarchy lookup deprecations
+
+For more details see https://docs.gradle.org/9.6.0/release-notes.html
+
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preFaithfulReleaseBuild UP-TO-DATE
+> Task :app:mergeFaithfulReleaseJniLibFolders
+> Task :app:mergeFaithfulReleaseNativeLibs
+> Task :app:checkFaithfulReleaseDuplicateClasses
+> Task :app:generateFaithfulReleaseBuildConfig
+> Task :app:generateFaithfulReleaseResValues
+> Task :app:generateFaithfulReleaseResources
+
+> Task :app:stripFaithfulReleaseDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+
+> Task :app:packageFaithfulReleaseResources
+> Task :app:extractFaithfulReleaseNativeSymbolTables
+> Task :app:processFaithfulReleaseNavigationResources
+> Task :app:mergeFaithfulReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:javaPreCompileFaithfulRelease
+> Task :app:mergeFaithfulReleaseArtProfile
+> Task :app:parseFaithfulReleaseLocalResources
+> Task :app:checkFaithfulReleaseAarMetadata
+> Task :app:mapFaithfulReleaseSourceSetPaths
+> Task :app:generateFaithfulReleaseRFile
+> Task :app:compileFaithfulReleaseNavigationResources
+> Task :app:createFaithfulReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksFaithfulRelease
+
+> Task :app:processFaithfulReleaseMainManifest FAILED
+/home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/AndroidManifest.xml Error:
+	uses-sdk:minSdkVersion 23 cannot be smaller than version 24 declared in library [androidx.navigation:navigation-runtime-android:2.10.2] /home/runner/.gradle/caches/9.6.0/transforms/f361fbe1dfffb1ae5b975c309b379787/transformed/navigation-runtime/AndroidManifest.xml as the library might be using APIs not available in 23
+	Suggestion: use a compatible library with a minSdk of at most 23,
+		or increase this project's minSdk version to at least 24,
+		or use tools:overrideLibrary="androidx.navigation" to force usage (may lead to runtime failures)
+
+See https://developer.android.com/r/studio-ui/build/manifest-merger for more information about the manifest merger.
+
+
+> Task :app:mergeFaithfulReleaseResources
+
+> Task :app:compileFaithfulReleaseKotlin FAILED
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:199:13 Function invocation 'supportZoom()' expected.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt:199:13 Variable expected.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ITNBrowserApp.kt:23:2 Unresolved reference 'Composable'.
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ITNBrowserApp.kt:24:5 Functions which invoke @Composable functions must be marked with the @Composable annotation
+e: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/ITNBrowserApp.kt:26:5 @Composable invocations can only happen from the context of a @Composable function
+
+[Incubating] Problems report is available at: file:///home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/build/reports/problems/problems-report.html
+
+FAILURE: Build completed with 2 failures.
+
+1: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:processFaithfulReleaseMainManifest' (registered by plugin 'com.android.internal.application').
+> Manifest merger failed : uses-sdk:minSdkVersion 23 cannot be smaller than version 24 declared in library [androidx.navigation:navigation-runtime-android:2.10.2] /home/runner/.gradle/caches/9.6.0/transforms/f361fbe1dfffb1ae5b975c309b379787/transformed/navigation-runtime/AndroidManifest.xml as the library might be using APIs not available in 23
+  	Suggestion: use a compatible library with a minSdk of at most 23,
+  		or increase this project's minSdk version to at least 24,
+  		or use tools:overrideLibrary="androidx.navigation" to force usage (may lead to runtime failures)
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+2: Task failed with an exception.
+-----------
+* What went wrong:
+Execution failed for task ':app:compileFaithfulReleaseKotlin' (registered by plugin 'com.android.internal.application').
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Kotlin compiler: FUNCTION_CALL_EXPECTED
+       Kotlin compiler error
+         Function invocation 'supportZoom()' expected.
+         Location: /home/runner/work/ITN-Secure-Browser/ITN-Secure-Browser/app/src/main/java/com/itn/securebrowser/BrowserSession.kt line 199
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+==============================================================================
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.6.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m 7s
+22 actionable tasks: 22 executed
