@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace 'com.itn.securebrowser'
-    compileSdk 36
+    compileSdk 37
 
     defaultConfig {
         applicationId "com.itn.securebrowser"
