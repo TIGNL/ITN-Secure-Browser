@@ -1,17 +1,36 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
     namespace 'com.itn.securebrowser'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.itn.securebrowser"
         minSdk 23
-        targetSdk 35
-        versionCode 1
-        versionName "1.0"
+        targetSdk 36
+        versionCode 2
+        versionName "2.0-compose"
+    }
+
+    flavorDimensions += 'design'
+
+    productFlavors {
+        create('full') {
+            dimension 'design'
+            applicationIdSuffix '.full'
+            resValue 'string', 'app_name', 'ITN Browser - Full'
+            buildConfigField 'String', 'DESIGN_VARIANT', '"full"'
+        }
+        create('faithful') {
+            dimension 'design'
+            applicationIdSuffix '.faithful'
+            resValue 'string', 'app_name', 'ITN Browser - Faithful'
+            buildConfigField 'String', 'DESIGN_VARIANT', '"faithful"'
+        }
     }
 
     buildTypes {
@@ -20,6 +39,11 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
     }
 
     lint {
@@ -32,6 +56,10 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
     packaging {
         resources {
             excludes += ['/META-INF/{AL2.0,LGPL2.1}']
@@ -40,4 +68,14 @@ android {
 }
 
 dependencies {
+    implementation platform('androidx.compose:compose-bom:2026.11.01')
+    implementation 'androidx.activity:activity-compose'
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material:material-icons-core'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose'
+    implementation 'androidx.navigation:navigation-compose'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
 }

@@ -28,7 +28,7 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard">
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard|uiMode|density|fontScale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -42,19 +42,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".PinEntryActivity" android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".PinSetupActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".GroupListActivity" />
-        <activity android:name=".GroupEditActivity" android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ScheduleEditActivity" />
-        <activity android:name=".TabListActivity" />
-        <activity android:name=".ConfirmActivity" />
-        <activity android:name=".TimePickerActivity" />
-        <activity android:name=".PinOptionsActivity" />
         <activity
             android:name=".ManageSpaceActivity"
             android:exported="true"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard|uiMode|density|fontScale" />
     </application>
 </manifest>
